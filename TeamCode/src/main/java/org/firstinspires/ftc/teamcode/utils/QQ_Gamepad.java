@@ -1,6 +1,8 @@
-package org.firstinspires.ftc.teamcode.Utils;
+package org.firstinspires.ftc.teamcode.utils;
 
 import com.qualcomm.robotcore.hardware.Gamepad;
+
+import org.firstinspires.ftc.teamcode.utils.Joystick;
 
 class QQ_Gamepad {
     Gamepad gamepad;
