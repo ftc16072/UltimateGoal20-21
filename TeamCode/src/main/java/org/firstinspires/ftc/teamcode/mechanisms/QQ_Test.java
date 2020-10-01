@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.mechanisms;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
-abstract class QQ_Test {
+public abstract class QQ_Test {
     private String description;
 
     /**
