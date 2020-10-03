@@ -11,7 +11,7 @@ public class Robot {
     Intake intake = new Intake();
     Transfer transfer = new Transfer();
     WobblyGoal wobblyGoal = new WobblyGoal();
-    public List<QQ_Mechanism> mechanisms = Arrays.asList(
+    private List<QQ_Mechanism> mechanisms = Arrays.asList(
             mecanumDrive,
             shooter,
             intake,
@@ -24,5 +24,8 @@ public class Robot {
         for (QQ_Mechanism mechanism : mechanisms){
             mechanism.init(hwMap);
         }
+    }
+    public List<QQ_Mechanism> getMechanisms(){
+        return mechanisms;
     }
 }

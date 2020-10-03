@@ -17,7 +17,7 @@ public abstract class QQ_Test {
      * gets the description of the test
      * @return returns the description of the test
      */
-    String getDescription() {
+    public String getDescription() {
         return description;
     }
 
@@ -26,5 +26,5 @@ public abstract class QQ_Test {
      * @param on on flips the test state
      * @param telemetry telemetry for the test to send what its doing
      */
-    abstract void run(boolean on, Telemetry telemetry);
+    public abstract void run(boolean on, Telemetry telemetry);
 }
