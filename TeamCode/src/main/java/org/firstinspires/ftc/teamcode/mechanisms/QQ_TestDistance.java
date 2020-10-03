@@ -26,7 +26,7 @@ public class QQ_TestDistance extends QQ_Test {
      * @param telemetry telemetry for the test to send what its doing
      */
     @Override
-    void run(boolean on, Telemetry telemetry) {
+    public void run(boolean on, Telemetry telemetry) {
         telemetry.addData("distance (centimeters)", distanceSensor.getDistance(DistanceUnit.CM) );
     }
 }
