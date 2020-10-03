@@ -25,7 +25,7 @@ public class QQ_TestAnalogSensor extends QQ_Test{
      * @param telemetry telemetry for the test to send the voltage of the sensor
      */
     @Override
-    void run(boolean on, Telemetry telemetry) {
+    public void run(boolean on, Telemetry telemetry) {
         telemetry.addData("distance (centimeters)", analogInput.getVoltage());
     }
 }

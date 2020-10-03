@@ -28,7 +28,7 @@ public class QQ_TestServo extends QQ_Test {
 }
 
     @Override
-    void run(boolean on, Telemetry telemetry) {
+    public void run(boolean on, Telemetry telemetry) {
         if(on){
 
             servo.setPosition(onlocation);

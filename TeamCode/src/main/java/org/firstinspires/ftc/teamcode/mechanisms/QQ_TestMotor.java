@@ -31,7 +31,7 @@ public class QQ_TestMotor extends QQ_Test{
      * @param telemetry telemetry for the test to send encoder position
      */
     @Override
-    void run(boolean on, Telemetry telemetry) {
+    public void run(boolean on, Telemetry telemetry) {
         if(on){
 
             dcMotor.setPower(speed);
