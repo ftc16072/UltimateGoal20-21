@@ -9,16 +9,29 @@ public class QQ_TestMotor extends QQ_Test{
     private double speed;
 
 
-    QQ_TestMotor(String desciption, double speed, DcMotor motor){
+    /**
+     *  Constructor
+     *
+     * @param description human readable of the description
+     * @param speed speed for the motor to run the test at
+     * @param motor instance of DcMotor class to run the test on
+     */
+    QQ_TestMotor(String description, double speed, DcMotor motor){
 
-        super(desciption);
+        super(description);
         this.speed = speed;
         dcMotor = motor;
 
     }
 
+    /**
+     * if on run at set speed, off turn off the motor
+     *
+     * @param on motor on or off
+     * @param telemetry telemetry for the test to send encoder position
+     */
     @Override
-    void run(boolean on, Telemetry telemetry) {
+    public void run(boolean on, Telemetry telemetry) {
         if(on){
 
             dcMotor.setPower(speed);

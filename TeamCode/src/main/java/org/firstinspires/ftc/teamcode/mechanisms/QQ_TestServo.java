@@ -10,7 +10,13 @@ public class QQ_TestServo extends QQ_Test {
     private double onlocation;
     private Servo servo;
 
-
+    /**
+     *
+     * @param desciption
+     * @param onlocation
+     * @param offlocation
+     * @param servo
+     */
     QQ_TestServo(String desciption, double onlocation,double offlocation, Servo servo){
 
     super(desciption);
@@ -22,7 +28,7 @@ public class QQ_TestServo extends QQ_Test {
 }
 
     @Override
-    void run(boolean on, Telemetry telemetry) {
+    public void run(boolean on, Telemetry telemetry) {
         if(on){
 
             servo.setPosition(onlocation);

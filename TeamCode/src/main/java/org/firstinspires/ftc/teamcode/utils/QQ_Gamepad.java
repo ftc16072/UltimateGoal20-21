@@ -1,13 +1,15 @@
-package org.firstinspires.ftc.teamcode.Utils;
+package org.firstinspires.ftc.teamcode.utils;
 
 import com.qualcomm.robotcore.hardware.Gamepad;
 
-class QQ_Gamepad {
+import org.firstinspires.ftc.teamcode.utils.Joystick;
+
+public class QQ_Gamepad {
     Gamepad gamepad;
     public Joystick rightStick;
     public Joystick leftStick;
 
-    QQ_Gamepad(Gamepad gamepad){
+    public QQ_Gamepad(Gamepad gamepad){
         this.gamepad = gamepad;
         rightStick  = new Joystick(gamepad.right_stick_x, gamepad.right_stick_y, gamepad.right_stick_button);
         leftStick = new Joystick(gamepad.left_stick_x, gamepad.left_stick_y, gamepad.left_stick_button);
