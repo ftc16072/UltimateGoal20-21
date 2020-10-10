@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.mechanisms;
 
+import com.qualcomm.ftccommon.CommandList;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -26,7 +27,8 @@ class MecanumDrive implements QQ_Mechanism {
     //created so we can easily change code to lower the speed in the setSpeeds method
     private double maxSpeed = 1.0;
 
-
+    private MatrixF conversion;
+    private GeneralMatrixF encoderMatrix = new GeneralMatrixF(3, 1);
 
 
     private int frontLeftOffset;
@@ -38,10 +40,13 @@ class MecanumDrive implements QQ_Mechanism {
     //creating a constructor for the mecanum drive, sets up the encoder matrix
 
     MecanumDrive() {
-  //TODO: put encoder matrix code back into here
+        float[] data = {1.0f, 1.0f1.0f,
+                1.0f, -1.0f, -1.0f,
+                1.0, -1.0f, 1.0f};
+        conversion = new GeneralMatrixF(3, 3, data);
+        conversion = conversion.inverted();
 
     }
-
 
 
     /*
@@ -70,12 +75,12 @@ class MecanumDrive implements QQ_Mechanism {
     public List<QQ_Test> getTests() {
         return Arrays.asList(
                 (QQ_Test) new QQ_TestMotor("Front Left", 0.3, frontLeft),
-                 new QQ_TestMotor("Front Right", 0.3, frontRight),
+                new QQ_TestMotor("Front Right", 0.3, frontRight),
                 new QQ_TestMotor("Back Left", 0.3, backLeft),
                 new QQ_TestMotor("Back Right", 0.3, backRight));
     }
 
-    private void setSpeeds(double f1Speed, double frSpeed, double b1Speed, double brSpeed){
+    private void setSpeeds(double f1Speed, double frSpeed, double b1Speed, double brSpeed) {
         double largest = 1.0;
         //takes the absolute value of the speed, returns the max value
         largest = Math.max(largest, Math.abs(f1Speed));
@@ -83,14 +88,40 @@ class MecanumDrive implements QQ_Mechanism {
         largest = Math.max(largest, Math.abs(b1Speed));
         largest = Math.max(largest, Math.abs(brSpeed));
 //at the end, largest will equal the highest speed or 1
-        frontLeft.setPower((maxSpeed*(f1Speed/largest)));
-        frontRight.setPower((maxSpeed*(frSpeed/largest)));
-        backLeft.setPower((maxSpeed*(b1Speed/largest)));
-        backRight.setPower((maxSpeed*(brSpeed/largest)));
+        frontLeft.setPower((maxSpeed * (f1Speed / largest)));
+        frontRight.setPower((maxSpeed * (frSpeed / largest)));
+        backLeft.setPower((maxSpeed * (b1Speed / largest)));
+        backRight.setPower((maxSpeed * (brSpeed / largest)));
     }
 
     @Override
     public String getName() {
         return "MecanumDrive";
     }
+
+    public void driveMecanum(double forward, double strafe, double rotate) {
+        double frontLeftSpeed = forward + strafe + rotate;
+        double frontRightSpeed = forward - strafe - rotate;
+        double backLeftSpeed = forward - strafe + rotate;
+        double backRightSpeed = forward + strafe - rotate;
+
+        setSpeeds(frontLeftSpeed, frontRightSpeed, backLeftSpeed, backRightSpeed);
+    }
+
+    double[] getDistanceCm() {
+        double[] distance = {0.0, 0.0};
+
+        encoderMatrix.put(0, 0, (float) ((frontLeft.getCurrentPosition() - frontLeftOffset) * CM_PER_TICK));
+        encoderMatrix.put(1, 0, (float) ((frontRight.getCurrentPosition() - frontRightOffset * CM_PER_TICK));
+        encoderMatrix.put(2, 0, (float) ((backLeft.getCurrentPosition() - backLeftOffset) * CM_PER_TICK));
+
+        MatrixF distanceMatrix = conversion.multiplied(encoderMatrix);
+        distance[0] = distanceMatrix.get(0, 0);
+        distance[0] = distanceMatrix.get(1, 0);
+
+        return distance;
+    }
+
 }
+
+
