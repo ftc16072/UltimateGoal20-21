@@ -40,9 +40,9 @@ class MecanumDrive implements QQ_Mechanism {
     //creating a constructor for the mecanum drive, sets up the encoder matrix
 
     MecanumDrive() {
-        float[] data = {1.0f, 1.0f1.0f,
+        float[] data = {1.0f, 1.0f,1.0f,
                 1.0f, -1.0f, -1.0f,
-                1.0, -1.0f, 1.0f};
+                1.0f, -1.0f, 1.0f};
         conversion = new GeneralMatrixF(3, 3, data);
         conversion = conversion.inverted();
 
@@ -112,7 +112,7 @@ class MecanumDrive implements QQ_Mechanism {
         double[] distance = {0.0, 0.0};
 
         encoderMatrix.put(0, 0, (float) ((frontLeft.getCurrentPosition() - frontLeftOffset) * CM_PER_TICK));
-        encoderMatrix.put(1, 0, (float) ((frontRight.getCurrentPosition() - frontRightOffset * CM_PER_TICK));
+        encoderMatrix.put(1, 0, (float) ((frontRight.getCurrentPosition() - frontRightOffset) * CM_PER_TICK));
         encoderMatrix.put(2, 0, (float) ((backLeft.getCurrentPosition() - backLeftOffset) * CM_PER_TICK));
 
         MatrixF distanceMatrix = conversion.multiplied(encoderMatrix);
