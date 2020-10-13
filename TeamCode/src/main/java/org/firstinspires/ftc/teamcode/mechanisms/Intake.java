@@ -16,7 +16,9 @@ class Intake implements QQ_Mechanism {
     public List<QQ_Test> getTests() {
         return null;
     }
+    public void ConveyorBelt(){
 
+    }
     @Override
     public String getName() {
         return "Intake";
