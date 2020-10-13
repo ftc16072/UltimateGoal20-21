@@ -15,7 +15,7 @@ public class QQ_TestServo extends QQ_Test {
      * @param offLocation the rest location of the servo
      * @param servo       the servo to test
      */
-    QQ_TestServo(String description, double onLocation, double offLocation, Servo servo) {
+    public QQ_TestServo(String description, double onLocation, double offLocation, Servo servo) {
         super(description);
         this.servo = servo;
         this.offLocation = offLocation;
