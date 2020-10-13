@@ -14,7 +14,7 @@ public class QQ_TestMotor extends QQ_Test {
      * @param speed       speed for the motor to run the test at
      * @param motor       instance of DcMotor class to run the test on
      */
-    QQ_TestMotor(String description, double speed, DcMotor motor) {
+    public QQ_TestMotor(String description, double speed, DcMotor motor) {
         super(description);
         this.speed = speed;
         dcMotor = motor;
