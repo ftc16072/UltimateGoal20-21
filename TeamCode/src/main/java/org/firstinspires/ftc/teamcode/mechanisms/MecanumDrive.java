@@ -71,6 +71,8 @@ class MecanumDrive implements QQ_Mechanism {
 
     }
 
+
+
     @Override
     public List<QQ_Test> getTests() {
         return Arrays.asList(
@@ -116,7 +118,7 @@ class MecanumDrive implements QQ_Mechanism {
         encoderMatrix.put(2, 0, (float) ((backLeft.getCurrentPosition() - backLeftOffset) * CM_PER_TICK));
 
         MatrixF distanceMatrix = conversion.multiplied(encoderMatrix);
-        distance[0] = distanceMatrix.get(0, 0);
+        distance[1] = distanceMatrix.get(0, 0);
         distance[0] = distanceMatrix.get(1, 0);
 
         return distance;
