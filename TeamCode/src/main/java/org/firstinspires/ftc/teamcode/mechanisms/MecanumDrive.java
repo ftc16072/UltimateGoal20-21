@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.mechanisms;
 
-import com.qualcomm.ftccommon.CommandList;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -13,7 +12,7 @@ import org.firstinspires.ftc.teamcode.mechanisms.tests.QQ_TestMotor;
 import java.util.Arrays;
 import java.util.List;
 
-class MecanumDrive implements QQ_Mechanism {
+public class MecanumDrive implements QQ_Mechanism {
     //declaring mecanum drive motors
     private DcMotor frontLeft;
     private DcMotor frontRight;
@@ -56,16 +55,16 @@ class MecanumDrive implements QQ_Mechanism {
      */
     @Override
     public void init(HardwareMap hwMap) {
-        frontLeft = hwMap.get(DcMotor.class, "front_left");
+        frontLeft = hwMap.get(DcMotor.class, "front_left_motor");
         frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        frontRight = hwMap.get(DcMotor.class, "front_right");
+        frontRight = hwMap.get(DcMotor.class, "front_right_motor");
         frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        backLeft = hwMap.get(DcMotor.class, "back_left");
+        backLeft = hwMap.get(DcMotor.class, "back_left_motor");
         backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        backRight = hwMap.get(DcMotor.class, "back_right");
+        backRight = hwMap.get(DcMotor.class, "back_right_motor");
         backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 //back left and front left motors move backwards
         backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
