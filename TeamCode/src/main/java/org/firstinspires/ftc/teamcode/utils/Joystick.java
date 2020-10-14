@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
-class Joystick {
+public class Joystick {
     double x;
     double y;
     boolean pressed;
