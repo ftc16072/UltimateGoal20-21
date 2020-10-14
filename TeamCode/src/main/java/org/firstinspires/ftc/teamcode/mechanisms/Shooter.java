@@ -8,12 +8,13 @@ import org.firstinspires.ftc.teamcode.mechanisms.tests.QQ_Test;
 import java.util.List;
 
 class Shooter implements QQ_Mechanism {
-private DcMotor ShooterLeft;
-        private DcMotor ShooterRight;
+    private DcMotor ShooterLeft;
+    private DcMotor ShooterRight;
+
     @Override
     public void init(HardwareMap hwMap) {
-ShooterLeft = hwMap.get(DcMotor.class, "LeftMotor");
-ShooterRight = hwMap.get(DcMotor.class, "RightMotor");
+//ShooterLeft = hwMap.get(DcMotor.class, "LeftMotor");
+//ShooterRight = hwMap.get(DcMotor.class, "RightMotor");
     }
 
     @Override
@@ -22,18 +23,22 @@ ShooterRight = hwMap.get(DcMotor.class, "RightMotor");
     }
 
     //create methods to set angle up and down, left, right
-public void ShooterUp(){
+    public void ShooterUp() {
 
-}
-public void ShooterLeft(){
+    }
 
-}
-public void ShooterRight(){
+    public void ShooterLeft() {
 
-}
-public void ShooterDown(){
+    }
 
-}
+    public void ShooterRight() {
+
+    }
+
+    public void ShooterDown() {
+
+    }
+
     @Override
     public String getName() {
         return "Shooter";
