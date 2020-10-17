@@ -10,22 +10,34 @@ import java.util.List;
 class Intake implements QQ_Mechanism {
     private DcMotor intakeMotor;
 
+    /**
+     * initialize intake
+     * @param hwMap hardware map from configuration
+     */
     @Override
     public void init(HardwareMap hwMap) {
         intakeMotor = hwMap.get(DcMotor.class, "intake_motor");
     }
 
+    /**
+     * Gets tests
+     * @return a list of tests
+     */
     @Override
     public List<QQ_Test> getTests() {
         return null;
     }
-    public void ConveyorBelt(){
+
+    public void ConveyorBelt(){}
 
     public void intake() {
 
     }
 
-    }
+    /**
+     * gets name
+     * @return intake
+     */
     @Override
     public String getName() {
         return "Intake";
