@@ -6,8 +6,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Robot {
-    public Navigation nav = new Navigation(this);
     public MecanumDrive mecanumDrive = new MecanumDrive();
+    public Navigation nav = new Navigation(mecanumDrive);
     public Shooter shooter = new Shooter();
     public Intake intake = new Intake();
     public Transfer transfer = new Transfer();
