@@ -13,11 +13,17 @@ public abstract class QQ_Opmode extends OpMode {
     public QQ_Gamepad qq_gamepad2;
     protected QQ_Action currentAction;
 
+    /**
+     * initializing hardware map
+     */
     @Override
     public void init() {
         robot.init(hardwareMap);
     }
 
+    /**
+     * run the gamepad movement
+     */
     @Override
     public void loop() {
         if(usesGamepads){

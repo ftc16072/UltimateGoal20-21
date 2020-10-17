@@ -9,6 +9,7 @@ public class SimpleDrive extends QQ_Opmode {
     @Override
     public void init(){
         super.init();
+        //robot will move the direction the user commands it to
         usesGamepads = true;
         currentAction = new TeleopDriveAction();
     }
