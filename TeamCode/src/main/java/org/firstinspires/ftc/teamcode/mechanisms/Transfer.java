@@ -12,11 +12,19 @@ class Transfer implements QQ_Mechanism {
 
     }
 
+    /**
+     * transfer mechanism
+     * @return nothing
+     */
     @Override
     public List<QQ_Test> getTests() {
         return null;
     }
 
+    /**
+     * get name
+     * @return transfer
+     */
     @Override
     public String getName() {
         return "Transfer";
