@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.utils;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
-class Polar {
+public class Polar {
     private double x;
     private double y;
     private double theta;
