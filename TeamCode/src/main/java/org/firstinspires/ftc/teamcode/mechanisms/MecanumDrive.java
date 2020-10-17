@@ -94,7 +94,10 @@ public class MecanumDrive implements QQ_Mechanism {
     }
 
 
-
+    /**
+     * get tests
+     * @return arrays as list
+     */
     @Override
     public List<QQ_Test> getTests() {
         return Arrays.asList(
@@ -103,6 +106,7 @@ public class MecanumDrive implements QQ_Mechanism {
                 new QQ_TestMotor("Back Left", 0.3, backLeft),
                 new QQ_TestMotor("Back Right", 0.3, backRight));
     }
+
 
     private void setSpeeds(double f1Speed, double frSpeed, double b1Speed, double brSpeed) {
         double largest = 1.0;
@@ -118,6 +122,10 @@ public class MecanumDrive implements QQ_Mechanism {
         backRight.setPower((maxSpeed * (brSpeed / largest)));
     }
 
+    /**
+     * get name
+     * @return defining the variables
+     */
     @Override
     public String getName() {
         return "MecanumDrive";
@@ -132,6 +140,11 @@ public class MecanumDrive implements QQ_Mechanism {
         setSpeeds(frontLeftSpeed, frontRightSpeed, backLeftSpeed, backRightSpeed);
     }
 
+    /**
+     * calculating the distances we have traveled using encoders
+     * @param du
+     * @return the distance
+     */
     MoveDeltas getDistance(DistanceUnit du) {
 
         encoderMatrix.put(0, 0, (float) ((frontLeft.getCurrentPosition() - frontLeftOffset) * CM_PER_TICK));
@@ -144,5 +157,3 @@ public class MecanumDrive implements QQ_Mechanism {
     }
 
 }
-
-
