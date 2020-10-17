@@ -6,6 +6,8 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.matrices.GeneralMatrixF;
 import org.firstinspires.ftc.robotcore.external.matrices.MatrixF;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.mechanisms.tests.QQ_Test;
 import org.firstinspires.ftc.teamcode.mechanisms.tests.QQ_TestMotor;
 
@@ -13,6 +15,25 @@ import java.util.Arrays;
 import java.util.List;
 
 public class MecanumDrive implements QQ_Mechanism {
+    public class MoveDeltas{
+        double x_cm;
+        double y_cm;
+
+        public MoveDeltas(double x, double y, DistanceUnit du){
+            x_cm = du.toCm(x);
+            y_cm = du.toCm(y);
+        }
+
+        public double getX(DistanceUnit du) {
+            return du.fromCm(x_cm);
+        }
+        public double getY(DistanceUnit du) {
+            return du.fromCm(y_cm);
+        }
+
+    }
+
+
     //declaring mecanum drive motors
     private DcMotor frontLeft;
     private DcMotor frontRight;
@@ -111,18 +132,15 @@ public class MecanumDrive implements QQ_Mechanism {
         setSpeeds(frontLeftSpeed, frontRightSpeed, backLeftSpeed, backRightSpeed);
     }
 
-    double[] getDistanceCm() {
-        double[] distance = {0.0, 0.0};
+    MoveDeltas getDistance(DistanceUnit du) {
 
         encoderMatrix.put(0, 0, (float) ((frontLeft.getCurrentPosition() - frontLeftOffset) * CM_PER_TICK));
         encoderMatrix.put(1, 0, (float) ((frontRight.getCurrentPosition() - frontRightOffset) * CM_PER_TICK));
         encoderMatrix.put(2, 0, (float) ((backLeft.getCurrentPosition() - backLeftOffset) * CM_PER_TICK));
 
         MatrixF distanceMatrix = conversion.multiplied(encoderMatrix);
-        distance[1] = distanceMatrix.get(0, 0);
-        distance[0] = distanceMatrix.get(1, 0);
 
-        return distance;
+        return new MoveDeltas(distanceMatrix.get(0, 0),  distanceMatrix.get(0, 0), du);
     }
 
 }

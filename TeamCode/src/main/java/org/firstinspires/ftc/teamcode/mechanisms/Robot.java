@@ -7,10 +7,11 @@ import java.util.List;
 
 public class Robot {
     public MecanumDrive mecanumDrive = new MecanumDrive();
-    Shooter shooter = new Shooter();
-    Intake intake = new Intake();
-    Transfer transfer = new Transfer();
-    WobblyGoal wobblyGoal = new WobblyGoal();
+    public Navigation nav = new Navigation(mecanumDrive);
+    public Shooter shooter = new Shooter();
+    public Intake intake = new Intake();
+    public Transfer transfer = new Transfer();
+    public WobblyGoal wobblyGoal = new WobblyGoal();
     private List<QQ_Mechanism> mechanisms = Arrays.asList(
             mecanumDrive,
             shooter,
@@ -24,6 +25,7 @@ public class Robot {
         for (QQ_Mechanism mechanism : mechanisms){
             mechanism.init(hwMap);
         }
+        nav.init(hwMap);
     }
     public List<QQ_Mechanism> getMechanisms(){
         return mechanisms;
