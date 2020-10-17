@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.teamcode.utils.NavigationPose;
 import org.firstinspires.ftc.teamcode.utils.RobotPose;
 
 
@@ -32,23 +33,23 @@ public class Navigation {
     }
 
 
-    public boolean translateTo(RobotPose desiredPose, double distanceTolerance, DistanceUnit du){
+    public boolean translateTo(NavigationPose desiredPose){
 
         //todo write drive code here
 
-        return currentPosition.getTransDistance(desiredPose, du).getR() < distanceTolerance;
+        return desiredPose.inDistanceTolerance(currentPosition);
 
     }
 
-    public boolean turnTo(RobotPose desiredPose, double angleTolerance, AngleUnit au){
+    public boolean turnTo(NavigationPose desiredPose){
 
         //todo write turn code here
 
-        return currentPosition.getAngleDistance(desiredPose, au) < angleTolerance;
+        return false;
     }
 
-    public boolean driveTo(RobotPose desiredPose){
-        return translateTo(desiredPose, 2, DistanceUnit.CM) && turnTo(desiredPose, 2, AngleUnit.DEGREES);
+    public boolean driveTo(NavigationPose desiredPose){
+        return translateTo(desiredPose) && turnTo(desiredPose);
     }
 
 
