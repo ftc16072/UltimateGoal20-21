@@ -8,22 +8,68 @@ import org.firstinspires.ftc.teamcode.mechanisms.tests.QQ_Test;
 import java.util.List;
 
 class Shooter implements QQ_Mechanism {
+    class manualAim{
+        /**
+         * Manualy move the shooter up
+         * @param degrees degrees to move the shooter up
+         * @return true when done
+         */
+        public boolean ShooterUp(double degrees) {
+            return false;
+        }
+
+        /**
+         * Manualy move the shooter Left
+         * @param degrees degrees to move the shooter left
+         * @return true when done
+         */
+        public boolean ShooterLeft(double degrees) {
+            return false;
+        }
+
+        /**
+         * Manualy move the shooter right
+         * @param degrees degrees to move the shooter right
+         * @return true when done
+         */
+        public boolean ShooterRight(double degrees) {
+            return false;
+        }
+        /**
+         * Manualy move the shooter down
+         * @param degrees degrees to move the shooter down
+         * @return true when done
+         */
+        public boolean ShooterDown(double degrees) {
+            return false;
+        }
+    }
+    enum AimLocation {
+        LowGoal,
+        MidGoal,
+        HighGoal,
+        PowerShot1,
+        PowerShot2,
+        PowerShot3
+    }
+
+
     private DcMotor ShooterLeft;
     private DcMotor ShooterRight;
 
     /**
-     * initializes hardware map
-     * @param hwMap
+     * initializes Shooter
+     * @param hwMap Harwdware map from config
      */
     @Override
     public void init(HardwareMap hwMap) {
-//ShooterLeft = hwMap.get(DcMotor.class, "LeftMotor");
-//ShooterRight = hwMap.get(DcMotor.class, "RightMotor");
+        ShooterLeft = hwMap.get(DcMotor.class, "LeftMotor");
+        ShooterRight = hwMap.get(DcMotor.class, "RightMotor");
     }
 
     /**
      * gets tests
-     * @return nothing
+     * @return a list of QQ_Tests
      */
     @Override
     public List<QQ_Test> getTests() {
@@ -31,21 +77,14 @@ class Shooter implements QQ_Mechanism {
     }
 
     //create methods to set angle up and down, left, right
-    //mmethod for moving the shooter up
-    public void ShooterUp() {
 
-    }
-//method for moving the shooter to the left
-    public void ShooterLeft() {
-
-    }
-//method for moving the shooter to the right
-    public void ShooterRight() {
-
-    }
-//method for moving the shooter down
-    public void ShooterDown() {
-
+    /**
+     * aim the shooter at the target
+     * @param aimLocation location to aim the shooter to
+     * @return true when done
+     */
+    public boolean aim(AimLocation aimLocation){
+        return false;
     }
 
     /**

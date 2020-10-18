@@ -30,6 +30,11 @@ public class Robot {
         }
         nav.init(hwMap);
     }
+
+    /**
+     * gets the mechanisms the robot has
+     * @return a list of QQ_mechanism
+     */
     public List<QQ_Mechanism> getMechanisms(){
         return mechanisms;
     }

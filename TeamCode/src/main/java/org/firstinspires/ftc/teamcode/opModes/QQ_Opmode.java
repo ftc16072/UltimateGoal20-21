@@ -14,7 +14,7 @@ public abstract class QQ_Opmode extends OpMode {
     protected QQ_Action currentAction;
 
     /**
-     * initializing hardware map
+     * initializing robot
      */
     @Override
     public void init() {
@@ -22,7 +22,9 @@ public abstract class QQ_Opmode extends OpMode {
     }
 
     /**
-     * run the gamepad movement
+     * loop method --- runs over and over
+     * Updates the gamepad
+     * runs the action method
      */
     @Override
     public void loop() {

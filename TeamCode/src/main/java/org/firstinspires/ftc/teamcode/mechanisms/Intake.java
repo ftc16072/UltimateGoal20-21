@@ -8,7 +8,15 @@ import org.firstinspires.ftc.teamcode.mechanisms.tests.QQ_Test;
 import java.util.List;
 
 class Intake implements QQ_Mechanism {
+    public enum intakeState{
+        Start,
+        Stop,
+        Reverse
+    };
+
     private DcMotor intakeMotor;
+    private static final double intakeSpeed = 0.2;
+    private static final double reverseIntakeSpeed = -0.2;
 
     /**
      * initialize intake
@@ -28,15 +36,23 @@ class Intake implements QQ_Mechanism {
         return null;
     }
 
-    public void ConveyorBelt(){}
-
-    public void intake() {
-
+    /**
+     * Sets intake to a desired state based off of the enum
+     * @param desiredState state desired for the intake
+     */
+    public void changeState(Intake.intakeState desiredState){
+        if(desiredState == intakeState.Start){
+            intakeMotor.setPower(intakeSpeed);
+        } else if (desiredState == intakeState.Reverse){
+            intakeMotor.setPower(reverseIntakeSpeed);
+        } else if (desiredState == intakeState.Stop){
+            intakeMotor.setPower(0.0);
+        }
     }
 
     /**
      * gets name
-     * @return intake
+     * @return the name as a string "Intake"
      */
     @Override
     public String getName() {

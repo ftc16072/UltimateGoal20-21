@@ -18,7 +18,6 @@ class TestWiring extends QQ_Opmode {
     /**
      * Main code for test wiring
      */
-
     @Override
     public void loop() {
         List<QQ_Test> tests = mechanisms.get(currentMechanism).getTests();

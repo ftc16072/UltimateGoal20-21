@@ -9,57 +9,106 @@ public class QQ_Gamepad {
     public Joystick rightStick;
     public Joystick leftStick;
 
+    /**
+     * Constructor for the QQ gamepad
+     * @param gamepad gamepad to use for the smart features
+     */
     public QQ_Gamepad(Gamepad gamepad){
         this.gamepad = gamepad;
         rightStick  = new Joystick(gamepad.right_stick_x, gamepad.right_stick_y, gamepad.right_stick_button);
         leftStick = new Joystick(gamepad.left_stick_x, gamepad.left_stick_y, gamepad.left_stick_button);
     }
 
-//returns the state of left bumper
+    /**
+     * left bumper
+     * @return the state of left bumper
+     */
     public boolean leftBumper(){
         return gamepad.left_bumper;
     }
-    //returns the state of right bumper
+
+    /**
+     * right bumper
+     * @return the state of right bumper
+     */
     public boolean rightBumper(){
         return gamepad.right_bumper;
     }
-    //returns the state of button a
+
+
+    /**
+     * button a
+     * @return the state of button a
+     */
     public boolean a(){
         return gamepad.a;
     }
-    //returns the state of button b
+
+
+
+    /**
+     * button b
+     * @return the state of button b
+     */
     public boolean b(){
         return gamepad.b;
     }
-    //returns the state of button x
+
+    /**
+     * button x
+     * @return the state of button x
+     */
     public boolean x(){
         return gamepad.x;
     }
-    //returns the state of button y
+    /**
+     * button y
+     * @return the state of button y
+     */
     public boolean y(){
         return gamepad.y;
     }
-    //returns the state of upper dpad
+    /**
+     * Dpad up button
+     * @return the state of the dpad up button
+     */
     public boolean dpadUp(){
         return gamepad.dpad_up;
     }
-    //returns the state of lower dpad
+
+    /**
+     * Dpad down button
+     * @return the state of the dpad down button
+     */
     public boolean dpadDown(){
         return gamepad.dpad_down;
     }
-    //returns the state of left dpad
+    /**
+     * Dpad left button
+     * @return the state of the dpad right button
+     */
     public boolean dpadLeft(){
         return gamepad.dpad_left;
     }
-    //returns the state of right dpad
+    /**
+     * Dpad right button
+     * @return the state of the dpad right button
+     */
     public boolean dpadRight(){
         return gamepad.dpad_right;
     }
-    //returns the state of left trigger
+    /**
+     * left trigger
+     * @return the state of the left trigger
+     */
     public double leftTrigger(){
         return gamepad.left_trigger;
     }
-    //returns the state of right trigger
+
+    /**
+     * right trigger
+     * @return the state of the right trigger
+     */
     public double rightTrigger(){
         return gamepad.right_trigger;
     }

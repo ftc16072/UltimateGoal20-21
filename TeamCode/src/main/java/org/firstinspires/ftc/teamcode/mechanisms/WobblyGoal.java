@@ -19,7 +19,7 @@ class WobblyGoal implements QQ_Mechanism {
 
     /**
      * initialize hardware map
-     * @param hwMap
+     * @param hwMap Hardware map from configuration
      */
     @Override
     public void init(HardwareMap hwMap) {
@@ -28,34 +28,46 @@ class WobblyGoal implements QQ_Mechanism {
     }
 
     /**
-     * listing arrays
-     * @return arrays as list
+     * Get wobbly goal tests
+     * @return List of Tests
      */
     @Override
     public List<QQ_Test> getTests() {
         return Arrays.asList((QQ_Test) new QQ_TestServo("rotator", ROTATOR_UP, ROTATOR_DOWN, rotator),
                 new QQ_TestServo("grabber", GRABBER_CLOSED, GRABBER_OPEN, grabber));
     }
-//grabber mechanism will open
+
+    /**
+     * grabber mechanism will open
+     */
     public void openGrabber() {
         grabber.setPosition(GRABBER_OPEN);
     }
-//grabber mechanism will close
+
+    /**
+     * grabber mechanism will close
+     */
     public void closeGrabber() {
         grabber.setPosition(GRABBER_CLOSED);
     }
-//rotator mechanism goes up
+
+
+    /**
+     * rotator mechanism goes up
+     */
     public void raiseRotator() {
         rotator.setPosition(ROTATOR_UP);
     }
-    //rotator mechanism goes down
+    /**
+     * rotator mechanism goes down
+     */
     public void lowerRotator() {
         rotator.setPosition(ROTATOR_DOWN);
     }
 
     /**
      * get name
-     * @return title
+     * @return title as string
      */
     @Override
     public String getName() {

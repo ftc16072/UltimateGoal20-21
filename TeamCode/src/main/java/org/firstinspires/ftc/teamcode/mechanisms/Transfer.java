@@ -7,14 +7,18 @@ import org.firstinspires.ftc.teamcode.mechanisms.tests.QQ_Test;
 import java.util.List;
 
 class Transfer implements QQ_Mechanism {
+    /**
+     * initializes the transfer
+     * @param hwMap forces the init to take a Hardware Map from the configuration
+     */
     @Override
     public void init(HardwareMap hwMap) {
 
     }
 
     /**
-     * transfer mechanism
-     * @return nothing
+     * get tests for the transfer mechanism
+     * @return list of tests for the mechanism
      */
     @Override
     public List<QQ_Test> getTests() {
@@ -23,7 +27,7 @@ class Transfer implements QQ_Mechanism {
 
     /**
      * get name
-     * @return transfer
+     * @return returns name as string
      */
     @Override
     public String getName() {

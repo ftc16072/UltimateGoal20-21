@@ -10,7 +10,7 @@ public interface QQ_Mechanism {
 
     /**
      * forces the mechanism to have a init
-     * @param hwMap forces the init to take a Hardware Map
+     * @param hwMap forces the init to take a Hardware Map from the configuration
      */
     void init(HardwareMap hwMap);
 

@@ -8,6 +8,16 @@ public class NavigationPose extends RobotPose {
     double yToleranceCm;
     double angleTolerance;
 
+    /**
+     * Main Constructor for NavigationPose
+     * @param x x component
+     * @param xTolerance tolerance on the x component
+     * @param y y component
+     * @param yTolerance tolerance on the y component
+     * @param du distance unit those distances are in
+     * @param angle angle component
+     * @param au angle unit that angle is in
+     */
     public NavigationPose(double x, double xTolerance, double y, double yTolerance, DistanceUnit du, double angle, AngleUnit au){
         super(x, y, du, angle, au);
         //figuring out x and y position of the robot
@@ -15,6 +25,11 @@ public class NavigationPose extends RobotPose {
         yToleranceCm = du.toCm(yTolerance);
     }
 
+    /**
+     * checks to see if another pose is in tolerance
+     * @param otherPose pose to check
+     * @return true if it is 
+     */
     public boolean inDistanceTolerance(RobotPose otherPose){
         //figuring out the tolerance in order to navigate the robot
         boolean xin = Math.abs(otherPose.getX(DistanceUnit.CM) - x_cm) <= xToleranceCm;
