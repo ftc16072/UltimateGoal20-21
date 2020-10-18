@@ -58,9 +58,10 @@ public class MecanumDrive implements QQ_Mechanism {
     private int backRightOffset;
     private int backLeftOffset;
 
-
-    //creating a constructor for the mecanum drive, sets up the encoder matrix
-
+    /**
+     * Constructor
+     * sets up the encoder matrix
+     */
     MecanumDrive() {
         float[] data = {1.0f, 1.0f,1.0f,
                 1.0f, -1.0f, -1.0f,
@@ -71,8 +72,9 @@ public class MecanumDrive implements QQ_Mechanism {
     }
 
 
-    /*
-    initializing mecanum drive
+    /**
+     * initializes macanum drive
+     * @param hwMap Hardware Map from the configuration
      */
     @Override
     public void init(HardwareMap hwMap) {
@@ -94,7 +96,10 @@ public class MecanumDrive implements QQ_Mechanism {
     }
 
 
-
+    /**
+     * get tests
+     * @return arrays as list
+     */
     @Override
     public List<QQ_Test> getTests() {
         return Arrays.asList(
@@ -104,6 +109,14 @@ public class MecanumDrive implements QQ_Mechanism {
                 new QQ_TestMotor("Back Right", 0.3, backRight));
     }
 
+
+    /**
+     * takes speeds for each wheel, scales them, allows us to set an artificial ceiling, and then sets the motors
+     * @param f1Speed speed for the front left wheel
+     * @param frSpeed speed for the front right wheel
+     * @param b1Speed speed for the back left wheel
+     * @param brSpeed speed for the back right wheel
+     */
     private void setSpeeds(double f1Speed, double frSpeed, double b1Speed, double brSpeed) {
         double largest = 1.0;
         //takes the absolute value of the speed, returns the max value
@@ -118,6 +131,10 @@ public class MecanumDrive implements QQ_Mechanism {
         backRight.setPower((maxSpeed * (brSpeed / largest)));
     }
 
+    /**
+     * get name
+     * @return defining the variables
+     */
     @Override
     public String getName() {
         return "MecanumDrive";
@@ -132,7 +149,11 @@ public class MecanumDrive implements QQ_Mechanism {
         setSpeeds(frontLeftSpeed, frontRightSpeed, backLeftSpeed, backRightSpeed);
     }
 
-    MoveDeltas getDistance(DistanceUnit du) {
+    /**
+     * calculating the distances we have traveled using encoders
+     * @return a MoveDelta of the mecanum drive representing how far we have driven since the last reset
+     */
+    MoveDeltas getDistance() {
 
         encoderMatrix.put(0, 0, (float) ((frontLeft.getCurrentPosition() - frontLeftOffset) * CM_PER_TICK));
         encoderMatrix.put(1, 0, (float) ((frontRight.getCurrentPosition() - frontRightOffset) * CM_PER_TICK));
@@ -140,9 +161,7 @@ public class MecanumDrive implements QQ_Mechanism {
 
         MatrixF distanceMatrix = conversion.multiplied(encoderMatrix);
 
-        return new MoveDeltas(distanceMatrix.get(0, 0),  distanceMatrix.get(0, 0), du);
+        return new MoveDeltas(distanceMatrix.get(0, 0),  distanceMatrix.get(0, 0), DistanceUnit.CM);
     }
 
 }
-
-

@@ -20,13 +20,21 @@ public class Robot {
             wobblyGoal
     );
 
-
+    /**
+     * initializing hardware map
+     * @param hwMap returning the mechanism that it calls for
+     */
     public void init(HardwareMap hwMap){
         for (QQ_Mechanism mechanism : mechanisms){
             mechanism.init(hwMap);
         }
         nav.init(hwMap);
     }
+
+    /**
+     * gets the mechanisms the robot has
+     * @return a list of QQ_mechanism
+     */
     public List<QQ_Mechanism> getMechanisms(){
         return mechanisms;
     }

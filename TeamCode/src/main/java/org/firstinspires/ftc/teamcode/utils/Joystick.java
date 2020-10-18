@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.utils;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 public class Joystick {
     double x;
@@ -43,7 +44,7 @@ public class Joystick {
      */
     void setPolar(){
         if(polar != null){
-            polar = new Polar(x, y);
+            polar = new Polar(x, y, DistanceUnit.INCH);
         }
     }
 
@@ -62,7 +63,7 @@ public class Joystick {
      */
     public double getR() {
         setPolar();
-        return polar.getR();
+        return polar.getR(DistanceUnit.MM);
     }
 
     /***
