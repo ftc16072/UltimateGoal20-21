@@ -1,5 +1,5 @@
 % Latex header for doxygen 1.8.20
-\let\mypdfximage\pdfximage\def\pdfximage{\immediate\mypdfximage}\documentclass[twoside]{article}
+\let\mypdfximage\pdfximage\def\pdfximage{\immediate\mypdfximage}\documentclass[twoside]{book}
 
 %% moved from doxygen.sty due to workaround for LaTex 2019 version and unmaintained tabu package
 \usepackage{ifthen}
@@ -12,7 +12,6 @@
 % Packages required by doxygen
 \usepackage{fixltx2e}
 \usepackage{calc}
-\usepackage{doxygen}
 \usepackage{doxygen}
 \usepackage{graphicx}
 \usepackage[utf8]{inputenc}
@@ -99,6 +98,9 @@
 \fancyfoot[CO]{\fancyplain{}{}}
 \fancyfoot[RO]{\fancyplain{}{}}
 \renewcommand{\footrulewidth}{0.4pt}
+\renewcommand{\chaptermark}[1]{%
+  \markboth{#1}{}%
+}
 \renewcommand{\sectionmark}[1]{%
   \markright{\thesection\ #1}%
 }
