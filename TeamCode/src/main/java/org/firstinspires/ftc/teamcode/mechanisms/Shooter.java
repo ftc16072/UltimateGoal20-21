@@ -63,8 +63,8 @@ class Shooter implements QQ_Mechanism {
      */
     @Override
     public void init(HardwareMap hwMap) {
-        ShooterLeft = hwMap.get(DcMotor.class, "LeftMotor");
-        ShooterRight = hwMap.get(DcMotor.class, "RightMotor");
+        //ShooterLeft = hwMap.get(DcMotor.class, "LeftMotor");
+        //ShooterRight = hwMap.get(DcMotor.class, "RightMotor");
     }
 
     /**
