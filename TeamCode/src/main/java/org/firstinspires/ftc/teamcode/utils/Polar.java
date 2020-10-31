@@ -15,10 +15,9 @@ public class Polar {
      * @param angle angle component
      * @param au angle unit the angle is in
      * @param r distance from center
-     * @param du distance unit distance is in
      */
-    Polar(double angle, AngleUnit au, double r, DistanceUnit du){
-        this.r = du.toCm(r);
+    Polar(double angle, AngleUnit au, double r){
+        this.r = r;
         this.theta = au.toRadians(angle);
         mathDone = false;
     }
@@ -27,11 +26,10 @@ public class Polar {
      * Constructor using cartesian coordinates
      * @param x distance from the origin in the x axis
      * @param y distance from the origin in the y axis
-     * @param du distance unit those distances are in
      */
-    Polar(double x, double y, DistanceUnit du){
-        this.x_cm = du.toCm(x);
-        this.y_cm = du.toCm(y);
+    Polar(double x, double y){
+        this.x_cm = x;
+        this.y_cm = y;
         mathDone = false;
     }
 

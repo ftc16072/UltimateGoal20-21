@@ -4,8 +4,12 @@ import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.teamcode.utils.NavigationPose;
+import org.firstinspires.ftc.teamcode.utils.Polar;
 import org.firstinspires.ftc.teamcode.utils.RobotPose;
 
 
@@ -13,8 +17,10 @@ public class Navigation {
     // Public Classes
     public RobotPose currentPosition;
     public BNO055IMU imu;
+    private double imuOffset;
     // Private Classes
     MecanumDrive mecanumDrive;
+
 
     // Private Values
     private double angleTolerance = AngleUnit.RADIANS.fromDegrees(2);
@@ -34,6 +40,32 @@ public class Navigation {
     void init(HardwareMap hwmap){
         imu = hwmap.get(BNO055IMU.class, "imu");
     }
+
+
+    //IMU Stuff
+
+    private double getHeading(AngleUnit au){
+        Orientation angles;
+
+        angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS);
+
+        return au.fromRadians(angles.firstAngle + imuOffset);
+    }
+
+
+
+    //Teleop Stuff
+
+    public void driveFieldRelative(double x, double y, double rotate){
+    }
+
+
+
+
+
+
+
+    //Auto Stuff
 
     /**
      * an exposed method to allow other people to get the current position
