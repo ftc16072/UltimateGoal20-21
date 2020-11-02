@@ -4,8 +4,13 @@ import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
+import org.firstinspires.ftc.teamcode.utils.Joystick;
 import org.firstinspires.ftc.teamcode.utils.NavigationPose;
+import org.firstinspires.ftc.teamcode.utils.Polar;
 import org.firstinspires.ftc.teamcode.utils.RobotPose;
 
 
@@ -13,8 +18,10 @@ public class Navigation {
     // Public Classes
     public RobotPose currentPosition;
     public BNO055IMU imu;
+    private double imuOffset;
     // Private Classes
     MecanumDrive mecanumDrive;
+
 
     // Private Values
     private double angleTolerance = AngleUnit.RADIANS.fromDegrees(2);
@@ -32,8 +39,58 @@ public class Navigation {
      * @param hwmap hardware map from the configuration
      */
     void init(HardwareMap hwmap){
-        imu = hwmap.get(BNO055IMU.class, "imu");
+        initializeImu(hwmap, 0);
+
     }
+
+
+    //IMU Stuff
+
+    /**
+     * Initialize the imu with an offset
+     *
+     * @param hwMap hardware map used from the configuration
+     * @param offset offset for the imu
+     */
+    public void initializeImu(HardwareMap hwMap, double offset) {
+        imu = hwMap.get(BNO055IMU.class, "imu");
+        BNO055IMU.Parameters params = new BNO055IMU.Parameters();
+        params.calibrationDataFile = "BNO055IMUCalibration.json";
+        imu.initialize(params);
+        imuOffset = offset;
+    }
+
+
+    private double getHeading(AngleUnit au){
+        Orientation angles;
+
+        angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS);
+
+        return au.fromRadians(angles.firstAngle + imuOffset);
+    }
+
+
+
+    //Teleop Stuff
+
+    public void driveFieldRel(Joystick translateJoystick, double rotateSpeed){
+        driveFieldRelative(translateJoystick.getPolar(), rotateSpeed);
+    }
+
+
+    public void driveFieldRelative(Polar translate, double rotateSpeed){
+        translate.subtractAngle(getHeading(AngleUnit.RADIANS), AngleUnit.RADIANS);
+
+        mecanumDrive.driveMecanum(translate.getY(DistanceUnit.CM), translate.getX(DistanceUnit.CM), rotateSpeed);
+    }
+
+
+
+
+
+
+
+    //Auto Stuff
 
     /**
      * an exposed method to allow other people to get the current position

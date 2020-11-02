@@ -40,20 +40,13 @@ public class Joystick {
     }
 
     /**
-     * does the math for the polar joystick
-     */
-    void setPolar(){
-        if(polar != null){
-            polar = new Polar(x, y, DistanceUnit.INCH);
-        }
-    }
-
-    /**
      * gets the polar of the joystick
      * @return polar of joystick
      */
     public Polar getPolar() {
-        setPolar();
+        if(polar == null){
+            polar = new Polar(x, y, DistanceUnit.CM);
+        }
         return polar;
     }
 
@@ -62,8 +55,7 @@ public class Joystick {
      * @return r portion of polar
      */
     public double getR() {
-        setPolar();
-        return polar.getR(DistanceUnit.MM);
+        return getPolar().getR(DistanceUnit.CM);
     }
 
     /***
@@ -72,7 +64,7 @@ public class Joystick {
      * @return theta in desired angle unit
      */
     public double getTheta(AngleUnit angleUnit){
-        return polar.getTheta(angleUnit);
+        return getPolar().getTheta(angleUnit);
     }
 
     /**
