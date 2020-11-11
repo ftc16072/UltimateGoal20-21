@@ -164,4 +164,7 @@ public class MecanumDrive implements QQ_Mechanism {
         return new MoveDeltas(distanceMatrix.get(0, 0),  distanceMatrix.get(0, 0), DistanceUnit.CM);
     }
 
+    public void setMaxSpeed(double maxSpeed) {
+        this.maxSpeed = maxSpeed;
+    }
 }

@@ -85,6 +85,16 @@ public class Navigation {
     }
 
 
+    public void driveFieldRelativeAngle(Polar translate, double angle, AngleUnit au){
+        translate.subtractAngle(getHeading(AngleUnit.RADIANS), AngleUnit.RADIANS);
+
+        mecanumDrive.driveMecanum(translate.getY(DistanceUnit.CM), translate.getX(DistanceUnit.CM), angle);
+    }
+
+    public void driveRotate(double rotateSpeed){
+        mecanumDrive.driveMecanum(0.0, 0.0, rotateSpeed);
+    }
+
 
 
 
