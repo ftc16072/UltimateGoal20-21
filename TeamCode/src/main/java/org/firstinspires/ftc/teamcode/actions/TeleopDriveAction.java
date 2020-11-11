@@ -3,15 +3,18 @@ package org.firstinspires.ftc.teamcode.actions;
 import org.firstinspires.ftc.teamcode.mechanisms.Intake;
 import org.firstinspires.ftc.teamcode.mechanisms.Transfer;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.teamcode.mechanisms.Intake;
+import org.firstinspires.ftc.teamcode.mechanisms.Transfer;
 import org.firstinspires.ftc.teamcode.opModes.QQ_Opmode;
 
 public class TeleopDriveAction extends QQ_Action {
-    final static double MAX_SPEED = 1;
-    final static double NORMAL_SPEED = 0.6;
-    final static double SLOW_SPEED = 0.3;
     double pivotAngle;
     boolean wasUp;
     boolean wasDown;
+    final static double MAX_SPEED = 1;
+    final static double NORMAL_SPEED = 0.6;
+    final static double SLOW_SPEED = 0.3;
+
 
     /**
      * handles everything we need for teleop
