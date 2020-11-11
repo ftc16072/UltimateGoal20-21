@@ -4,10 +4,12 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.mechanisms.tests.QQ_Test;
+import org.firstinspires.ftc.teamcode.mechanisms.tests.QQ_TestMotor;
 
+import java.util.Arrays;
 import java.util.List;
 
-class Intake implements QQ_Mechanism {
+public class Intake implements QQ_Mechanism {
     public enum intakeState{
         Start,
         Stop,
@@ -24,7 +26,7 @@ class Intake implements QQ_Mechanism {
      */
     @Override
     public void init(HardwareMap hwMap) {
-        // intakeMotor = hwMap.get(DcMotor.class, "intake_motor");
+         intakeMotor = hwMap.get(DcMotor.class, "intake_motor");
     }
 
     /**
@@ -33,7 +35,7 @@ class Intake implements QQ_Mechanism {
      */
     @Override
     public List<QQ_Test> getTests() {
-        return null;
+        return Arrays.asList(new QQ_TestMotor("Intake Motor",  0.25, intakeMotor));
     }
 
     /**
