@@ -9,7 +9,12 @@ public class Joystick {
     double x;
     double y;
     boolean pressed;
+    boolean squared;
     Polar polar;
+
+    private double squareWithSign(double input){
+        return input * input * Math.signum(input);
+    }
 
     /**
      * Construct a Joystick with X, Y, pressed
@@ -18,8 +23,9 @@ public class Joystick {
      * @param pressed is the stick pressed?
      */
     Joystick(double x, double y, boolean pressed){
-        this.x = x;
-        this.y = -y;
+        y = y * -1;
+        this.x = squared ? squareWithSign(x) : x;
+        this.y = squared ? squareWithSign(y) : y;
         this.pressed = pressed;
     }
 
@@ -73,5 +79,9 @@ public class Joystick {
      */
     public boolean isPressed() {
         return pressed;
+    }
+
+    public void setSquared(boolean squared){
+        this.squared = squared;
     }
 }
