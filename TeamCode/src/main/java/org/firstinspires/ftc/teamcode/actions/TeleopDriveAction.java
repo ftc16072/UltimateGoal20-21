@@ -115,11 +115,6 @@ public class TeleopDriveAction extends QQ_Action {
             opmode.robot.nav.driveFieldRel(
                     opmode.qq_gamepad1.leftStick, 0.0);
         }
-
-
-
-
-
     }
 }
 
