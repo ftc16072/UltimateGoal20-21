@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.mechanisms;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
@@ -87,8 +88,15 @@ public class Navigation {
 
     public void driveFieldRelativeAngle(Polar translate, double angle, AngleUnit au){
         translate.subtractAngle(getHeading(AngleUnit.RADIANS), AngleUnit.RADIANS);
+        double desiredRobotAngle = au.toRadians(angle) - Math.PI/2;
 
-        mecanumDrive.driveMecanum(translate.getY(DistanceUnit.CM), translate.getX(DistanceUnit.CM), angle);
+        double deltaAngle = AngleUnit.normalizeRadians(getHeading(AngleUnit.RADIANS) - desiredRobotAngle);
+
+        double MAX_ROTATE = 0.7;
+
+        deltaAngle = Range.clip(deltaAngle,-MAX_ROTATE, MAX_ROTATE);
+
+        mecanumDrive.driveMecanum(translate.getY(DistanceUnit.CM), translate.getX(DistanceUnit.CM), deltaAngle);
     }
 
     public void driveRotate(double rotateSpeed){
