@@ -12,10 +12,10 @@ import java.util.List;
 class WobblyGoal implements QQ_Mechanism {
     private Servo rotator;
     private Servo grabber;
-    private final double ROTATOR_UP = 0.5;
-    private final double ROTATOR_DOWN = 0;
-    private final double GRABBER_OPEN = 0;
-    private final double GRABBER_CLOSED = 0.2;
+    private final double ROTATOR_UP = 0.87;
+    private final double ROTATOR_DOWN = 0.6;
+    private final double GRABBER_OPEN = 0.65;
+    private final double GRABBER_CLOSED = 0.85;
 
     /**
      * initialize hardware map
