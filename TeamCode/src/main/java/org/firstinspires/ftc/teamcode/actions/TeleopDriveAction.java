@@ -27,20 +27,22 @@ public class TeleopDriveAction extends QQ_Action {
     }
 
     void manipulatorControls(QQ_Opmode opmode) {
-//spinning wheels
+        //spinning shooter wheels
         if (opmode.qq_gamepad1.rightBumper()) {
             opmode.robot.shooter.spinWheels(0.8, 0.5);
         } else {
             opmode.robot.shooter.spinWheels(0, 0);
         }
-//servo to push rings
+
+        //shooter servo to push rings
         if (opmode.qq_gamepad1.rightTrigger() > 0.1) {
             opmode.robot.shooter.flick(true);
 
         } else {
             opmode.robot.shooter.flick(false);
         }
-//up and down of pivot
+
+        //up and down of pivot shooter
         if (opmode.qq_gamepad1.dpadUp() && !wasUp) {
             pivotAngle = Math.max(1.0, pivotAngle + 0.1);
         }
@@ -51,19 +53,22 @@ public class TeleopDriveAction extends QQ_Action {
         }
         wasDown = opmode.qq_gamepad1.dpadDown();
         opmode.robot.shooter.setPivotAngle(pivotAngle);
-//up and down of wobbly goal
+
+        //up and down of wobbly goal
         if (opmode.qq_gamepad1.leftStick.getY() > 0.2) {
             opmode.robot.wobblyGoal.raiseRotator();
         } else if (opmode.qq_gamepad1.leftStick.getY() < -0.2) {
             opmode.robot.wobblyGoal.lowerRotator();
         }
-//wobbly goal open and close grabber
+
+        //wobbly goal open and close grabber
         if (opmode.qq_gamepad1.leftBumper()) {
             opmode.robot.wobblyGoal.openGrabber();
         } else {
             opmode.robot.wobblyGoal.closeGrabber();
         }
-//intake and transfer in and out
+
+        //intake and transfer in and out
         if (opmode.qq_gamepad1.rightStick.getY() > 0.2) {
             opmode.robot.intake.changeState(Intake.intakeState.Start);
             opmode.robot.transfer.changeTransfer(Transfer.transferState.Start);
