@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.mechanisms;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.teamcode.mechanisms.tests.QQ_Test;
 import org.firstinspires.ftc.teamcode.mechanisms.tests.QQ_TestMotor;
@@ -11,7 +12,7 @@ import org.firstinspires.ftc.teamcode.mechanisms.tests.QQ_TestServo;
 import java.util.Arrays;
 import java.util.List;
 
-class Shooter implements QQ_Mechanism {
+public class Shooter implements QQ_Mechanism {
     enum AimLocation {
         LowGoal,
         MidGoal,
@@ -69,6 +70,30 @@ class Shooter implements QQ_Mechanism {
     public boolean aim(AimLocation aimLocation) {
         return false;
     }
+
+    public void spinWheels(double frontSpeed, double backSpeed) {
+        shooterBack.setPower(frontSpeed);
+        shooterFront.setPower(backSpeed);
+    }
+
+    public void flick(boolean shouldFlick){
+        if (shouldFlick) {
+            shooterImport.setPosition(INSERT);
+        } else {
+            shooterImport.setPosition(RESET);
+        }
+    }
+
+    /**
+     * sets shooter pivot
+     * @param angle 0 is down, 1 is up
+     */
+    public void setPivotAngle(double angle){
+
+        shooterPivot.setPosition(Range.scale(angle, 0, 1, PIVOT_DOWN, PIVOT_UP));
+
+    }
+
 
     /**
      * get name

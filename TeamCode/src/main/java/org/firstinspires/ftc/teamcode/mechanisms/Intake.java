@@ -24,7 +24,7 @@ class Intake implements QQ_Mechanism {
      */
     @Override
     public void init(HardwareMap hwMap) {
-        intakeMotor = hwMap.get(DcMotor.class, "intake_motor");
+        // intakeMotor = hwMap.get(DcMotor.class, "intake_motor");
     }
 
     /**
