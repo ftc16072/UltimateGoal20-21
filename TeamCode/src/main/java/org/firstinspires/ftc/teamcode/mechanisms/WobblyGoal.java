@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.mechanisms.tests.QQ_TestServo;
 import java.util.Arrays;
 import java.util.List;
 
-class WobblyGoal implements QQ_Mechanism {
+public class WobblyGoal implements QQ_Mechanism {
     private Servo rotator;
     private Servo grabber;
     private final double ROTATOR_UP = 0.87;
