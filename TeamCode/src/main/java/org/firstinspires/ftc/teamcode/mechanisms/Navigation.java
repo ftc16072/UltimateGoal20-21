@@ -16,12 +16,15 @@ import org.firstinspires.ftc.teamcode.utils.RobotPose;
 
 
 public class Navigation {
-    // Public Classes
+    // Public Classe
     public RobotPose currentPosition;
     public BNO055IMU imu;
     private double imuOffset;
     // Private Classes
     MecanumDrive mecanumDrive;
+    double TRANSLATE_KP = 0.1;
+    double MIN_R = 0.14;
+
 
 
     // Private Values
@@ -130,6 +133,13 @@ public class Navigation {
     public boolean translateTo(NavigationPose desiredPose){
 
         //todo write drive code here
+        Polar distance = currentPosition.getTransDistance(desiredPose);
+
+        double newR = Math.max((distance.getR(DistanceUnit.CM) * TRANSLATE_KP), MIN_R);
+
+        Polar drive = new Polar(distance.getTheta(AngleUnit.RADIANS), AngleUnit.RADIANS, newR, DistanceUnit.CM);
+
+        driveFieldRelative(drive, 0.0);
 
         return desiredPose.inDistanceTolerance(currentPosition);
 
@@ -145,7 +155,7 @@ public class Navigation {
 
         //todo write turn code here
 
-        return false;
+        return true;
     }
 
     /**
@@ -154,7 +164,14 @@ public class Navigation {
      * @return true if done
      */
     public boolean driveTo(NavigationPose desiredPose) {
-        return translateTo(desiredPose) && turnTo(desiredPose);
+        boolean translate = translateTo(desiredPose);
+        boolean rotate = turnTo(desiredPose);
+        if(translate && rotate){
+            mecanumDrive.driveMecanum(0,0,0);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public void updatePose(){
