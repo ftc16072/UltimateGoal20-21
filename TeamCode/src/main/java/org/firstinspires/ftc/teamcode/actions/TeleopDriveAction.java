@@ -1,9 +1,12 @@
 package org.firstinspires.ftc.teamcode.actions;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.mechanisms.Intake;
+import org.firstinspires.ftc.teamcode.mechanisms.MecanumDrive;
 import org.firstinspires.ftc.teamcode.mechanisms.Transfer;
 import org.firstinspires.ftc.teamcode.opModes.QQ_Opmode;
+import org.firstinspires.ftc.teamcode.utils.RobotPose;
 
 public class TeleopDriveAction extends QQ_Action {
     double pivotAngle;
@@ -21,6 +24,9 @@ public class TeleopDriveAction extends QQ_Action {
      * @return next action
      */
     public QQ_Action run(QQ_Opmode opmode) {
+        RobotPose pose = opmode.robot.nav.currentPosition;
+        opmode.telemetry.addData("forward", pose.getY(DistanceUnit.INCH));
+        opmode.telemetry.addData("strafe", pose.getX(DistanceUnit.INCH));
         driverControls(opmode);
         manipulatorControls(opmode);
         return this;

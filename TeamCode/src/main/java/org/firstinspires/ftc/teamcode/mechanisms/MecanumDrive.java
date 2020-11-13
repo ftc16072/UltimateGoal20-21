@@ -18,18 +18,22 @@ public class MecanumDrive implements QQ_Mechanism {
     public class MoveDeltas{
         double x_cm;
         double y_cm;
+        double theta;
 
-        public MoveDeltas(double x, double y, DistanceUnit du){
-            x_cm = du.toCm(x);
-            y_cm = du.toCm(y);
+        public MoveDeltas(double forward, double strafe, DistanceUnit du, double angle, AngleUnit au){
+            x_cm = du.toCm(forward);
+            y_cm = du.toCm(strafe);
+            theta = au.toRadians(angle);
         }
 
-        public double getX(DistanceUnit du) {
+        public double getForward(DistanceUnit du) {
             return du.fromCm(x_cm);
         }
-        public double getY(DistanceUnit du) {
+        public double getStrafe(DistanceUnit du) {
             return du.fromCm(y_cm);
         }
+        public double getAngle(AngleUnit au) { return au.fromRadians(theta); }
+        public void setAngle(double angle, AngleUnit au) {theta = au.toRadians(angle);}
 
     }
 
@@ -153,7 +157,7 @@ public class MecanumDrive implements QQ_Mechanism {
      * calculating the distances we have traveled using encoders
      * @return a MoveDelta of the mecanum drive representing how far we have driven since the last reset
      */
-    MoveDeltas getDistance() {
+    public MoveDeltas getDistance() {
 
         encoderMatrix.put(0, 0, (float) ((frontLeft.getCurrentPosition() - frontLeftOffset) * CM_PER_TICK));
         encoderMatrix.put(1, 0, (float) ((frontRight.getCurrentPosition() - frontRightOffset) * CM_PER_TICK));
@@ -161,10 +165,22 @@ public class MecanumDrive implements QQ_Mechanism {
 
         MatrixF distanceMatrix = conversion.multiplied(encoderMatrix);
 
-        return new MoveDeltas(distanceMatrix.get(0, 0),  distanceMatrix.get(0, 0), DistanceUnit.CM);
+        double forward = distanceMatrix.get(0, 0);
+        double strafe = distanceMatrix.get(0, 1);
+        double angle = 0.0;
+
+
+        return new MoveDeltas(forward, strafe, DistanceUnit.CM, angle , AngleUnit.DEGREES);
     }
 
     public void setMaxSpeed(double maxSpeed) {
         this.maxSpeed = maxSpeed;
+    }
+
+    public void setOffsets(){
+        backLeftOffset = backLeft.getCurrentPosition();
+        backRightOffset = backRight.getCurrentPosition();
+        frontLeftOffset = frontLeft.getCurrentPosition();
+        frontRightOffset = frontRight.getCurrentPosition();
     }
 }

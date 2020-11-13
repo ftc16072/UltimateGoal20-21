@@ -61,6 +61,9 @@ public class Navigation {
         imuOffset = offset;
     }
 
+    public void setCurrentPosition(RobotPose pose){
+        currentPosition = pose;
+    }
 
     private double getHeading(AngleUnit au){
         Orientation angles;
@@ -152,6 +155,13 @@ public class Navigation {
      */
     public boolean driveTo(NavigationPose desiredPose) {
         return translateTo(desiredPose) && turnTo(desiredPose);
+    }
+
+    public void updatePose(){
+        MecanumDrive.MoveDeltas movement = mecanumDrive.getDistance();
+        currentPosition.setAngle(getHeading(AngleUnit.RADIANS), AngleUnit.RADIANS);
+        currentPosition.updatePose(movement);
+        mecanumDrive.setOffsets();
     }
 
 
