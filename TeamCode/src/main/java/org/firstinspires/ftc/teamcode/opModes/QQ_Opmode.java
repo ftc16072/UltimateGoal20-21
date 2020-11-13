@@ -36,6 +36,14 @@ public abstract class QQ_Opmode extends OpMode {
             qq_gamepad1 = new QQ_Gamepad(gamepad1);
             qq_gamepad2 = new QQ_Gamepad(gamepad2);
         }
-        currentAction = currentAction.run(this);
+
+        if(currentAction != null){
+            telemetry.addData("State", currentAction.getDescription());
+            currentAction = currentAction.run(this);
+        } else {
+            telemetry.addData("State", "done");
+        }
+
+
     }
 }

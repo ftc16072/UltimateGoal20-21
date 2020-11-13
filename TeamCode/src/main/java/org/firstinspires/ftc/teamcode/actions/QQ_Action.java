@@ -41,4 +41,8 @@ abstract public class QQ_Action {
      */
     public abstract QQ_Action run(QQ_Opmode opmode);
 
+    public String getDescription(){
+        return description;
+    }
+
 }
