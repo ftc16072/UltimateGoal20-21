@@ -17,7 +17,7 @@ public class TestAuto extends QQ_Opmode{
         usesGamepads = false;
         currentAction = new DriveToAction(
                 new NavigationPose(-24, 2, 0, 2, DistanceUnit.INCH, 0, AngleUnit.DEGREES),
-                null, "Drive to (-24, 0)");
+                 "Drive to (-24, 0)", null);
     }
 
 
