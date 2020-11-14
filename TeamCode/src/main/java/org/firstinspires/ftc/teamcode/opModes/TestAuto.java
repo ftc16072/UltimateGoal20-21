@@ -16,8 +16,7 @@ public class TestAuto extends QQ_Opmode{
         //robot will move the direction the user commands it to
         usesGamepads = false;
         currentAction = new DriveToAction(
-                new NavigationPose(-24, 2, 0, 2, DistanceUnit.INCH, 0, AngleUnit.DEGREES),
-                 "Drive to (-24, 0)", null);
+                new NavigationPose("Drive to (-24, 0)", -24, 2, 0, 2, DistanceUnit.INCH, 0, AngleUnit.DEGREES);
     }
 
 
