@@ -17,8 +17,8 @@ public class Polar {
      * @param au    angle unit the angle is in
      * @param r     distance from center
      */
-    Polar(double angle, AngleUnit au, double r) {
-        this.r = r;
+    public Polar(double angle, AngleUnit au, double r, DistanceUnit du) {
+        this.r = du.toCm(r);
         this.theta = au.toRadians(angle);
         x_cm = r * Math.cos(theta);
         y_cm = r * Math.sin(theta);
@@ -93,4 +93,9 @@ public class Polar {
         x_cm = r * Math.cos(theta);
         y_cm = r * Math.sin(theta);
     }
+
+    public void scaleR(double scale){
+        r = r * scale;
+    }
+
 }

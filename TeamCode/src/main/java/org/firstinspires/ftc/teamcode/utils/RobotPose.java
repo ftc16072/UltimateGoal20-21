@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.utils;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.teamcode.mechanisms.MecanumDrive;
 
 public class RobotPose {
     double x_cm;
@@ -31,6 +32,16 @@ public class RobotPose {
     public RobotPose(double x, double y, DistanceUnit du){
         x_cm = du.toCm(x);
         y_cm = du.toCm(y);
+    }
+
+    public void setX(double x, DistanceUnit du){
+        x_cm = du.toCm(x);
+    }
+    public void setY(double y, DistanceUnit du){
+        y_cm = du.toCm(y);
+    }
+    public void setAngle(double angle, AngleUnit au){
+        theta = au.toRadians(angle);
     }
 
     /**
@@ -78,6 +89,17 @@ public class RobotPose {
      */
     public double getAngleDistance(RobotPose otherPoint, AngleUnit au){
         return otherPoint.getAngle(au) - getAngle(au);
+    }
+
+    public void updatePose(MecanumDrive.MoveDeltas moveDeltas){
+        theta += moveDeltas.getAngle(AngleUnit.RADIANS);
+
+        Polar translation = new Polar(moveDeltas.getStrafe(DistanceUnit.CM), moveDeltas.getForward(DistanceUnit.CM), DistanceUnit.CM);
+        translation.subtractAngle(theta, AngleUnit.RADIANS);
+
+        x_cm += translation.getX(DistanceUnit.CM);
+        y_cm += translation.getY(DistanceUnit.CM);
+
     }
 
 
