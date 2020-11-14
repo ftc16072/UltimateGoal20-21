@@ -12,11 +12,10 @@ public class DriveToAction extends QQ_Action {
     /**
      * constructor
      * @param desiredPose desired pose to get to
-     * @param nextAction action to run when this is done
      * @param description description of the action
      */
-    public DriveToAction(NavigationPose desiredPose, String description, QQ_Action nextAction){
-        super(description, nextAction);
+    public DriveToAction(String description, NavigationPose desiredPose){
+        super(description);
         this.desiredPose = desiredPose;
     }
 

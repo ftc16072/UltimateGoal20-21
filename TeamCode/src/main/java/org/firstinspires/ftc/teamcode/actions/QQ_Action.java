@@ -10,28 +10,18 @@ abstract public class QQ_Action {
     /**
      * Constructor with next action and description
      * @param description description of the action
-     * @param nextAction the action to take when this is done
      */
-    public QQ_Action(String description, QQ_Action nextAction){
+    public QQ_Action(String description){
         this.description = description;
-        this.nextAction = nextAction;
     }
 
-    /**
-     * Constructor with next action
-     * description is pulled from the simple name of the class
-     * @param nextAction the action to take when this is done
-     */
-    public QQ_Action(QQ_Action nextAction){
-        this(Class.class.getSimpleName(), nextAction);
-    }
 
     /**
      * constructor with nothing
      * next action is null
      */
     public QQ_Action(){
-        this(null);
+        this(Class.class.getSimpleName());
     }
 
     /**
@@ -40,6 +30,11 @@ abstract public class QQ_Action {
      * @return returns the next action to run when done
      */
     public abstract QQ_Action run(QQ_Opmode opmode);
+
+    public QQ_Action setNext(QQ_Action nextAction){
+        this.nextAction = nextAction;
+        return this;
+    }
 
     public String getDescription(){
         return description;
