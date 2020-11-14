@@ -15,7 +15,7 @@ public class DriveToAction extends QQ_Action {
      * @param nextAction action to run when this is done
      * @param description description of the action
      */
-    public DriveToAction(NavigationPose desiredPose, QQ_Action nextAction, String description){
+    public DriveToAction(NavigationPose desiredPose, String description, QQ_Action nextAction){
         super(description, nextAction);
         this.desiredPose = desiredPose;
     }

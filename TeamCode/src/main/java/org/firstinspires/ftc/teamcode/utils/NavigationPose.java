@@ -26,6 +26,14 @@ public class NavigationPose extends RobotPose {
     }
 
     /**
+     * default tolerance is 0.5 and angle is 0
+     * @param x in inches
+     * @param y in inches
+     */
+    public NavigationPose(double x, double y){
+        this(x, 0.5, y, 0.5, DistanceUnit.INCH, 0, AngleUnit.DEGREES);
+    }
+    /**
      * checks to see if another pose is in tolerance
      * @param otherPose pose to check
      * @return true if it is 
