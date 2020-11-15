@@ -15,14 +15,11 @@ public class QQ_ShootAndParkAuto extends QQ_ParkAuto {
     @Override
     public void init() {
         super.init();
-        currentAction = new DriveToAction(new NavigationPose(SHOOT_X, SHOOT_Y),
-                "drives to shooting spot",
-                new ShootAction("shoot 1",
-                        new ShootAction("shoot 2",
-                                new ShootAction("shoot 3",
-                                    new DriveToAction(new NavigationPose(SHOOT_X, PARK_Y),
-                                            "drives to park",
-                                            null)))));
+        currentAction = new DriveToAction("drives to shooting spot",new NavigationPose(SHOOT_X, SHOOT_Y)).
+                setNext(new ShootAction("shoot 1")).
+                setNext(new ShootAction("shoot 2")).
+                setNext(new ShootAction("shoot 3")).
+                setNext(new DriveToAction("drives to park",new NavigationPose(SHOOT_X, PARK_Y)));
 
     }
 
