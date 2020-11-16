@@ -13,7 +13,7 @@ public class QQ_TestAnalogSensor extends QQ_Test {
      * @param description a human readable description of the test
      * @param analogInput an instance of a analog input sensor the test is using
      */
-    QQ_TestAnalogSensor(String description, AnalogInput analogInput) {
+    public QQ_TestAnalogSensor(String description, AnalogInput analogInput) {
         super(description);
         this.analogInput = analogInput;
     }

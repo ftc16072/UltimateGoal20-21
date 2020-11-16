@@ -6,7 +6,7 @@ import org.firstinspires.ftc.teamcode.mechanisms.Transfer;
 import org.firstinspires.ftc.teamcode.opModes.QQ_Opmode;
 
 public class TeleopDriveAction extends QQ_Action {
-    double pivotAngle;
+    double pivotAngle = 0;
     boolean wasUp;
     boolean wasDown;
     final static double MAX_SPEED = 1;
@@ -29,7 +29,7 @@ public class TeleopDriveAction extends QQ_Action {
     void manipulatorControls(QQ_Opmode opmode) {
         //spinning shooter wheels
         if (opmode.qq_gamepad2.rightBumper()) {
-            opmode.robot.shooter.spinWheels(0.8, 0.5);
+            opmode.robot.shooter.spinWheels(-1, -0.8);
         } else {
             opmode.robot.shooter.spinWheels(0, 0);
         }
@@ -41,18 +41,19 @@ public class TeleopDriveAction extends QQ_Action {
         } else {
             opmode.robot.shooter.flick(false);
         }
-
+/*
         //up and down of pivot shooter
         if (opmode.qq_gamepad2.dpadUp() && !wasUp) {
-            pivotAngle = Math.max(1.0, pivotAngle + 0.1);
+            pivotAngle = Math.min(15, pivotAngle + 3);
         }
         wasUp = opmode.qq_gamepad2.dpadUp();
 
         if (opmode.qq_gamepad2.dpadDown() && !wasDown) {
-            pivotAngle = Math.min(0, pivotAngle - 0.1);
+            pivotAngle = Math.max(0, pivotAngle - 3);
         }
         wasDown = opmode.qq_gamepad2.dpadDown();
-        opmode.robot.shooter.setPivotAngle(pivotAngle);
+        opmode.telemetry.addData("angle", pivotAngle);
+        opmode.robot.shooter.goToAngle(pivotAngle);
 
         //up and down of wobbly goal
         if (opmode.qq_gamepad2.leftStick.getY() > 0.2) {
@@ -67,12 +68,12 @@ public class TeleopDriveAction extends QQ_Action {
         } else {
             opmode.robot.wobblyGoal.closeGrabber();
         }
-
+*/
         //intake and transfer in and out
         if (opmode.qq_gamepad2.rightStick.getY() > 0.2) {
             opmode.robot.intake.changeState(Intake.intakeState.Start);
             opmode.robot.transfer.changeTransfer(Transfer.transferState.Start);
-        } else if (opmode.qq_gamepad2.rightStick.getY() < 0.2) {
+        } else if (opmode.qq_gamepad2.rightStick.getY() < -0.2) {
             opmode.robot.intake.changeState(Intake.intakeState.Reverse);
             opmode.robot.transfer.changeTransfer(Transfer.transferState.Reverse);
         } else {

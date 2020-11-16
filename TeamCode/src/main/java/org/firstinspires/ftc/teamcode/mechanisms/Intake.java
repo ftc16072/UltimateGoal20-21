@@ -17,8 +17,8 @@ public class Intake implements QQ_Mechanism {
     };
 
     private DcMotor intakeMotor;
-    private static final double intakeSpeed = 0.2;
-    private static final double reverseIntakeSpeed = -0.2;
+    private static final double intakeSpeed = -0.5;
+    private static final double reverseIntakeSpeed = 0.2;
 
     /**
      * initialize intake
@@ -35,7 +35,7 @@ public class Intake implements QQ_Mechanism {
      */
     @Override
     public List<QQ_Test> getTests() {
-        return Arrays.asList(new QQ_TestMotor("Intake Motor",  0.25, intakeMotor));
+        return Arrays.asList(new QQ_TestMotor("Intake Motor",  -0.5, intakeMotor));
     }
 
     /**
