@@ -23,7 +23,7 @@ public class Transfer implements QQ_Mechanism {
      */
 
     private DcMotor transferMotor;
-    private static final double transferSpeed = 0.25;
+    private static final double transferSpeed = 0.5;
     private static final double reverseTransferSpeed = -0.25;
 
     @Override
@@ -38,7 +38,7 @@ public class Transfer implements QQ_Mechanism {
      */
     @Override
     public List<QQ_Test> getTests() {
-        return Arrays.asList(new QQ_TestMotor("Transfer Motor", 0.25, transferMotor));
+        return Arrays.asList(new QQ_TestMotor("Transfer Motor", 0.5, transferMotor));
     }
 
     public void changeTransfer(Transfer.transferState desiredState) {
