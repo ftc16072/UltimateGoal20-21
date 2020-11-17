@@ -96,6 +96,15 @@ public class TeleopDriveAction extends QQ_Action {
     public void driverControls(QQ_Opmode opmode) {
         opmode.qq_gamepad1.leftStick.setSquared(true);
 
+
+
+
+        if (opmode.qq_gamepad1.dpadUp()){
+            opmode.robot.nav.setImuOffset(0, AngleUnit.RADIANS);
+        }
+
+
+
         if (opmode.qq_gamepad1.leftBumper()) {
             opmode.robot.mecanumDrive.setMaxSpeed(SLOW_SPEED);
         } else if (opmode.qq_gamepad1.rightBumper()) {

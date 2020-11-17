@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.mechanisms;
 
+import android.view.accessibility.AccessibilityNodeInfo;
+
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.Range;
@@ -66,6 +68,10 @@ public class Navigation {
 
     public void setCurrentPosition(RobotPose pose){
         currentPosition = pose;
+    }
+
+    public void setImuOffset(double imuOffset, AngleUnit au) {
+        this.imuOffset = au.toRadians(imuOffset);
     }
 
     private double getHeading(AngleUnit au){
