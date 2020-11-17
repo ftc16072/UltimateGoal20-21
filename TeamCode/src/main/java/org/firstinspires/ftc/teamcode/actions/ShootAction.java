@@ -15,7 +15,7 @@ double AUTO_SHOOT_ANGLE = 0.5; //change value to correct
         switch (step){
             case 0:
                 opmode.robot.shooter.spinWheels(0.8, 0.5);
-                opmode.robot.shooter.setPivotAngle(AUTO_SHOOT_ANGLE);
+                //opmode.robot.shooter.setPivotAngle(AUTO_SHOOT_ANGLE);
                 waitTime = opmode.time + 0.5;
                 step = 1;
                 break;

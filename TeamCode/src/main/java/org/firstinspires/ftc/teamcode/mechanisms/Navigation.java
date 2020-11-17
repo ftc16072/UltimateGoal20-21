@@ -74,7 +74,7 @@ public class Navigation {
         this.imuOffset = au.toRadians(imuOffset);
     }
 
-    private double getHeading(AngleUnit au){
+    public double getHeading(AngleUnit au){
         Orientation angles;
 
         angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS);
