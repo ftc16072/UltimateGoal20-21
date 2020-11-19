@@ -101,6 +101,12 @@ public class TeleopDriveAction extends QQ_Action {
 
         if (opmode.qq_gamepad1.dpadUp()){
             opmode.robot.nav.resetIMU(0, AngleUnit.DEGREES);
+        } else if (opmode.qq_gamepad1.dpadLeft()){
+            opmode.robot.nav.resetIMU(-90, AngleUnit.DEGREES);
+        } else if (opmode.qq_gamepad1.dpadDown()){
+            opmode.robot.nav.resetIMU(180, AngleUnit.DEGREES);
+        }  else if (opmode.qq_gamepad1.dpadRight()){
+            opmode.robot.nav.resetIMU(90, AngleUnit.DEGREES);
         }
 
 
