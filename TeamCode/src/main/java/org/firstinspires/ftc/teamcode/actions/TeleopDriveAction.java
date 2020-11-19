@@ -100,7 +100,7 @@ public class TeleopDriveAction extends QQ_Action {
 
 
         if (opmode.qq_gamepad1.dpadUp()){
-            opmode.robot.nav.setImuOffset(-(opmode.robot.nav.getHeading(AngleUnit.RADIANS) + (Math.PI) ), AngleUnit.RADIANS);
+            opmode.robot.nav.resetIMU(0, AngleUnit.DEGREES);
         }
 
 

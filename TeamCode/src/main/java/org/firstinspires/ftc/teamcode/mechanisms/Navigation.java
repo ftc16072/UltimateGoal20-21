@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode.mechanisms;
 
-import android.view.accessibility.AccessibilityNodeInfo;
-
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.Range;
@@ -19,18 +17,17 @@ import org.firstinspires.ftc.teamcode.utils.RobotPose;
 
 public class Navigation {
     // Public Classe
-    public RobotPose currentPosition;
-    public BNO055IMU imu;
-    private double imuOffset;
+    public static RobotPose currentPosition;
+
     // Private Classes
+    private static BNO055IMU imu;
     MecanumDrive mecanumDrive;
-    double TRANSLATE_KP = 0.1;
-    double MIN_R = 0.14;
-
-
 
     // Private Values
     private double angleTolerance = AngleUnit.RADIANS.fromDegrees(2);
+    private static double imuOffset;
+    double TRANSLATE_KP = 0.1;
+    double MIN_R = 0.14;
 
     /**
      * Constructor
@@ -70,8 +67,11 @@ public class Navigation {
         currentPosition = pose;
     }
 
-    public void setImuOffset(double imuOffset, AngleUnit au) {
-        this.imuOffset = au.toRadians(imuOffset);
+    public void resetIMU(double angle, AngleUnit au) {
+        double supposedHeading = au.toRadians(angle);
+        double currentHeading = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS).firstAngle; //if we use our get method it would double the offset if we set it again
+
+        imuOffset = supposedHeading - currentHeading;
     }
 
     public double getHeading(AngleUnit au){
