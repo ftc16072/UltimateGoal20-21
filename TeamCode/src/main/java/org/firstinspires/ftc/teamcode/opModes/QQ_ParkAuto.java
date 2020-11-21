@@ -14,7 +14,7 @@ public class QQ_ParkAuto extends QQ_Opmode {
     double START_X = 48;
     double TOLERANCE = 0.5;
     double START_Y = 9;
-    double PARK_Y = 80.0 / 2;
+    double PARK_Y = PARK_Y+24;
     @Override
     public void init() {
         super.init();
