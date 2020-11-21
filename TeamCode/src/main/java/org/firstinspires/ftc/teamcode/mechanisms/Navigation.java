@@ -65,6 +65,7 @@ public class Navigation {
 
     public void setCurrentPosition(RobotPose pose){
         currentPosition = pose;
+        mecanumDrive.setOffsets();
     }
 
     public void resetIMU(double angle, AngleUnit au) {
