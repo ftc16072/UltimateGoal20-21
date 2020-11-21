@@ -36,19 +36,31 @@ class WobblyGoal implements QQ_Mechanism {
         return Arrays.asList((QQ_Test) new QQ_TestServo("rotator", ROTATOR_UP, ROTATOR_DOWN, rotator),
                 new QQ_TestServo("grabber", GRABBER_CLOSED, GRABBER_OPEN, grabber));
     }
-//grabber mechanism will open
+
+    /**
+     * grabber mechanism will open
+     */
     public void openGrabber() {
         grabber.setPosition(GRABBER_OPEN);
     }
-//grabber mechanism will close
+
+    /**
+     * grabber mechanism will close
+     */
     public void closeGrabber() {
         grabber.setPosition(GRABBER_CLOSED);
     }
-//rotator mechanism goes up
+
+    /**
+     * rotator mechanism goes up
+     */
     public void raiseRotator() {
         rotator.setPosition(ROTATOR_UP);
     }
-    //rotator mechanism goes down
+
+    /**
+     * rotator mechanism goes down
+     */
     public void lowerRotator() {
         rotator.setPosition(ROTATOR_DOWN);
     }

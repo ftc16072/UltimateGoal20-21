@@ -30,20 +30,30 @@ class Shooter implements QQ_Mechanism {
         return null;
     }
 
-    //create methods to set angle up and down, left, right
-    //mmethod for moving the shooter up
+    /**
+     * create methods to set angle up and down, left, right
+     * method for moving the shooter up
+     */
     public void ShooterUp() {
 
     }
-//method for moving the shooter to the left
+/**
+ *     method for moving the shooter to the left
+ */
     public void ShooterLeft() {
 
     }
-//method for moving the shooter to the right
+
+    /**
+     * method for moving the shooter to the right
+      */
     public void ShooterRight() {
 
     }
-//method for moving the shooter down
+
+    /**
+     * method for moving the shooter down
+     */
     public void ShooterDown() {
 
     }
