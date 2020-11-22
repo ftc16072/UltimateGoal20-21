@@ -30,7 +30,7 @@ public class Polar {
      * @param x distance from the origin in the x axis
      * @param y distance from the origin in the y axis
      */
-    Polar(double x, double y, DistanceUnit du) {
+    public Polar(double x, double y, DistanceUnit du) {
         this.x_cm = du.toCm(x);
         this.y_cm = du.toCm(y);
         theta = Math.atan2(y_cm, x_cm);
@@ -89,7 +89,7 @@ public class Polar {
      * @param angleUnit angle unit that angle is in
      */
     public void subtractAngle(double heading, AngleUnit angleUnit) {
-        theta = theta - angleUnit.toRadians(heading);
+        theta = AngleUnit.normalizeRadians(theta - angleUnit.toRadians(heading));
         x_cm = r * Math.cos(theta);
         y_cm = r * Math.sin(theta);
     }
