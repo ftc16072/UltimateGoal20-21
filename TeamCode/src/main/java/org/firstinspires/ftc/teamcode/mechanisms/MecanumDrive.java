@@ -168,8 +168,8 @@ public class MecanumDrive implements QQ_Mechanism {
 
         double forward = distanceMatrix.get(0, 0);
         double strafe = distanceMatrix.get(0, 1);
-        double angle = distanceMatrix.get(0, 2);
-
+        //double angle = distanceMatrix.get(0, 2);
+        double angle = 0;
 
         return new MoveDeltas(forward, strafe, DistanceUnit.CM, angle , AngleUnit.DEGREES);
     }
