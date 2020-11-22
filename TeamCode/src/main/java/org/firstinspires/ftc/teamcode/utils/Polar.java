@@ -83,15 +83,23 @@ public class Polar {
     }
 
     /**
-     * rotates the polar component by a certain angle
+     * rotates the polar component by a certain angle counter clockwise
      *
      * @param heading   angle to subtract
      * @param angleUnit angle unit that angle is in
      */
-    public void subtractAngle(double heading, AngleUnit angleUnit) {
-        theta = AngleUnit.normalizeRadians(theta - angleUnit.toRadians(heading));
-        x_cm = r * Math.cos(theta);
-        y_cm = r * Math.sin(theta);
+    public Polar rotateCCW(double heading, AngleUnit angleUnit) {
+        return new Polar(theta - angleUnit.toRadians(heading), AngleUnit.RADIANS, r, DistanceUnit.CM);
+    }
+
+    /**
+     * rotates the polar component by a certain angle clockwise
+     *
+     * @param heading   angle to add
+     * @param angleUnit angle unit that angle is in
+     */
+    public Polar rotateCW(double heading, AngleUnit angleUnit) {
+        return new Polar(theta + angleUnit.toRadians(heading), AngleUnit.RADIANS, r, DistanceUnit.CM);
     }
 
     public void scaleR(double scale){

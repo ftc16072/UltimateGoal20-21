@@ -30,8 +30,7 @@ public class RobotPose {
      * @param du distance unit positions are in
      */
     public RobotPose(double x, double y, DistanceUnit du){
-        x_cm = du.toCm(x);
-        y_cm = du.toCm(y);
+        this(x, y, du, 0, AngleUnit.DEGREES);
     }
 
     public void setX(double x, DistanceUnit du){
@@ -92,16 +91,12 @@ public class RobotPose {
     }
 
     public void updatePose(MecanumDrive.MoveDeltas moveDeltas){
-        theta += moveDeltas.getAngle(AngleUnit.RADIANS);
+        theta = AngleUnit.normalizeRadians(theta + moveDeltas.getAngle(AngleUnit.RADIANS));
 
         Polar translation = new Polar(moveDeltas.getStrafe(DistanceUnit.CM), moveDeltas.getForward(DistanceUnit.CM), DistanceUnit.CM);
-        translation.subtractAngle(theta, AngleUnit.RADIANS);
+        Polar rotated = translation.rotateCCW(theta, AngleUnit.RADIANS);
 
-        x_cm += translation.getX(DistanceUnit.CM);
-        y_cm += translation.getY(DistanceUnit.CM);
-
+        x_cm += rotated.getX(DistanceUnit.CM);
+        y_cm += rotated.getY(DistanceUnit.CM);
     }
-
-
-
 }

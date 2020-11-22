@@ -11,16 +11,17 @@ import org.firstinspires.ftc.teamcode.utils.RobotPose;
 
 @Autonomous()
 public class QQ_ParkAuto extends QQ_Opmode {
-    double START_X = 48;
-    double TOLERANCE = 0.5;
     double START_Y = 9;
-    double PARK_Y = START_Y + 24;
+    double START_X = 48;
+    double PARK_X = START_X;
+    double PARK_Y = 80;
+
     @Override
     public void init() {
         super.init();
-        robot.nav.setCurrentPosition(new RobotPose(START_X, START_Y, DistanceUnit.INCH));
+        robot.nav.setCurrentPosition(new RobotPose(START_X, START_Y, DistanceUnit.INCH, 0, AngleUnit.DEGREES));
         fitIn18();
-        currentAction = new DriveToAction("parks", new NavigationPose(START_X, PARK_Y));
+        currentAction = new DriveToAction("parks", new NavigationPose(PARK_X, PARK_Y));
     }
 
     protected void fitIn18() {
