@@ -10,7 +10,7 @@ public class Drive_Test extends QQ_Opmode {
     @Override
     public void loop() {
         robot.mecanumDrive.driveMecanum(-gamepad1.left_stick_y, 0, 0);
-        MecanumDrive.MoveDeltas moveDeltas = robot.mecanumDrive.getDistance();
+        MecanumDrive.MoveDeltas moveDeltas = robot.mecanumDrive.getDistance(false);
         telemetry.addData("forward", moveDeltas.getForward(DistanceUnit.INCH));
     }
 }
