@@ -147,6 +147,10 @@ public class Navigation {
      * @return true if done
      */
     public boolean translateTo(NavigationPose desiredPose) {
+        if (desiredPose.inDistanceTolerance(currentPosition)){
+            mecanumDrive.driveMecanum(0,0,0);
+            return true;
+        }
 
         Polar distance = currentPosition.getTransDistance(desiredPose);
 
@@ -156,8 +160,7 @@ public class Navigation {
 
         driveFieldRelative(drive, 0.0);
 
-        return desiredPose.inDistanceTolerance(currentPosition);
-
+        return false;
     }
 
     //todo make this javadoc link to the drive to method
@@ -193,10 +196,9 @@ public class Navigation {
     }
 
     public void updatePose() {
-        MecanumDrive.MoveDeltas movement = mecanumDrive.getDistance();
+        MecanumDrive.MoveDeltas movement = mecanumDrive.getDistance(true);
         currentPosition.setAngle(getHeading(AngleUnit.RADIANS), AngleUnit.RADIANS);
         currentPosition.updatePose(movement);
-        mecanumDrive.setOffsets();
     }
 
 
