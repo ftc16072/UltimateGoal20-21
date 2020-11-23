@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.mechanisms;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -39,10 +40,10 @@ public class MecanumDrive implements QQ_Mechanism {
 
 
     //declaring mecanum drive motors
-    private DcMotor frontLeft;
-    private DcMotor frontRight;
-    private DcMotor backRight;
-    private DcMotor backLeft;
+    private DcMotorEx frontLeft;
+    private DcMotorEx frontRight;
+    private DcMotorEx backRight;
+    private DcMotorEx backLeft;
 
     private final static double GEAR_RATIO = 0.5;
     private final static double WHEEL_RADIUS = 5.0; //5 cm
@@ -82,16 +83,16 @@ public class MecanumDrive implements QQ_Mechanism {
      */
     @Override
     public void init(HardwareMap hwMap) {
-        frontLeft = hwMap.get(DcMotor.class, "front_left_motor");
+        frontLeft = hwMap.get(DcMotorEx.class, "front_left_motor");
         frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        frontRight = hwMap.get(DcMotor.class, "front_right_motor");
+        frontRight = hwMap.get(DcMotorEx.class, "front_right_motor");
         frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        backLeft = hwMap.get(DcMotor.class, "back_left_motor");
+        backLeft = hwMap.get(DcMotorEx.class, "back_left_motor");
         backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        backRight = hwMap.get(DcMotor.class, "back_right_motor");
+        backRight = hwMap.get(DcMotorEx.class, "back_right_motor");
         backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 //back left and front left motors move backwards
         backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -155,20 +156,31 @@ public class MecanumDrive implements QQ_Mechanism {
 
     /**
      * calculating the distances we have traveled using encoders
+     * @param reset whether to reset encoders after this
      * @return a MoveDelta of the mecanum drive representing how far we have driven since the last reset
      */
-    public MoveDeltas getDistance() {
+    public MoveDeltas getDistance(boolean reset) {
+        int backLeftPosition = backLeft.getCurrentPosition();
+        int backRightPosition = backRight.getCurrentPosition();
+        int frontLeftPosition = frontLeft.getCurrentPosition();
+        int frontRightPosition = frontRight.getCurrentPosition();
 
-        encoderMatrix.put(0, 0, (float) ((frontLeft.getCurrentPosition() - frontLeftOffset) * CM_PER_TICK));
-        encoderMatrix.put(1, 0, (float) ((frontRight.getCurrentPosition() - frontRightOffset) * CM_PER_TICK));
-        encoderMatrix.put(2, 0, (float) ((backLeft.getCurrentPosition() - backLeftOffset) * CM_PER_TICK));
+        encoderMatrix.put(0, 0, (float) ((frontLeftPosition - frontLeftOffset) * CM_PER_TICK));
+        encoderMatrix.put(1, 0, (float) ((frontRightPosition - frontRightOffset) * CM_PER_TICK));
+        encoderMatrix.put(2, 0, (float) ((backLeftPosition - backLeftOffset) * CM_PER_TICK));
 
         MatrixF distanceMatrix = conversion.multiplied(encoderMatrix);
 
         double forward = distanceMatrix.get(0, 0);
         double strafe = distanceMatrix.get(0, 1);
-        double angle = 0.0;
-
+        //double angle = distanceMatrix.get(0, 2);
+        double angle = 0;
+        if(reset){
+            frontLeftOffset  = frontLeftPosition;
+            frontRightOffset = frontRightPosition;
+            backLeftOffset   = backLeftPosition;
+            backRightOffset  = backRightPosition;
+        }
 
         return new MoveDeltas(forward, strafe, DistanceUnit.CM, angle , AngleUnit.DEGREES);
     }

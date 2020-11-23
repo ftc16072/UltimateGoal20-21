@@ -4,6 +4,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.mechanisms.Intake;
 import org.firstinspires.ftc.teamcode.mechanisms.MecanumDrive;
+import org.firstinspires.ftc.teamcode.mechanisms.Robot;
 import org.firstinspires.ftc.teamcode.mechanisms.Transfer;
 import org.firstinspires.ftc.teamcode.opModes.QQ_Opmode;
 import org.firstinspires.ftc.teamcode.utils.RobotPose;
@@ -25,8 +26,10 @@ public class TeleopDriveAction extends QQ_Action {
      */
     public QQ_Action run(QQ_Opmode opmode) {
         RobotPose pose = opmode.robot.nav.currentPosition;
-        opmode.telemetry.addData("forward", pose.getY(DistanceUnit.INCH));
-        opmode.telemetry.addData("strafe", pose.getX(DistanceUnit.INCH));
+        opmode.telemetry.addData("Y", pose.getY(DistanceUnit.INCH));
+        opmode.telemetry.addData("X", pose.getX(DistanceUnit.INCH));
+        opmode.telemetry.addData("imu", opmode.robot.nav.getHeading(AngleUnit.DEGREES));
+        opmode.telemetry.addData("theta", pose.getAngle(AngleUnit.DEGREES));
         driverControls(opmode);
         manipulatorControls(opmode);
         return this;
@@ -96,9 +99,6 @@ public class TeleopDriveAction extends QQ_Action {
     public void driverControls(QQ_Opmode opmode) {
         opmode.qq_gamepad1.leftStick.setSquared(true);
 
-
-
-
         if (opmode.qq_gamepad1.dpadUp()){
             opmode.robot.nav.resetIMU(0, AngleUnit.DEGREES);
         } else if (opmode.qq_gamepad1.dpadLeft()){
@@ -108,8 +108,6 @@ public class TeleopDriveAction extends QQ_Action {
         }  else if (opmode.qq_gamepad1.dpadRight()){
             opmode.robot.nav.resetIMU(90, AngleUnit.DEGREES);
         }
-
-
 
         if (opmode.qq_gamepad1.leftBumper()) {
             opmode.robot.mecanumDrive.setMaxSpeed(SLOW_SPEED);
@@ -123,14 +121,10 @@ public class TeleopDriveAction extends QQ_Action {
             opmode.robot.nav.driveRotate(-rotateFromTrigger(opmode.qq_gamepad1.leftTrigger()));
         } else if (opmode.qq_gamepad1.rightTrigger() >= 0.05) {
             opmode.robot.nav.driveRotate(rotateFromTrigger(opmode.qq_gamepad1.rightTrigger()));
-        } else if (opmode.qq_gamepad1.rightStick.getR() >= 0.8) {
+        } else{
             opmode.robot.nav.driveFieldRelativeAngle(
-                    opmode.qq_gamepad1.leftStick.getPolar(),
-                    opmode.qq_gamepad1.rightStick.getTheta(AngleUnit.RADIANS),
-                    AngleUnit.RADIANS);
-        } else {
-            opmode.robot.nav.driveFieldRel(
-                    opmode.qq_gamepad1.leftStick, 0.0);
+                    opmode.qq_gamepad1.leftStick,
+                    opmode.qq_gamepad1.rightStick);
         }
     }
 }
