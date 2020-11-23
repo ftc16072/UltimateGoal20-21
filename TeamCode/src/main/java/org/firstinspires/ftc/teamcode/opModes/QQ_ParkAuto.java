@@ -19,7 +19,7 @@ public class QQ_ParkAuto extends QQ_Opmode {
     @Override
     public void init() {
         super.init();
-        robot.nav.setCurrentPosition(new RobotPose(START_X, START_Y, DistanceUnit.INCH, 0, AngleUnit.DEGREES));
+        robot.nav.setCurrentPosition(new RobotPose(START_X, START_Y, DistanceUnit.INCH));
         fitIn18();
         currentAction = new DriveToAction("parks", new NavigationPose(PARK_X, PARK_Y));
     }
