@@ -156,13 +156,18 @@ public class MecanumDrive implements QQ_Mechanism {
 
     /**
      * calculating the distances we have traveled using encoders
+     * @param reset whether to reset encoders after this
      * @return a MoveDelta of the mecanum drive representing how far we have driven since the last reset
      */
-    public MoveDeltas getDistance() {
+    public MoveDeltas getDistance(boolean reset) {
+        int backLeftPosition = backLeft.getCurrentPosition();
+        int backRightPosition = backRight.getCurrentPosition();
+        int frontLeftPosition = frontLeft.getCurrentPosition();
+        int frontRightPosition = frontRight.getCurrentPosition();
 
-        encoderMatrix.put(0, 0, (float) ((frontLeft.getCurrentPosition() - frontLeftOffset) * CM_PER_TICK));
-        encoderMatrix.put(1, 0, (float) ((frontRight.getCurrentPosition() - frontRightOffset) * CM_PER_TICK));
-        encoderMatrix.put(2, 0, (float) ((backLeft.getCurrentPosition() - backLeftOffset) * CM_PER_TICK));
+        encoderMatrix.put(0, 0, (float) ((frontLeftPosition - frontLeftOffset) * CM_PER_TICK));
+        encoderMatrix.put(1, 0, (float) ((frontRightPosition - frontRightOffset) * CM_PER_TICK));
+        encoderMatrix.put(2, 0, (float) ((backLeftPosition - backLeftOffset) * CM_PER_TICK));
 
         MatrixF distanceMatrix = conversion.multiplied(encoderMatrix);
 
@@ -170,6 +175,12 @@ public class MecanumDrive implements QQ_Mechanism {
         double strafe = distanceMatrix.get(0, 1);
         //double angle = distanceMatrix.get(0, 2);
         double angle = 0;
+        if(reset){
+            frontLeftOffset  = frontLeftPosition;
+            frontRightOffset = frontRightPosition;
+            backLeftOffset   = backLeftPosition;
+            backRightOffset  = backRightPosition;
+        }
 
         return new MoveDeltas(forward, strafe, DistanceUnit.CM, angle , AngleUnit.DEGREES);
     }
