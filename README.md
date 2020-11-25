@@ -1,7 +1,7 @@
 ## Overview
 This GitHub repository contains the source code for **FTC 16072 Ultimate Goal season (2020-2021)**.
 
-All team specific code is in [TeamCode](TeamCode/src/main/java/org/firstinspires/ftc/teamcode)
+All team specific code is in [TeamCode/ftc16072](TeamCode/src/main/java/org/firstinspires/ftc/teamcode/ftc16072)
 
 ## Travis-CI build status
  Master Branch [![Build Status](https://travis-ci.com/ftc16072/UltimateGoal20-21.svg?branch=master)](https://travis-ci.com/ftc16072/UltimateGoal20-21)
