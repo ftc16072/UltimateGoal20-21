@@ -14,6 +14,7 @@ public abstract class QQ_Opmode extends OpMode {
     public QQ_Gamepad qq_gamepad1;
     public QQ_Gamepad qq_gamepad2;
     protected QQ_Action currentAction;
+    public int numberRingsSeen;
 
     /**
      * initializing robot
