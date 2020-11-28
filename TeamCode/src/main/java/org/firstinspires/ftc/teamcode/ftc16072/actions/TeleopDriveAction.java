@@ -61,7 +61,7 @@ public class TeleopDriveAction extends QQ_Action {
         wasDown = opmode.qq_gamepad2.dpadDown();
         opmode.telemetry.addData("angle", pivotAngle);
         opmode.robot.shooter.goToAngle(pivotAngle);
-
+*/
         //up and down of wobbly goal
         if (opmode.qq_gamepad2.leftStick.getY() > 0.2) {
             opmode.robot.wobblyGoal.raiseRotator();
@@ -75,7 +75,7 @@ public class TeleopDriveAction extends QQ_Action {
         } else {
             opmode.robot.wobblyGoal.closeGrabber();
         }
-*/
+
         //intake and transfer in and out
         if (opmode.qq_gamepad2.rightStick.getY() > 0.2) {
             opmode.robot.intake.changeState(Intake.intakeState.Start);
