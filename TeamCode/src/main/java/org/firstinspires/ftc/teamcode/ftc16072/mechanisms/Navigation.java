@@ -115,7 +115,7 @@ public class Navigation {
         double rotateSpeed = 0;
 
         if (angleJoystick.getR() >= 0.8) {
-            Polar fieldRelative = fieldFromDriver(angleJoystick.getPolar());
+            Polar fieldRelative = fieldFromDriver(angleJoystick.getPolar().rotateCCW(Math.PI/2, AngleUnit.RADIANS));
             double deltaAngle = AngleUnit.normalizeRadians(getHeading(AngleUnit.RADIANS) - fieldRelative.getTheta(AngleUnit.RADIANS));
             rotateSpeed = Range.clip(deltaAngle, -MAX_ROTATE_SPEED, MAX_ROTATE_SPEED);
         }
