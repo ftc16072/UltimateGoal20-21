@@ -12,7 +12,7 @@ double AUTO_SHOOT_ANGLE = 0.5; //change value to correct
 
     @Override
     public QQ_Action run(QQ_Opmode opmode) {
-        switch (step){
+        /*switch (step){
             case 0:
                 opmode.robot.shooter.spinWheels(0.8, 0.5);
                 //opmode.robot.shooter.setPivotAngle(AUTO_SHOOT_ANGLE);
@@ -41,6 +41,8 @@ double AUTO_SHOOT_ANGLE = 0.5; //change value to correct
                 return nextAction;
 
         }
+
+         */
         return this;
     }
 }

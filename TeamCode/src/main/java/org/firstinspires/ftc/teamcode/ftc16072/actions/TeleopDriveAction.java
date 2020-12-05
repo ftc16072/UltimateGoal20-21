@@ -29,10 +29,10 @@ public class TeleopDriveAction extends QQ_Action {
         opmode.telemetry.addData("imu", opmode.robot.nav.getHeading(AngleUnit.DEGREES));
         opmode.telemetry.addData("theta", pose.getAngle(AngleUnit.DEGREES));
         driverControls(opmode);
-        manipulatorControls(opmode);
+        //manipulatorControls(opmode);
         return this;
     }
-
+/*
     void manipulatorControls(QQ_Opmode opmode) {
         //spinning shooter wheels
         if (opmode.qq_gamepad2.rightBumper()) {
@@ -63,6 +63,7 @@ public class TeleopDriveAction extends QQ_Action {
         opmode.robot.shooter.goToAngle(pivotAngle);
 */
         //up and down of wobbly goal
+    /*
         if (opmode.qq_gamepad2.leftStick.getY() > 0.2) {
             opmode.robot.wobblyGoal.raiseRotator();
         } else if (opmode.qq_gamepad2.leftStick.getY() < -0.2) {
@@ -88,6 +89,8 @@ public class TeleopDriveAction extends QQ_Action {
             opmode.robot.transfer.changeTransfer(Transfer.transferState.Stop);
         }
     }
+
+     */
 
 
     double rotateFromTrigger(double trigger) {
