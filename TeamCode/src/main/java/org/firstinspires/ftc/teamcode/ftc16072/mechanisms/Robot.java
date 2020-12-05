@@ -9,7 +9,7 @@ public class Robot {
     public double ringCount;
     public MecanumDrive mecanumDrive = new MecanumDrive();
     public Navigation nav = new Navigation(mecanumDrive);
-    public Shooter shooter = new Shooter();
+    /*public Shooter shooter = new Shooter();
     public Intake intake = new Intake();
     public Transfer transfer = new Transfer();
     public WobblyGoal wobblyGoal = new WobblyGoal();
@@ -22,6 +22,9 @@ public class Robot {
             wobblyGoal,
             lights
     );
+
+     */
+    private List<QQ_Mechanism> mechanisms = Arrays.asList(mecanumDrive);
 
     /**
      * initializing hardware map

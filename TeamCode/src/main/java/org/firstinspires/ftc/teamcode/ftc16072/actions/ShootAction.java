@@ -24,7 +24,7 @@ double AUTO_SHOOT_ANGLE = 0.5; //change value to correct
      */
     @Override
     public QQ_Action run(QQ_Opmode opmode) {
-        switch (step){
+        /*switch (step){
             case 0:
                 opmode.robot.shooter.flick(true);
                 step = 1;
@@ -48,6 +48,8 @@ double AUTO_SHOOT_ANGLE = 0.5; //change value to correct
             case 4:
                 return nextAction;
         }
+
+         */
         return this;
     }
 }
