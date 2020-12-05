@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.ftc16072.mechanisms;
 
 import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
@@ -29,7 +30,7 @@ public class Shooter implements QQ_Mechanism {
 
 
     private DcMotor shooterBack;
-    private DcMotor shooterFront;
+    private DcMotorEx shooterFront;
     private Servo shooterPivot;
     private Servo shooterImport;
     private AnalogInput pot;
@@ -61,7 +62,7 @@ public class Shooter implements QQ_Mechanism {
     @Override
     public void init(HardwareMap hwMap) {
         shooterBack = hwMap.get(DcMotor.class, "shooter_back_motor");
-        shooterFront = hwMap.get(DcMotor.class, "shooter_front_motor");
+        shooterFront = hwMap.get(DcMotorEx.class, "shooter_front_motor");
         shooterPivot = hwMap.get(Servo.class, "servo_pivot_shooter");
         shooterImport = hwMap.get(Servo.class, "servo_import_shooter");
         pot = hwMap.get(AnalogInput.class, "lift_pot");
@@ -131,7 +132,9 @@ public class Shooter implements QQ_Mechanism {
         }
     }
 
-
+public void setSpeed (double speedMetersPerSecond){
+        shooterFront.setVelocity((speedMetersPerSecond/49)*(180/Math.PI));
+}
 
     /**
      * get name
