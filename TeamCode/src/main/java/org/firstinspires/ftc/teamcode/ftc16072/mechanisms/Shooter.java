@@ -133,7 +133,7 @@ public class Shooter implements QQ_Mechanism {
     }
 
 public void setSpeed (double speedMetersPerSecond){
-        shooterFront.setVelocity((speedMetersPerSecond/49)*(180/Math.PI));
+        shooterFront.setVelocity((speedMetersPerSecond/48.0)*(180/Math.PI));
 }
 
     /**
