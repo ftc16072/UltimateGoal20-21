@@ -94,9 +94,9 @@ public class MecanumDrive implements QQ_Mechanism {
 
         backRight = hwMap.get(DcMotorEx.class, "back_right_motor");
         backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-//back left and front left motors move backwards
+//back left and front right motors move backwards
         backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
-        frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+        frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
 
     }
 
