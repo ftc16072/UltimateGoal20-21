@@ -12,12 +12,14 @@ public class Robot {
     public Intake intake = new Intake();
     public Transfer transfer = new Transfer();
     public WobblyGoal wobblyGoal = new WobblyGoal();
+    public Lights lights = new Lights();
     private List<QQ_Mechanism> mechanisms = Arrays.asList(
             mecanumDrive,
             shooter,
             intake,
             transfer,
-            wobblyGoal
+            wobblyGoal,
+            lights
     );
 
     /**
@@ -29,6 +31,7 @@ public class Robot {
             mechanism.init(hwMap);
         }
         nav.init(hwMap);
+        lights.normal();
     }
 
     /**
