@@ -38,7 +38,7 @@ public class Transfer implements QQ_Mechanism {
      */
     @Override
     public List<QQ_Test> getTests() {
-        return Arrays.asList(new QQ_TestMotor("Transfer Motor", 0.5, transferMotor));
+        return Arrays.asList(new QQ_TestMotor("Transfer Motor", 1, transferMotor));
     }
 
     public void changeTransfer(Transfer.transferState desiredState) {

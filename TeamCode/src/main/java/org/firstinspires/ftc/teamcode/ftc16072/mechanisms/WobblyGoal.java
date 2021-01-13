@@ -1,18 +1,20 @@
 package org.firstinspires.ftc.teamcode.ftc16072.mechanisms;
 
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.ftc16072.mechanisms.tests.QQ_Test;
+import org.firstinspires.ftc.teamcode.ftc16072.mechanisms.tests.QQ_TestMotor;
 import org.firstinspires.ftc.teamcode.ftc16072.mechanisms.tests.QQ_TestServo;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class WobblyGoal implements QQ_Mechanism {
-    private Servo rotator;
+    private DcMotor rotator;
     private Servo grabber;
-    private final double ROTATOR_UP =.0;
+    private final double ROTATOR_UP = 0.0;
     private final double ROTATOR_DOWN = 0.6;
     private final double GRABBER_OPEN = 0.65;
     private final double GRABBER_CLOSED = 0.85;
@@ -23,7 +25,7 @@ public class WobblyGoal implements QQ_Mechanism {
      */
     @Override
     public void init(HardwareMap hwMap) {
-        rotator = hwMap.get(Servo.class, "rotator");
+        rotator = hwMap.get(DcMotor.class, "rotator");
         grabber = hwMap.get(Servo.class, "grabber");
     }
 
@@ -33,7 +35,7 @@ public class WobblyGoal implements QQ_Mechanism {
      */
     @Override
     public List<QQ_Test> getTests() {
-        return Arrays.asList((QQ_Test) new QQ_TestServo("rotator", ROTATOR_UP, ROTATOR_DOWN, rotator),
+        return Arrays.asList((QQ_Test) new QQ_TestMotor("rotator", .2, rotator ),
                 new QQ_TestServo("grabber", GRABBER_CLOSED, GRABBER_OPEN, grabber));
     }
 
@@ -56,13 +58,13 @@ public class WobblyGoal implements QQ_Mechanism {
      * rotator mechanism goes up
      */
     public void raiseRotator() {
-        rotator.setPosition(ROTATOR_UP);
+
     }
     /**
      * rotator mechanism goes down
      */
     public void lowerRotator() {
-        rotator.setPosition(ROTATOR_DOWN);
+
     }
 
     /**
