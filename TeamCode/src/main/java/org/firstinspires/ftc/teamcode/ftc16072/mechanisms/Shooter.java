@@ -28,7 +28,7 @@ public class Shooter implements QQ_Mechanism {
     private Servo shooterImport;
 
     final double INSERT = 0; // TODO: Find Value
-    final double RESET = 0.18; // TODO: Find value
+    final double RESET = 0.5; // TODO: Find value
 
     /**
      * initializes Shooter
