@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.ftc16072.utils.NavigationPose;
 
 
 @Autonomous()
-public class autoRings extends QQ_ParkAuto {
+public class autoRings extends QQ_Opmode {
     double GOAL_X = 24;
     double GOAL_Y = 12;
 

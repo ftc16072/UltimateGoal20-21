@@ -35,7 +35,7 @@ public class Intake implements QQ_Mechanism {
      */
     @Override
     public List<QQ_Test> getTests() {
-        return Arrays.asList(new QQ_TestMotor("Intake Motor",  -0.5, intakeMotor));
+        return Arrays.asList(new QQ_TestMotor("Intake Motor",  intakeSpeed, intakeMotor), new QQ_TestMotor("Intake - FULL speed", -1.0, intakeMotor));
     }
 
     /**

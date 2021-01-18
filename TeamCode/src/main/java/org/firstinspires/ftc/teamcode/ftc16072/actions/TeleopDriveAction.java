@@ -51,20 +51,6 @@ public class TeleopDriveAction extends QQ_Action {
         } else {
             opmode.robot.shooter.flick(false);
         }
-/*
-        //up and down of pivot shooter
-        if (opmode.qq_gamepad2.dpadUp() && !wasUp) {
-            pivotAngle = Math.min(15, pivotAngle + 3);
-        }
-        wasUp = opmode.qq_gamepad2.dpadUp();
-
-        if (opmode.qq_gamepad2.dpadDown() && !wasDown) {
-            pivotAngle = Math.max(0, pivotAngle - 3);
-        }
-        wasDown = opmode.qq_gamepad2.dpadDown();
-        opmode.telemetry.addData("angle", pivotAngle);
-        opmode.robot.shooter.goToAngle(pivotAngle);
-*/
         //up and down of wobbly goal
         if (opmode.qq_gamepad2.leftStick.getY() > 0.2) {
             opmode.robot.wobblyGoal.raiseRotator();
