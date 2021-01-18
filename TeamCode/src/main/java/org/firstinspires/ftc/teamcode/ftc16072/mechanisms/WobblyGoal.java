@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.ftc16072.mechanisms.tests.QQ_Test;
 import org.firstinspires.ftc.teamcode.ftc16072.mechanisms.tests.QQ_TestMotor;
+import org.firstinspires.ftc.teamcode.ftc16072.mechanisms.tests.QQ_TestMotorPosition;
 import org.firstinspires.ftc.teamcode.ftc16072.mechanisms.tests.QQ_TestServo;
 
 import java.util.Arrays;
@@ -14,8 +15,10 @@ import java.util.List;
 public class WobblyGoal implements QQ_Mechanism {
     private DcMotor rotator;
     private Servo grabber;
-    private final double ROTATOR_UP = 0.0;
-    private final double ROTATOR_DOWN = 0.6;
+    private final int ROTATOR_IN = 0;
+    private final int ROTATOR_UP = -350;
+    private final int ROTATOR_DOWN = -720;
+    private final double ROTATOR_MAX_SPEED = 0.5;
     private final double GRABBER_OPEN = 0.65;
     private final double GRABBER_CLOSED = 0.85;
 
@@ -26,6 +29,8 @@ public class WobblyGoal implements QQ_Mechanism {
     @Override
     public void init(HardwareMap hwMap) {
         rotator = hwMap.get(DcMotor.class, "rotator");
+        rotator.setTargetPosition(0);
+        rotator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         grabber = hwMap.get(Servo.class, "grabber");
     }
 
@@ -35,7 +40,8 @@ public class WobblyGoal implements QQ_Mechanism {
      */
     @Override
     public List<QQ_Test> getTests() {
-        return Arrays.asList((QQ_Test) new QQ_TestMotor("rotator", .2, rotator ),
+        return Arrays.asList((QQ_Test) new QQ_TestMotorPosition("rotator", ROTATOR_DOWN, ROTATOR_IN, ROTATOR_MAX_SPEED, rotator ),
+                new QQ_TestMotor("rotator - motor only", 0.2, rotator),
                 new QQ_TestServo("grabber", GRABBER_CLOSED, GRABBER_OPEN, grabber));
     }
 
@@ -58,14 +64,21 @@ public class WobblyGoal implements QQ_Mechanism {
      * rotator mechanism goes up
      */
     public void raiseRotator() {
-
+        rotator.setTargetPosition(ROTATOR_UP);
+        rotator.setPower(ROTATOR_MAX_SPEED);
     }
     /**
      * rotator mechanism goes down
      */
     public void lowerRotator() {
-
+        rotator.setTargetPosition(ROTATOR_DOWN);
+        rotator.setPower(ROTATOR_MAX_SPEED);
     }
+
+    public boolean isRotatorBusy(){
+        return rotator.isBusy();
+    }
+
 
     /**
      * get name
