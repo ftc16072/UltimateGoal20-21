@@ -4,6 +4,7 @@ import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.Range;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
@@ -28,7 +29,9 @@ public class Navigation {
     private static double imuOffset;
     double TRANSLATE_KP = 0.1;
     double MIN_R = 0.14;
-    final static double MAX_ROTATE_SPEED = 0.7;
+    final static double ROTATE_KP = 2;
+    final static double MAX_ROTATE_SPEED = 0.8;
+    final static double MIN_ROTATE_SPEED = 0.1;
 
     public enum DriverPerspective {
         BLUE, BACK, RED
@@ -138,45 +141,6 @@ public class Navigation {
         return currentPosition;
     }
 
-    //todo make this javadoc link to the drive to method
-
-    /**
-     * A method that will only translate to the desired position if you want both call driveTo()
-     *
-     * @param desiredPose desired postition to translate to (IGNORES ANGLE)
-     * @return true if done
-     */
-    public boolean translateTo(NavigationPose desiredPose) {
-        if (desiredPose.inDistanceTolerance(currentPosition)){
-            mecanumDrive.driveMecanum(0,0,0);
-            return true;
-        }
-
-        Polar distance = currentPosition.getTransDistance(desiredPose);
-
-        double newR = Math.max((distance.getR(DistanceUnit.CM) * TRANSLATE_KP), MIN_R);
-
-        Polar drive = new Polar(distance.getTheta(AngleUnit.RADIANS), AngleUnit.RADIANS, newR, DistanceUnit.CM);
-
-        driveFieldRelative(drive, 0.0);
-
-        return false;
-    }
-
-    //todo make this javadoc link to the drive to method
-
-    /**
-     * Rotates to face the angle portion of a desired pose
-     *
-     * @param desiredPose pose containing the desired angle for rotation DOES NOT TRANSLATE
-     * @return true if done
-     */
-    public boolean turnTo(NavigationPose desiredPose) {
-
-        //todo write turn code here
-
-        return true;
-    }
 
     /**
      * Translates and rotates to desired pose
@@ -185,14 +149,40 @@ public class Navigation {
      * @return true if done
      */
     public boolean driveTo(NavigationPose desiredPose) {
-        boolean translate = translateTo(desiredPose);
-        boolean rotate = turnTo(desiredPose);
-        if (translate && rotate) {
+        Polar drive;
+        double rotateSpeed;
+        boolean distancebln;
+        boolean angle;
+
+        if (desiredPose.inDistanceTolerance(currentPosition)){
+            drive = new Polar(0, AngleUnit.RADIANS, 0, DistanceUnit.CM);
+            distancebln = true;
+        } else {
+            Polar distance = currentPosition.getTransDistance(desiredPose);
+
+            double newR = Math.max((distance.getR(DistanceUnit.CM) * TRANSLATE_KP), MIN_R);
+
+            drive = new Polar(distance.getTheta(AngleUnit.RADIANS), AngleUnit.RADIANS, newR, DistanceUnit.CM);
+            distancebln = false;
+        }
+
+        if(desiredPose.inAngleTolerance(currentPosition)){
+            rotateSpeed = 0.0;
+            angle = true;
+        } else {
+            double angleDelta = desiredPose.getAngleDistance(currentPosition, AngleUnit.RADIANS);
+            rotateSpeed = Math.signum(angleDelta) * Math.max(Math.min(Math.abs(angleDelta * ROTATE_KP), MAX_ROTATE_SPEED), MIN_ROTATE_SPEED);
+            angle = false;
+
+        }
+
+        if(distancebln && angle){
             mecanumDrive.driveMecanum(0, 0, 0);
             return true;
-        } else {
-            return false;
         }
+        driveFieldRelative(drive, rotateSpeed);
+
+        return false;
     }
 
     public void updatePose() {
