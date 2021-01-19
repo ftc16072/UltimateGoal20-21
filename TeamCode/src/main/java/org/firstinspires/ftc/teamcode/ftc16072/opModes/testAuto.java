@@ -13,24 +13,17 @@ import org.firstinspires.ftc.teamcode.ftc16072.utils.StackPipeline;
 
 
 @Autonomous()
-public class autoRings extends QQ_Opmode {
-    double GOAL_X = 24;
-    double GOAL_Y = 12;
+public class testAuto extends QQ_Opmode {
+    public static double GOAL_X = 0;
+    public static double GOAL_Y = 24;
     StackPipeline stackPipeline = new StackPipeline();
 
 
     @Override
     public void init() {
-        usesCamera = true;
         super.init();
-        webcam.setPipeline(stackPipeline);
-        robot.nav.setCurrentPosition(new RobotPose(34,9, DistanceUnit.INCH));
-        numberRingsSeen = StackPipeline.analysis;
-        currentAction = new DriveToWobblyGoalZone().
-                        setNext(new DropWobblyGoal().
-                        setNext(new DriveToAction("drives to pick up the second wobbly goal", new NavigationPose(GOAL_X, GOAL_Y)).
-                        setNext(new PickUpWobblyGoal().
-                        setNext(new DriveToWobblyGoalZone()))));
+        robot.nav.setCurrentPosition(new RobotPose(0,0, DistanceUnit.INCH));
+        currentAction = new DriveToAction("testing", new NavigationPose(GOAL_X, GOAL_Y));
 
 
     }
