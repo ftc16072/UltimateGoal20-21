@@ -52,6 +52,12 @@ public class PipelineOpmode extends OpMode {
     }
 
     @Override
+    public void init_loop() {
+        super.init_loop();
+        telemetry.addData("analysis", StackPipeline.analysis);
+    }
+
+    @Override
     public void loop() {
         /* telemetry.addData("Frame Count", webcam.getFrameCount());
         telemetry.addData("FPS", String.format("%.2f", webcam.getFps()));
@@ -59,7 +65,8 @@ public class PipelineOpmode extends OpMode {
         telemetry.addData("Pipeline time ms", webcam.getPipelineTimeMs());
         telemetry.addData("Overhead time ms", webcam.getOverheadTimeMs());
         telemetry.addData("Theoretical max FPS", webcam.getCurrentPipelineMaxFps());
-        telemetry.update();
+        telemetry.update();            Mat hierarchey = new Mat();
+
 
          */
 

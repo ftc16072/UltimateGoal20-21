@@ -17,10 +17,17 @@ import java.util.List;
 
 @Config
 public class StackPipeline extends OpenCvPipeline {
-        public static int testRec_x = 140;
-        public static int testRec_y = 90;
-        public static int testRec_width = 125;
-        public static int testRec_height = 90;
+        public static int testRec_x = 200;
+        public static int testRec_y = 110;
+        public static int testRec_width = 20;
+        public static int testRec_height = 60;
+        public static ringNumber analysis;
+
+        public enum ringNumber{
+            zero,
+            one,
+            four
+        }
 
         /*
          * NOTE: if you wish to use additional Mat objects in your processing pipeline, it is
@@ -31,25 +38,9 @@ public class StackPipeline extends OpenCvPipeline {
          * constantly allocating and freeing large chunks of memory.
          */
 
-        @Override
+    @Override
         public Mat processFrame(Mat input)
         {
-            Mat gray = new Mat(input.rows(), input.cols(),input.type());
-            Imgproc.cvtColor(input, gray, Imgproc.COLOR_BGR2GRAY);
-            Mat binary = new Mat(input.rows(), input.cols(),input.type(), new Scalar(0));
-            Imgproc.threshold(gray, binary, 0, 255, Imgproc.THRESH_BINARY_INV);
-
-
-
-            List<MatOfPoint> contours = new ArrayList<>();
-
-            Mat hierarchey = new Mat();
-
-            Imgproc.findContours(binary, contours, hierarchey, Imgproc.RETR_TREE, Imgproc.CHAIN_APPROX_SIMPLE);
-
-            Scalar color = new Scalar(0,255,0);
-
-            //for testing
             Rect rect = new Rect(testRec_x, testRec_y, testRec_width, testRec_height);
 
             Imgproc.rectangle(input, rect, new Scalar(0, 0, 255), 2);
@@ -58,17 +49,25 @@ public class StackPipeline extends OpenCvPipeline {
             Mat ringHSV = new Mat(ring.cols(), ring.rows(), ring.type());
             Imgproc.cvtColor(ring, ringHSV, Imgproc.COLOR_BGR2HSV);
 
-            Scalar colors = Core.mean(ring);
+            Scalar colors = Core.mean(ringHSV);
 
-            Imgproc.putText(input, "1:" + (int)colors.val[0], new Point(testRec_x, testRec_y - 40), Imgproc.FONT_HERSHEY_COMPLEX_SMALL,0.8, new Scalar(0, 255, 0));
-            Imgproc.putText(input, "2:" + (int)colors.val[1], new Point(testRec_x, testRec_y - 22.5), Imgproc.FONT_HERSHEY_COMPLEX_SMALL,0.8, new Scalar(0, 255, 0));
-            Imgproc.putText(input, "3:" + (int)colors.val[2], new Point(testRec_x, testRec_y - 10), Imgproc.FONT_HERSHEY_COMPLEX_SMALL,0.8, new Scalar(0, 255, 0));
+            Imgproc.putText(input, "1:" + (int)colors.val[0], new Point(testRec_x, testRec_y - 40), Imgproc.FONT_HERSHEY_COMPLEX_SMALL,0.8, new Scalar(255, 255, 255));
+            Imgproc.putText(input, "2:" + (int)colors.val[1], new Point(testRec_x, testRec_y - 22.5), Imgproc.FONT_HERSHEY_COMPLEX_SMALL,0.8, new Scalar(255, 255, 255));
+            Imgproc.putText(input, "3:" + (int)colors.val[2], new Point(testRec_x, testRec_y - 10), Imgproc.FONT_HERSHEY_COMPLEX_SMALL,0.8, new Scalar(255, 255, 255));
 
 
 
-            //Imgproc.drawContours(gray, contours, -1, color, 2, Imgproc.LINE_8, hierarchey, 2);
+            //Imgproc.drawContours(gray, contours, -
 
+            if(colors.val[0] > 70 ){
+                analysis = ringNumber.four;
+            } else if (colors.val[0] > 50){
+                analysis = ringNumber.one;
+            } else {
+                analysis = ringNumber.zero;
+            }
 
             return input;
         }
+
 }
