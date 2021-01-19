@@ -87,16 +87,16 @@ public class RobotPose {
      * @return distance in desired angle unit
      */
     public double getAngleDistance(RobotPose otherPoint, AngleUnit au){
-        return otherPoint.getAngle(au) - getAngle(au);
+        return  au.normalize(otherPoint.getAngle(au) - getAngle(au));
     }
 
     public void updatePose(MecanumDrive.MoveDeltas moveDeltas){
         theta = AngleUnit.normalizeRadians(theta + moveDeltas.getAngle(AngleUnit.RADIANS));
 
-        Polar translation = new Polar(moveDeltas.getStrafe(DistanceUnit.CM), moveDeltas.getForward(DistanceUnit.CM), DistanceUnit.CM);
+        Polar translation = new Polar(moveDeltas.getForward(DistanceUnit.CM), moveDeltas.getStrafe(DistanceUnit.CM), DistanceUnit.CM);
         Polar rotated = translation.rotateCCW(theta, AngleUnit.RADIANS);
 
-        x_cm += rotated.getX(DistanceUnit.CM);
-        y_cm += rotated.getY(DistanceUnit.CM);
+        y_cm += rotated.getX(DistanceUnit.CM);
+        x_cm += rotated.getY(DistanceUnit.CM);
     }
 }
