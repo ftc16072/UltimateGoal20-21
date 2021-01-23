@@ -11,9 +11,13 @@ public class TeleopDriveActionUpdate extends QQ_Action {
     double pivotAngle = 0;
     boolean wasUp;
     boolean wasDown;
+    private boolean gamepad2APressed;
+    private boolean gamepad1BPressed;
+    private boolean closeGrabber;
     final static double MAX_SPEED = 1;
     final static double NORMAL_SPEED = 0.6;
     final static double SLOW_SPEED = 0.3;
+
 
 
     /**
@@ -59,10 +63,15 @@ public class TeleopDriveActionUpdate extends QQ_Action {
         }
 
         //wobbly goal open and close grabber
-        if (opmode.qq_gamepad2.a()) {
-            opmode.robot.wobblyGoal.openGrabber();
-        } else {
+        if (opmode.qq_gamepad2.a() && !gamepad2APressed) {
+            closeGrabber = !closeGrabber;
+        }
+        gamepad2APressed = opmode.qq_gamepad2.a();
+
+        if (closeGrabber){
             opmode.robot.wobblyGoal.closeGrabber();
+        } else {
+            opmode.robot.wobblyGoal.openGrabber();
         }
 
         //intake and transfer in and out
@@ -113,6 +122,13 @@ public class TeleopDriveActionUpdate extends QQ_Action {
                     opmode.qq_gamepad1.leftStick,
                     opmode.qq_gamepad1.rightStick);
         }
+
+        if (opmode.qq_gamepad1.b() & !gamepad1BPressed){
+            opmode.robot.nav.flipDriving = !opmode.robot.nav.flipDriving;
+        }
+        gamepad1BPressed = opmode.qq_gamepad1.b();
+
+
     }
 }
 

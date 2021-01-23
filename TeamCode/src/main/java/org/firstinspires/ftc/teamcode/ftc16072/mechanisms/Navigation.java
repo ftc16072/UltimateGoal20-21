@@ -32,6 +32,7 @@ public class Navigation {
     final static double ROTATE_KP = 2;
     final static double MAX_ROTATE_SPEED = 0.8;
     final static double MIN_ROTATE_SPEED = 0.1;
+    public boolean flipDriving = false;
 
     public enum DriverPerspective {
         BLUE, BACK, RED
@@ -119,10 +120,14 @@ public class Navigation {
 
         if (angleJoystick.getR() >= 0.8) {
             Polar fieldRelative = fieldFromDriver(angleJoystick.getPolar().rotateCCW(Math.PI/2, AngleUnit.RADIANS));
+            fieldRelative = flipDriving ? fieldRelative.rotateCCW(180, AngleUnit.DEGREES) : fieldRelative;
             double deltaAngle = AngleUnit.normalizeRadians(getHeading(AngleUnit.RADIANS) - fieldRelative.getTheta(AngleUnit.RADIANS));
             rotateSpeed = Range.clip(deltaAngle, -MAX_ROTATE_SPEED, MAX_ROTATE_SPEED);
         }
-        driveFieldRelative(fieldFromDriver(translateJoystick.getPolar()), rotateSpeed);
+
+        Polar translate = flipDriving ? translateJoystick.getPolar() : fieldFromDriver(translateJoystick.getPolar()) ;
+
+        driveFieldRelative(translate, rotateSpeed);
     }
 
     public void driveRotate(double rotateSpeed) {
