@@ -13,6 +13,14 @@ import java.util.List;
 
 public class Lights implements QQ_Mechanism {
     RevBlinkinLedDriver blinkinLedDriver;
+
+    public enum lightState{
+        green,
+        yellow,
+        orange,
+        red,
+        blueStrobe
+    }
     /**
      * initialize hardware map
      * @param hwMap Hardware map from configuration
