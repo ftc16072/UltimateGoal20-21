@@ -2,9 +2,11 @@ package org.firstinspires.ftc.teamcode.ftc16072.mechanisms;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.ftc16072.mechanisms.tests.QQ_Test;
 import org.firstinspires.ftc.teamcode.ftc16072.mechanisms.tests.QQ_TestMotor;
+import org.firstinspires.ftc.teamcode.ftc16072.mechanisms.tests.QQ_TestServo;
 
 import java.util.Arrays;
 import java.util.List;
@@ -17,8 +19,11 @@ public class Intake implements QQ_Mechanism {
     };
 
     private DcMotor intakeMotor;
+    public Servo intakeHolder;
     private static final double intakeSpeed = -0.5;
-    private static final double reverseIntakeSpeed = 0.2;
+    private static final double reverseIntakeSpeed = 0.4;
+    private static final double HOLD_POSITION = 0.33;
+    private static final double RELEASE_POSITION = 0.0;
 
     /**
      * initialize intake
@@ -27,6 +32,7 @@ public class Intake implements QQ_Mechanism {
     @Override
     public void init(HardwareMap hwMap) {
          intakeMotor = hwMap.get(DcMotor.class, "intake_motor");
+         intakeHolder = hwMap.get(Servo.class, "intake_holder");
     }
 
     /**
@@ -35,7 +41,10 @@ public class Intake implements QQ_Mechanism {
      */
     @Override
     public List<QQ_Test> getTests() {
-        return Arrays.asList(new QQ_TestMotor("Intake Motor",  intakeSpeed, intakeMotor), new QQ_TestMotor("Intake - FULL speed", -1.0, intakeMotor));
+        return Arrays.asList(
+                new QQ_TestMotor("Intake Motor",  intakeSpeed, intakeMotor),
+                new QQ_TestMotor("motor - FULL speed", -1.0, intakeMotor),
+                new QQ_TestServo("Holder", HOLD_POSITION, RELEASE_POSITION, intakeHolder));
     }
 
     /**
@@ -50,6 +59,14 @@ public class Intake implements QQ_Mechanism {
         } else if (desiredState == intakeState.Stop){
             intakeMotor.setPower(0.0);
         }
+    }
+
+    public void release(){
+        intakeHolder.setPosition(RELEASE_POSITION);
+    }
+
+    public void hold(){
+        intakeHolder.setPosition(HOLD_POSITION);
     }
 
     /**
