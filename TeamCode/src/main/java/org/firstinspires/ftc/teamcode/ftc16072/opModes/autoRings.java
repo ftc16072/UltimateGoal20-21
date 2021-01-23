@@ -14,7 +14,7 @@ import org.firstinspires.ftc.teamcode.ftc16072.utils.StackPipeline;
 
 @Autonomous()
 public class autoRings extends QQ_Opmode {
-    double GOAL_X = 24;
+    double GOAL_X = 48;
     double GOAL_Y = 12;
     StackPipeline stackPipeline = new StackPipeline();
 
