@@ -45,7 +45,7 @@ public class MecanumDrive implements QQ_Mechanism {
     private DcMotorEx backRight;
     private DcMotorEx backLeft;
 
-    private final static double GEAR_RATIO = 0.5;
+    private final static double GEAR_RATIO = 4.0/6.0;
     private final static double WHEEL_RADIUS = 5.0; //5 cm
     private final static double TICKS_PER_ROTATION = 383.6;
     //cm per rotation/ticks per rotation
