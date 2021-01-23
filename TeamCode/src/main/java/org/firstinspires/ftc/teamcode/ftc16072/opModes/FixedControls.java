@@ -16,5 +16,7 @@ public class FixedControls extends QQ_Opmode {
         //robot will move the direction the user commands it to
         usesGamepads = true;
         currentAction = new TeleopDriveActionUpdate();
+        robot.intake.hold();
+
     }
 }

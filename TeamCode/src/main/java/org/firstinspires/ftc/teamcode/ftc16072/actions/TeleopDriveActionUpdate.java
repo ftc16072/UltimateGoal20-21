@@ -113,6 +113,14 @@ public class TeleopDriveActionUpdate extends QQ_Action {
                     opmode.qq_gamepad1.leftStick,
                     opmode.qq_gamepad1.rightStick);
         }
+
+
+
+
+        if (opmode.gamepad1.a){
+            opmode.robot.intake.release();
+        }
+
     }
 }
 
