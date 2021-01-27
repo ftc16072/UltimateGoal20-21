@@ -34,7 +34,8 @@ public class TeleopDriveActionUpdate extends QQ_Action {
         opmode.telemetry.addData("theta", pose.getAngle(AngleUnit.DEGREES));
         driverControls(opmode);
         manipulatorControls(opmode);
-        if(opmode.time > 90){
+        opmode.telemetry.addData("Vel", opmode.robot.shooter.shooterMotor.getVelocity());
+        if(opmode.time > 90) {
             opmode.robot.lights.endGame();
         }
         return this;

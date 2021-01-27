@@ -6,6 +6,7 @@ public class PickUpWobblyGoal extends QQ_Action{
 
     @Override
     public QQ_Action run(QQ_Opmode opmode) {
+        opmode.robot.wobblyGoal.closeGrabber();
         return nextAction;
 }
 }

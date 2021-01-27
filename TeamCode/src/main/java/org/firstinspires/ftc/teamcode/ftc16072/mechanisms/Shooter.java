@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.ftc16072.mechanisms;
 
 import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
@@ -24,11 +25,13 @@ public class Shooter implements QQ_Mechanism {
     }
 
 
-    private DcMotor shooterMotor;
+    public DcMotorEx shooterMotor;
     private Servo shooterImport;
 
     final double INSERT = 0; // TODO: Find Value
     final double RESET = 0.5; // TODO: Find value
+
+    public static double SHOOTER_VELO = -1125;
 
     /**
      * initializes Shooter
@@ -37,7 +40,7 @@ public class Shooter implements QQ_Mechanism {
      */
     @Override
     public void init(HardwareMap hwMap) {
-        shooterMotor = hwMap.get(DcMotor.class, "shooter_motor");
+        shooterMotor = hwMap.get(DcMotorEx.class, "shooter_motor");
         shooterImport = hwMap.get(Servo.class, "servo_import_shooter");
     }
 
@@ -67,7 +70,11 @@ public class Shooter implements QQ_Mechanism {
 
 
     public void spinWheels(double frontSpeed, double backSpeed) {
-        shooterMotor.setPower(backSpeed);
+        if (frontSpeed == 0 || backSpeed == 0){
+            shooterMotor.setVelocity(0);
+        } else {
+            shooterMotor.setVelocity(SHOOTER_VELO);
+        }
     }
 
     public void flick(boolean shouldFlick){

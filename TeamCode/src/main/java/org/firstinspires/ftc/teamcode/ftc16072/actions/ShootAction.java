@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.ftc16072.actions;
 
+import android.sax.StartElementListener;
+
 import org.firstinspires.ftc.teamcode.ftc16072.opModes.QQ_Opmode;
 
 public class ShootAction extends QQ_Action{
@@ -14,21 +16,17 @@ double AUTO_SHOOT_ANGLE = 0.5; //change value to correct
     public QQ_Action run(QQ_Opmode opmode) {
         switch (step){
             case 0:
-                opmode.robot.shooter.spinWheels(0.8, 0.5);
-                //opmode.robot.shooter.setPivotAngle(AUTO_SHOOT_ANGLE);
-                waitTime = opmode.time + 0.5;
+                opmode.robot.shooter.flick(true);
                 step = 1;
                 break;
             case 1:
-                if(opmode.time > waitTime){
-                    opmode.robot.shooter.flick(true);
-                    step = 2;
-                }
+                waitTime = opmode.time + 0.25;
+                step = 2;
                 break;
             case 2:
-                if(opmode.time > waitTime){
-                    waitTime = opmode.time + 0.5;
+                if(opmode.time >= waitTime){
                     opmode.robot.shooter.flick(false);
+                    waitTime = opmode.time + 0.25;
                     step = 3;
                 }
                 break;
@@ -39,7 +37,6 @@ double AUTO_SHOOT_ANGLE = 0.5; //change value to correct
                 break;
             case 4:
                 return nextAction;
-
         }
         return this;
     }

@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.ftc16072.actions;
 
 
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.ftc16072.mechanisms.Navigation;
 import org.firstinspires.ftc.teamcode.ftc16072.mechanisms.Robot;
@@ -32,6 +33,7 @@ public class DriveToAction extends QQ_Action {
         RobotPose pose = Navigation.currentPosition;
         opmode.telemetry.addData("forward", pose.getY(DistanceUnit.INCH));
         opmode.telemetry.addData("strafe", pose.getX(DistanceUnit.INCH));
+        opmode.telemetry.addData("imu", pose.getAngle(AngleUnit.DEGREES));
 
         boolean done = opmode.robot.nav.driveTo(desiredPose);
 

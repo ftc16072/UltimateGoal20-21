@@ -31,7 +31,11 @@ abstract public class QQ_Action {
     public abstract QQ_Action run(QQ_Opmode opmode);
 
     public QQ_Action setNext(QQ_Action nextAction){
-        this.nextAction = nextAction;
+        if (this.nextAction == null){
+            this.nextAction = nextAction;
+        } else {
+            this.nextAction.setNext(nextAction);
+        }
         return this;
     }
 
