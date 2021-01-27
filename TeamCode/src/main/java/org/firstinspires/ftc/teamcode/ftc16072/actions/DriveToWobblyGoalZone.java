@@ -21,9 +21,6 @@ public class DriveToWobblyGoalZone extends QQ_Action{
         } else {
             return new DriveToAction("moving to Zone C", new NavigationPose(ZONE_C_X, ZONE_C_Y, 0.5, -130, .5)).setNext(nextAction);
         }
-        if (opmode.numberRingsSeen == 4){
-            return new DriveToAction("moving to Zone C", new NavigationPose(ZONE_C_X, ZONE_C_Y)).setNext(nextAction);
-        }
-        return nextAction;
+
     }
 }
