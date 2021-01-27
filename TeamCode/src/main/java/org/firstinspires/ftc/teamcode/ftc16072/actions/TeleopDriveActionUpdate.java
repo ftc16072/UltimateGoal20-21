@@ -35,7 +35,7 @@ public class TeleopDriveActionUpdate extends QQ_Action {
         driverControls(opmode);
         manipulatorControls(opmode);
         opmode.telemetry.addData("Vel", opmode.robot.shooter.shooterMotor.getVelocity());
-        if(opmode.time > 90) {
+        if(opmode.time > 90){
             opmode.robot.lights.endGame();
         }
         return this;

@@ -55,6 +55,5 @@ public class autoRings extends QQ_Opmode {
         super.init_loop();
         telemetry.addData("analysis", StackPipeline.analysis);
         numberRingsSeen = StackPipeline.analysis;
-        telemetry.addData("whats messedd up?", numberRingsSeen);
     }
 }
