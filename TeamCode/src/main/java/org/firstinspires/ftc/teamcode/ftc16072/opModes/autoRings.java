@@ -53,7 +53,7 @@ public class autoRings extends QQ_Opmode {
     @Override
     public void init_loop() {
         super.init_loop();
-        telemetry.addData("analysis", StackPipeline.analysis);
-        numberRingsSeen = StackPipeline.analysis;
+        telemetry.addData("analysis", stackPipeline.analysis);
+        numberRingsSeen = stackPipeline.analysis;
     }
 }

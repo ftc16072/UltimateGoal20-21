@@ -4,29 +4,24 @@ import com.acmerobotics.dashboard.config.Config;
 
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
-import org.opencv.core.MatOfPoint;
 import org.opencv.core.Point;
 import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 import org.openftc.easyopencv.OpenCvPipeline;
 
-import java.nio.channels.ScatteringByteChannel;
-import java.util.ArrayList;
-import java.util.List;
-
 @Config
 public class StackPipeline extends OpenCvPipeline {
-        public static int testRec_x = 220;
-        public static int testRec_y = 110;
-        public static int testRec_width = 20;
-        public static int testRec_height = 60;
-        public static ringNumber analysis;
+        private static int testRec_x = 220;
+        private static int testRec_y = 110;
+        private static int testRec_width = 20;
+        private static int testRec_height = 60;
+        public ringNumber analysis;
 
         public enum ringNumber{
-            zero,
-            one,
-            four
+            ZERO,
+            ONE,
+            FOUR
         }
 
         /*
@@ -60,11 +55,11 @@ public class StackPipeline extends OpenCvPipeline {
             //Imgproc.drawContours(gray, contours, -
 
             if(colors.val[0] > 70 ){
-                analysis = ringNumber.four;
+                analysis = ringNumber.FOUR;
             } else if (colors.val[0] > 58){
-                analysis = ringNumber.one;
+                analysis = ringNumber.ONE;
             } else {
-                analysis = ringNumber.zero;
+                analysis = ringNumber.ZERO;
             }
 
             return input;

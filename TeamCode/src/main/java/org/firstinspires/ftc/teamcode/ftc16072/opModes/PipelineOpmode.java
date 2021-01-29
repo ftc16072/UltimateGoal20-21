@@ -54,7 +54,7 @@ public class PipelineOpmode extends OpMode {
     @Override
     public void init_loop() {
         super.init_loop();
-        telemetry.addData("analysis", StackPipeline.analysis);
+        telemetry.addData("analysis", stackPipeline.analysis);
     }
 
     @Override
