@@ -105,10 +105,11 @@ public class Shooter implements QQ_Mechanism {
         if(time >= delayTime) {
             if (inAcceptableVelo()) {
                 flick(true);
+                delayTime = time + 0.25;
             } else {
                 flick(false);
             }
-            delayTime = time + 0.25;
+
         }
     }
 
