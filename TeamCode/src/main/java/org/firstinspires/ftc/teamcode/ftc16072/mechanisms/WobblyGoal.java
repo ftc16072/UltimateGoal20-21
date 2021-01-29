@@ -19,7 +19,7 @@ public class WobblyGoal implements QQ_Mechanism {
     private final int ROTATOR_UP = -240;
     private final int ROTATOR_DOWN = -720;
     private final double ROTATOR_MAX_SPEED = 0.5;
-    private final double GRABBER_OPEN = 0.85;
+    private final double GRABBER_OPEN = 1.0;
     private final double GRABBER_CLOSED = 0.65;
 
     /**

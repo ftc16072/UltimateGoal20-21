@@ -130,6 +130,17 @@ public class Navigation {
         driveFieldRelative(translate, rotateSpeed);
     }
 
+    public void driveAngle(Joystick translateJoystick, double angle){
+        double rotateSpeed = 0;
+
+        double deltaAngle = AngleUnit.normalizeRadians(getHeading(AngleUnit.RADIANS) - AngleUnit.RADIANS.fromDegrees(angle));
+        rotateSpeed = Range.clip(deltaAngle * 2, -MAX_ROTATE_SPEED, MAX_ROTATE_SPEED);
+
+        Polar translate = flipDriving ? translateJoystick.getPolar() : fieldFromDriver(translateJoystick.getPolar()) ;
+
+        driveFieldRelative(translate, rotateSpeed);
+    }
+
     public void driveRotate(double rotateSpeed) {
         mecanumDrive.driveMecanum(0.0, 0.0, rotateSpeed);
     }

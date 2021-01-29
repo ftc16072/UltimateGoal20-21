@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.util.Range;
 import org.firstinspires.ftc.teamcode.ftc16072.mechanisms.tests.QQ_Test;
 import org.firstinspires.ftc.teamcode.ftc16072.mechanisms.tests.QQ_TestMotor;
 import org.firstinspires.ftc.teamcode.ftc16072.mechanisms.tests.QQ_TestServo;
+import org.opencv.core.Mat;
 
 import java.util.Arrays;
 import java.util.List;
@@ -32,6 +33,12 @@ public class Shooter implements QQ_Mechanism {
     final double RESET = 0.5; // TODO: Find value
 
     public static double SHOOTER_VELO = -1125;
+    public static double SHOOTER_RANGE = 50;
+
+    private int state;
+    private boolean flag = true;
+
+    double delayTime;
 
     /**
      * initializes Shooter
@@ -84,6 +91,28 @@ public class Shooter implements QQ_Mechanism {
             shooterImport.setPosition(RESET);
         }
     }
+
+    public double getShooterVelo(){
+        return shooterMotor.getVelocity();
+    }
+
+    public boolean inAcceptableVelo(){
+        return (getShooterVelo() >= SHOOTER_VELO - SHOOTER_RANGE) & (getShooterVelo() <= SHOOTER_VELO + SHOOTER_RANGE);
+    }
+
+    public void autoShoot(double time){
+        spinWheels(1, 1);
+        if(time >= delayTime) {
+            if (inAcceptableVelo()) {
+                flick(true);
+            } else {
+                flick(false);
+            }
+            delayTime = time + 0.25;
+        }
+    }
+
+
 
 
 

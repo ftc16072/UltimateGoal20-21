@@ -17,7 +17,7 @@ import java.util.List;
 
 @Config
 public class StackPipeline extends OpenCvPipeline {
-        public static int testRec_x = 200;
+        public static int testRec_x = 220;
         public static int testRec_y = 110;
         public static int testRec_width = 20;
         public static int testRec_height = 60;
@@ -61,7 +61,7 @@ public class StackPipeline extends OpenCvPipeline {
 
             if(colors.val[0] > 70 ){
                 analysis = ringNumber.four;
-            } else if (colors.val[0] > 50){
+            } else if (colors.val[0] > 58){
                 analysis = ringNumber.one;
             } else {
                 analysis = ringNumber.zero;

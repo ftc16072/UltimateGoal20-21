@@ -52,6 +52,10 @@ public class Lights implements QQ_Mechanism {
     public void normal(){
         blinkinLedDriver.setPattern(RevBlinkinLedDriver.BlinkinPattern.YELLOW);
     }
+
+    public void blue(){
+        blinkinLedDriver.setPattern(RevBlinkinLedDriver.BlinkinPattern.BLUE);
+    }
     public void endGame(){
         blinkinLedDriver.setPattern(RevBlinkinLedDriver.BlinkinPattern.CP1_2_TWINKLES);
     }
