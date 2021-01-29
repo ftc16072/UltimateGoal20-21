@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.ftc16072.utils;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.teamcode.ftc16072.mechanisms.Navigation;
 
 public class NavigationPose extends RobotPose {
     double xToleranceCm;
@@ -24,6 +25,10 @@ public class NavigationPose extends RobotPose {
         xToleranceCm = du.toCm(xTolerance);
         yToleranceCm = du.toCm(yTolerance);
         this.angleTolerance = au.toRadians(angleTolerance);
+    }
+
+    public NavigationPose(double x, double y, double distanceTolerance, double angle, double angleTolerance){
+        this(x, distanceTolerance, y, distanceTolerance, DistanceUnit.INCH, angle, angleTolerance, AngleUnit.DEGREES);
     }
 
     /**

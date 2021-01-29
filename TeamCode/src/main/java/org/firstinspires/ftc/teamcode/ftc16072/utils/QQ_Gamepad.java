@@ -7,6 +7,7 @@ public class QQ_Gamepad {
     public Joystick rightStick;
     public Joystick leftStick;
 
+
     /**
      * Constructor for the QQ gamepad
      * @param gamepad gamepad to use for the smart features
@@ -41,7 +42,6 @@ public class QQ_Gamepad {
     public boolean a(){
         return gamepad.a;
     }
-
 
 
     /**

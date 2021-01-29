@@ -3,9 +3,10 @@ package org.firstinspires.ftc.teamcode.ftc16072.opModes;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.ftc16072.actions.TeleopDriveAction;
+import org.firstinspires.ftc.teamcode.ftc16072.actions.TeleopDriveActionUpdate;
 
-@TeleOp(name="Simple Drive")
-public class SimpleDrive extends QQ_Opmode {
+@TeleOp(name="Teleop")
+public class Teleop extends QQ_Opmode {
     /**
      * updates the init of the opmode to drive via teleopDrive
      */
@@ -14,6 +15,7 @@ public class SimpleDrive extends QQ_Opmode {
         super.init();
         //robot will move the direction the user commands it to
         usesGamepads = true;
-        currentAction = new TeleopDriveAction();
+        currentAction = new TeleopDriveActionUpdate();
+        robot.intake.hold();
     }
 }
