@@ -9,8 +9,8 @@ public class DriveToWobblyGoalZone extends QQ_Action{
     double ZONE_A_Y = 68;
     double ZONE_B_X = 40;
     double ZONE_B_Y = 95;
-    double ZONE_C_X = 12;
-    double ZONE_C_Y = 110;
+    double ZONE_C_X = 10;
+    double ZONE_C_Y = 114;
 
     @Override
     public QQ_Action run(QQ_Opmode opmode) {
@@ -19,7 +19,7 @@ public class DriveToWobblyGoalZone extends QQ_Action{
         } else if (opmode.numberRingsSeen == StackPipeline.ringNumber.ONE){
             return new DriveToAction("moving to Zone B", new NavigationPose(ZONE_B_X, ZONE_B_Y, 0.5, -150, .5)).setNext(nextAction);
         } else {
-            return new DriveToAction("moving to Zone C", new NavigationPose(ZONE_C_X, ZONE_C_Y, 0.5, -130, .5)).setNext(nextAction);
+            return new DriveToAction("moving to Zone C", new NavigationPose(ZONE_C_X, ZONE_C_Y, 0.5, -120, .5)).setNext(nextAction);
         }
 
     }

@@ -38,7 +38,7 @@ public class autoRings extends QQ_Opmode {
                                 .setNext(new DelayAction(1))
                                 .setNext(new RaiseWobblyGoal())
                                 .setNext(new WarmUpShooter())
-                                .setNext(new DriveToAction("aim", new NavigationPose(40, 65, 0)))
+                                .setNext(new DriveToAction("aim", new NavigationPose(40, 61, 0)))
                                 .setNext(new DelayAction(1))
                                 .setNext(new ShootRings())
                                 .setNext(new TurnOffShooter())

@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.ftc16072.mechanisms;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.ftc16072.mechanisms.tests.QQ_Test;
@@ -30,6 +31,7 @@ public class Transfer implements QQ_Mechanism {
     private CRServo rightBelts;
     private CRServo middleTransferRight;
     private CRServo middleTransferLeft;
+    private DistanceSensor distanceSensor;
 
     private static final double transferSpeed = 1.0;
     private static final double reverseTransferSpeed = -0.5;
