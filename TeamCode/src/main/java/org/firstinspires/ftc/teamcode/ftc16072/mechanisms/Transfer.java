@@ -6,8 +6,10 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.ftc16072.mechanisms.tests.QQ_Test;
 import org.firstinspires.ftc.teamcode.ftc16072.mechanisms.tests.QQ_TestCRServo;
+import org.firstinspires.ftc.teamcode.ftc16072.mechanisms.tests.QQ_TestDistance;
 import org.firstinspires.ftc.teamcode.ftc16072.mechanisms.tests.QQ_TestMotor;
 
 import java.util.Arrays;
@@ -40,6 +42,13 @@ public class Transfer implements QQ_Mechanism {
     private static final double middleTransferSpeed = 1;
     private static final double reverseMiddleTransferSpeed = -0.5;
 
+    private double normalDistance;
+    private double distanceTolerance = 3;
+
+    private boolean wasRing;
+    private double ringsSeen;
+
+
 
 
 
@@ -52,6 +61,8 @@ public class Transfer implements QQ_Mechanism {
         middleTransferRight = hwMap.get(CRServo.class, "middleTransferRight");
         middleTransferLeft = hwMap.get(CRServo.class, "middleTransferLeft");
         middleTransferLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+        distanceSensor = hwMap.get(DistanceSensor.class, "transfer_distance");
+        normalDistance = distanceSensor.getDistance(DistanceUnit.CM);
     }
 
     /**
@@ -64,7 +75,8 @@ public class Transfer implements QQ_Mechanism {
                 new QQ_TestCRServo("left belts", beltSpeed, leftBelts),
                 new QQ_TestCRServo("right belts", beltSpeed, rightBelts),
                 new QQ_TestCRServo("middle Transfer Right", middleTransferSpeed, middleTransferRight),
-                new QQ_TestCRServo("middle Transfer Left", middleTransferSpeed, middleTransferLeft));
+                new QQ_TestCRServo("middle Transfer Left", middleTransferSpeed, middleTransferLeft),
+                new QQ_TestDistance("Distance", distanceSensor));
 
     }
 
@@ -75,6 +87,7 @@ public class Transfer implements QQ_Mechanism {
             leftBelts.setPower(beltSpeed);
             middleTransferRight.setPower(middleTransferSpeed);
             middleTransferLeft.setPower(middleTransferSpeed);
+            checkForRing(true);
 
         } else if (desiredState == transferState.Reverse) {
             transferMotor.setPower(reverseTransferSpeed);
@@ -82,6 +95,7 @@ public class Transfer implements QQ_Mechanism {
             leftBelts.setPower(reverseBeltSpeed);
             middleTransferRight.setPower(reverseMiddleTransferSpeed);
             middleTransferLeft.setPower(reverseMiddleTransferSpeed);
+            checkForRing(false);
 
         } else {
             transferMotor.setPower(0);
@@ -92,6 +106,26 @@ public class Transfer implements QQ_Mechanism {
 
         }
     }
+
+     private boolean seeRing(){
+        return distanceSensor.getDistance(DistanceUnit.CM) <= normalDistance - distanceTolerance;
+     }
+
+     private void checkForRing(boolean forward){
+        if(seeRing() & !wasRing) {
+            ringsSeen += forward ? 0.5 : -0.5;
+        }
+        wasRing = seeRing();
+     }
+
+     public double getRingsSeen(boolean reset){
+         double ringCount = ringsSeen;
+         if(reset){
+            ringsSeen = 0;
+        }
+        return ringCount;
+     }
+
 
         /**
          * get name

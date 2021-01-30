@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Robot {
+    public double ringCount;
     public MecanumDrive mecanumDrive = new MecanumDrive();
     public Navigation nav = new Navigation(mecanumDrive);
     public Shooter shooter = new Shooter();
