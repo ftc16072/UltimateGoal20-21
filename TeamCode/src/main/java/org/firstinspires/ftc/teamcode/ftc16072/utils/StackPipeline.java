@@ -12,8 +12,8 @@ import org.openftc.easyopencv.OpenCvPipeline;
 
 @Config
 public class StackPipeline extends OpenCvPipeline {
-        private static int testRec_x = 220;
-        private static int testRec_y = 110;
+        public static int testRec_x = 240;
+        public static int testRec_y = 146;
         private static int testRec_width = 20;
         private static int testRec_height = 60;
         public ringNumber analysis;

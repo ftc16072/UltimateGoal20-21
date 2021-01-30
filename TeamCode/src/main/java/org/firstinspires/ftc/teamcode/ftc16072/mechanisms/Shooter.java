@@ -12,6 +12,7 @@ import org.firstinspires.ftc.teamcode.ftc16072.mechanisms.tests.QQ_TestMotor;
 import org.firstinspires.ftc.teamcode.ftc16072.mechanisms.tests.QQ_TestServo;
 import org.opencv.core.Mat;
 
+import java.io.Console;
 import java.util.Arrays;
 import java.util.List;
 
@@ -102,6 +103,7 @@ public class Shooter implements QQ_Mechanism {
 
     public void autoShoot(double time){
         spinWheels(1, 1);
+
         if(time >= delayTime) {
             if (inAcceptableVelo()) {
                 flick(true);
