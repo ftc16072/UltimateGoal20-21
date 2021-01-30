@@ -12,6 +12,11 @@ public class DriveToWobblyGoalZone extends QQ_Action{
     double ZONE_C_X = 10;
     double ZONE_C_Y = 114;
 
+    /**
+     * checks rings seen and drives to specific zone
+     * @param opmode this gives the action access to our robot, gamepads, time left etc
+     * @return drives to zone a, b, or c
+     */
     @Override
     public QQ_Action run(QQ_Opmode opmode) {
         if (opmode.numberRingsSeen == StackPipeline.ringNumber.ZERO){

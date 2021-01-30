@@ -14,6 +14,11 @@ public class ShootRings extends QQ_Action {
         main.setNext(new ShootAction("ring3"));
     }
 
+    /**
+     * shoots rings
+     * @param opmode this gives the action access to our robot, gamepads, time left etc
+     * @return nextAction
+     */
     @Override
     public QQ_Action run(QQ_Opmode opmode) {
         return main.setNext(nextAction);

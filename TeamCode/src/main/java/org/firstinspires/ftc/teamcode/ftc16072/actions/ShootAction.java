@@ -12,6 +12,11 @@ double AUTO_SHOOT_ANGLE = 0.5; //change value to correct
         super(description);
     }
 
+    /**
+     * tests if the cases are true or false
+     * @param opmode this gives the action access to our robot, gamepads, time left etc
+     * @return if true, return case number; if false, return nextAction
+     */
     @Override
     public QQ_Action run(QQ_Opmode opmode) {
         switch (step){

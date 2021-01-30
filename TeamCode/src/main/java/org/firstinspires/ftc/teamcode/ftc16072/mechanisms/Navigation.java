@@ -101,6 +101,11 @@ public class Navigation {
         imuOffset = supposedHeading - currentHeading;
     }
 
+    /**
+     *
+     * @param au
+     * @return radians from angles
+     */
     public double getHeading(AngleUnit au) {
         Orientation angles;
 
