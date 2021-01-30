@@ -13,7 +13,7 @@ public class DelayAction extends QQ_Action {
     /**
      *
      * @param opmode this gives the action access to our robot, gamepads, time left etc
-     * @return next action to run once finishe
+     * @return next action to run once finished
      */
 
     @Override
