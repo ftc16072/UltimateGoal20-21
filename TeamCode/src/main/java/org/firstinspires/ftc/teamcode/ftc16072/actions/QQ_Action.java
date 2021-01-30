@@ -30,6 +30,11 @@ abstract public class QQ_Action {
      */
     public abstract QQ_Action run(QQ_Opmode opmode);
 
+    /**
+     *
+     * @param nextAction
+     * @return nextAction
+     */
     public QQ_Action setNext(QQ_Action nextAction){
         if (this.nextAction == null){
             this.nextAction = nextAction;
@@ -39,6 +44,10 @@ abstract public class QQ_Action {
         return this;
     }
 
+    /**
+     *
+     * @return description
+     */
     public String getDescription(){
         return description;
     }
