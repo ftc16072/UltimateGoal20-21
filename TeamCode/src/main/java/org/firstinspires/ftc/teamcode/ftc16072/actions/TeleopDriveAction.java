@@ -65,19 +65,22 @@ public class TeleopDriveAction extends QQ_Action {
         //spinning shooter wheels
         if (opmode.qq_gamepad2.rightTrigger() >= 0.2){
             opmode.robot.shooter.autoShoot(opmode.time);
-        } else if (opmode.qq_gamepad2.rightBumper()) {
-            opmode.robot.shooter.spinWheels(-1, -0.8);
         } else {
-            opmode.robot.shooter.spinWheels(0, 0);
+            if (opmode.qq_gamepad2.rightBumper()) {
+                opmode.robot.shooter.spinWheels(true);
+            } else {
+                opmode.robot.shooter.spinWheels(false);
+            }
+            //shooter servo to push rings
+            if (opmode.qq_gamepad2.b()) {
+                opmode.robot.shooter.flick(true);
+
+            } else {
+                opmode.robot.shooter.flick(false);
+            }
         }
 
-        //shooter servo to push rings
-        if (opmode.qq_gamepad2.b()) {
-            opmode.robot.shooter.flick(true);
 
-        } else {
-            opmode.robot.shooter.flick(false);
-        }
         //up and down of wobbly goal
         if (opmode.qq_gamepad2.dpadUp()) {
             opmode.robot.wobblyGoal.raiseRotator();

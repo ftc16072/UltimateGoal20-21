@@ -10,7 +10,7 @@ public class TurnOffShooter extends QQ_Action {
      */
     @Override
     public QQ_Action run(QQ_Opmode opmode) {
-        opmode.robot.shooter.spinWheels(0, 0);
+        opmode.robot.shooter.spinWheels(false);
         return nextAction;
     }
 }
