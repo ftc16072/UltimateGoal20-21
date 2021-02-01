@@ -43,7 +43,7 @@ public class Transfer implements QQ_Mechanism {
     private static final double reverseMiddleTransferSpeed = -0.5;
 
     private double normalDistance;
-    private double distanceTolerance = 3;
+    private double distanceTolerance = 1.5;
 
     private boolean wasRing;
     private double ringsSeen;
