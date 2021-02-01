@@ -41,6 +41,8 @@ public class Shooter implements QQ_Mechanism {
 
     double delayTime;
 
+    double ringsShot = 0;
+
     /**
      * initializes Shooter
      *
@@ -88,6 +90,7 @@ public class Shooter implements QQ_Mechanism {
     public void flick(boolean shouldFlick){
         if (shouldFlick) {
             shooterImport.setPosition(INSERT);
+            ringsShot += 1;
         } else {
             shooterImport.setPosition(RESET);
         }
@@ -115,9 +118,15 @@ public class Shooter implements QQ_Mechanism {
         }
     }
 
+    public double getRingsShot(boolean reset){
+        double ringCount = ringsShot;
 
+        if (reset){
+            ringsShot = 0;
+        }
 
-
+        return ringCount;
+    }
 
     /**
      * get name

@@ -14,7 +14,7 @@ public class QQ_TestDistance extends QQ_Test {
      * @param description    a human readable description of the test
      * @param distanceSensor an instance of the distance sensor class to use for the test
      */
-    QQ_TestDistance(String description, DistanceSensor distanceSensor) {
+    public QQ_TestDistance(String description, DistanceSensor distanceSensor) {
         super(description);
         this.distanceSensor = distanceSensor;
     }
