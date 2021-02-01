@@ -21,7 +21,6 @@ public class WobblyGoal implements QQ_Mechanism {
     private final double ROTATOR_MAX_SPEED = 0.5;
     private final double GRABBER_OPEN = 1.0;
     private final double GRABBER_CLOSED = 0.35;
-=
     /**
      * initialize hardware map
      * @param hwMap Hardware map from configuration
