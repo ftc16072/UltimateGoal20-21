@@ -13,7 +13,6 @@ public class TeleopDriveAction extends QQ_Action {
     boolean wasUp;
     boolean wasDown;
 
-    boolean flag = true;
     double timeOffset;
 
     private boolean gamepad2APressed;
@@ -37,7 +36,7 @@ public class TeleopDriveAction extends QQ_Action {
      * @return next action
      */
     public QQ_Action run(QQ_Opmode opmode) {
-        if(flag){
+        if(timeOffset == 0.0){
             timeOffset = opmode.time;
         }
 
