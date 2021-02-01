@@ -11,7 +11,7 @@ public class WarmUpShooter extends QQ_Action {
 
     @Override
     public QQ_Action run(QQ_Opmode opmode) {
-        opmode.robot.shooter.spinWheels(-0.7, -0.8);
+        opmode.robot.shooter.spinWheels(true);
         return nextAction;
     }
 }

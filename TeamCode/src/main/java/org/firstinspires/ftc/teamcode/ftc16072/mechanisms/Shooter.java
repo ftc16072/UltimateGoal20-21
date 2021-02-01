@@ -52,6 +52,7 @@ public class Shooter implements QQ_Mechanism {
     public void init(HardwareMap hwMap) {
         shooterMotor = hwMap.get(DcMotorEx.class, "shooter_motor");
         shooterImport = hwMap.get(Servo.class, "servo_import_shooter");
+        delayTime = 0.0;
     }
 
     /**
@@ -79,8 +80,8 @@ public class Shooter implements QQ_Mechanism {
     }
 
 
-    public void spinWheels(double frontSpeed, double backSpeed) {
-        if (frontSpeed == 0 || backSpeed == 0){
+    public void spinWheels(boolean spin) {
+        if (!spin){
             shooterMotor.setVelocity(0);
         } else {
             shooterMotor.setVelocity(SHOOTER_VELO);
@@ -105,7 +106,7 @@ public class Shooter implements QQ_Mechanism {
     }
 
     public void autoShoot(double time){
-        spinWheels(1, 1);
+        spinWheels(true);
 
         if(time >= delayTime) {
             if (inAcceptableVelo()) {
