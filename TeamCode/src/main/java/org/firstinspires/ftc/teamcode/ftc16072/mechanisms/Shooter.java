@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.ftc16072.mechanisms;
 
+import android.util.Log;
+
 import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -37,11 +39,13 @@ public class Shooter implements QQ_Mechanism {
     public static double SHOOTER_RANGE = 50;
 
     private int state;
-    private boolean flag = true;
+    private boolean waitSecond = true;
 
     double delayTime;
 
     double ringsShot = 0;
+
+    boolean flicked;
 
     /**
      * initializes Shooter
@@ -91,10 +95,15 @@ public class Shooter implements QQ_Mechanism {
     public void flick(boolean shouldFlick){
         if (shouldFlick) {
             shooterImport.setPosition(INSERT);
-            ringsShot += 1;
+            if(!flicked){
+                ringsShot += 1;
+            }
+
+
         } else {
             shooterImport.setPosition(RESET);
         }
+        flicked = shouldFlick;
     }
 
     public double getShooterVelo(){
@@ -110,13 +119,27 @@ public class Shooter implements QQ_Mechanism {
 
         if(time >= delayTime) {
             if (inAcceptableVelo()) {
-                flick(true);
+                if (!waitSecond) {
+                    if(flicked){
+                        flick(false);
+                        Log.d("QQ", "autoShoot: waitSecond");
+                    } else {
+                        flick(true);
+                        Log.d("QQ", "autoShoot: Flicked");
+                    }
+                }
                 delayTime = time + 0.25;
+                waitSecond = false;
             } else {
                 flick(false);
+                Log.d("QQ", "autoShoot: Reset");
             }
 
         }
+    }
+
+    public void doneShooting(){
+        waitSecond = true;
     }
 
     public double getRingsShot(boolean reset){

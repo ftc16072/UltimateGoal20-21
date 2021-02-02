@@ -66,6 +66,7 @@ public class TeleopDriveAction extends QQ_Action {
         if (opmode.qq_gamepad2.rightTrigger() >= 0.2){
             opmode.robot.shooter.autoShoot(opmode.time);
         } else {
+            opmode.robot.shooter.doneShooting();
             if (opmode.qq_gamepad2.rightBumper()) {
                 opmode.robot.shooter.spinWheels(true);
             } else {
