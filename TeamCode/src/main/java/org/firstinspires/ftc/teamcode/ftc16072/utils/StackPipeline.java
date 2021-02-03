@@ -27,14 +27,6 @@ public class StackPipeline extends OpenCvPipeline {
             FOUR
         }
 
-        /*
-         * NOTE: if you wish to use additional Mat objects in your processing pipeline, it is
-         * highly recommended to declare them here as instance variables and re-use them for
-         * each invocation of processFrame(), rather than declaring them as new local variables
-         * each time through processFrame(). This removes the danger of causing a memory leak
-         * by forgetting to call mat.release(), and it also reduces memory pressure by not
-         * constantly allocating and freeing large chunks of memory.
-         */
 
     @Override
         public Mat processFrame(Mat input)
@@ -48,6 +40,9 @@ public class StackPipeline extends OpenCvPipeline {
             Imgproc.cvtColor(ring, ringHSV, Imgproc.COLOR_BGR2HSV);
 
             double avgHueValue = Core.mean(ringHSV).val[0];
+
+            ring.release();
+            ringHSV.release();
 
             Imgproc.putText(input, "H:" + (int)avgHueValue, new Point(TEST_RECT_X, TEST_RECT_Y - 40), Imgproc.FONT_HERSHEY_COMPLEX_SMALL,0.8, new Scalar(255, 255, 255));
 
