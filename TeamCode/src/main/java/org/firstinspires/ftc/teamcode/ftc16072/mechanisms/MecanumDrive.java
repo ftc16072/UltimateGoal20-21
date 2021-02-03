@@ -45,11 +45,11 @@ public class MecanumDrive implements QQ_Mechanism {
     private DcMotorEx backRight;
     private DcMotorEx backLeft;
 
-    private final static double GEAR_RATIO = 4.0/6.0;
-    private final static double WHEEL_RADIUS = 5.0; //5 cm
-    private final static double TICKS_PER_ROTATION = 383.6;
+    private final double GEAR_RATIO = 4.0/6.0;
+    private final double WHEEL_RADIUS = 5.0; //5 cm
+    private final double TICKS_PER_ROTATION = 383.6;
     //cm per rotation/ticks per rotation
-    private final static double CM_PER_TICK = (2 * Math.PI * GEAR_RATIO * WHEEL_RADIUS) / TICKS_PER_ROTATION;
+    private final double CM_PER_TICK = (2 * Math.PI * GEAR_RATIO * WHEEL_RADIUS) / TICKS_PER_ROTATION;
 
     //created so we can easily change code to lower the speed in the setSpeeds method
     private double maxSpeed = 1.0;

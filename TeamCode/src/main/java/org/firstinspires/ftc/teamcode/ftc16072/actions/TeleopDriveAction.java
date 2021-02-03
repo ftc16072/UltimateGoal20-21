@@ -18,13 +18,13 @@ public class TeleopDriveAction extends QQ_Action {
     private boolean gamepad2APressed;
     private boolean gamepad1BPressed;
     private boolean closeGrabber;
-    final static double MAX_SPEED = 1;
-    final static double NORMAL_SPEED = 0.6;
-    final static double SLOW_SPEED = 0.3;
+    final double MAX_SPEED = 1;
+    final double NORMAL_SPEED = 0.6;
+    final double SLOW_SPEED = 0.3;
 
-    public static double powerShot1Angle = 91.0;
-    public static double powerShot2Angle = 88.0;
-    public static double powerShot3Angle = 84.6;
+    public double powerShot1Angle = 91.0;
+    public double powerShot2Angle = 88.0;
+    public double powerShot3Angle = 84.6;
 
 
 
@@ -66,6 +66,7 @@ public class TeleopDriveAction extends QQ_Action {
         if (opmode.qq_gamepad2.rightTrigger() >= 0.2){
             opmode.robot.shooter.autoShoot(opmode.time);
         } else {
+            opmode.robot.shooter.doneShooting();
             if (opmode.qq_gamepad2.rightBumper()) {
                 opmode.robot.shooter.spinWheels(true);
             } else {

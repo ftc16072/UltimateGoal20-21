@@ -29,9 +29,9 @@ public class Navigation {
     private static double imuOffset;
     double TRANSLATE_KP = 0.1;
     double MIN_R = 0.14;
-    final static double ROTATE_KP = 2;
-    final static double MAX_ROTATE_SPEED = 0.8;
-    final static double MIN_ROTATE_SPEED = 0.1;
+    final double ROTATE_KP = 2;
+    final double MAX_ROTATE_SPEED = 0.8;
+    final double MIN_ROTATE_SPEED = 0.1;
     public boolean flipDriving = false;
 
     public enum DriverPerspective {

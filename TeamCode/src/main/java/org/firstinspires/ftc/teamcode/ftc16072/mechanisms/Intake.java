@@ -20,10 +20,10 @@ public class Intake implements QQ_Mechanism {
 
     private DcMotor intakeMotor;
     public Servo intakeHolder;
-    private static final double intakeSpeed = -0.5;
-    private static final double reverseIntakeSpeed = 0.4;
-    private static final double HOLD_POSITION = 0.33;
-    private static final double RELEASE_POSITION = 0.0;
+    private final double intakeSpeed = -0.5;
+    private final double reverseIntakeSpeed = 0.4;
+    private final double HOLD_POSITION = 0.33;
+    private final double RELEASE_POSITION = 0.0;
 
     /**
      * initialize intake
