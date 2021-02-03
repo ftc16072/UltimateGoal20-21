@@ -35,8 +35,8 @@ public class Shooter implements QQ_Mechanism {
     final double INSERT = 0; // TODO: Find Value
     final double RESET = 0.5; // TODO: Find value
 
-    public static double SHOOTER_VELO = -1125;
-    public static double SHOOTER_RANGE = 50;
+    public double SHOOTER_VELO = -1125;
+    public double SHOOTER_RANGE = 10;
 
     private int state;
     private boolean waitSecond = true;

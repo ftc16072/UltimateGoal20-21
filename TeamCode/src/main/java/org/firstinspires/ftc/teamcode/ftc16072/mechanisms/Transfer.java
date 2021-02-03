@@ -35,12 +35,12 @@ public class Transfer implements QQ_Mechanism {
     private CRServo middleTransferLeft;
     private DistanceSensor distanceSensor;
 
-    private static final double transferSpeed = 1.0;
-    private static final double reverseTransferSpeed = -0.5;
-    private static final double beltSpeed = 1.0;
-    private static final double reverseBeltSpeed = -1.0;
-    private static final double middleTransferSpeed = 1;
-    private static final double reverseMiddleTransferSpeed = -0.5;
+    private final double transferSpeed = 1.0;
+    private final double reverseTransferSpeed = -0.5;
+    private final double beltSpeed = 1.0;
+    private final double reverseBeltSpeed = -1.0;
+    private final double middleTransferSpeed = 1;
+    private final double reverseMiddleTransferSpeed = -0.5;
 
     private double normalDistance;
     private double distanceTolerance = 1.5;

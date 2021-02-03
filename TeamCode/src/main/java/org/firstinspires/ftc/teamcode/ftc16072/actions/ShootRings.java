@@ -30,7 +30,7 @@ public class ShootRings extends QQ_Action {
     public QQ_Action run(QQ_Opmode opmode) {
         opmode.robot.shooter.autoShoot(opmode.time);
         if (waitTime == 0.0){
-            waitTime = opmode.time + 7;
+            waitTime = opmode.time + 5;
         }
 
         if ((opmode.robot.shooter.getRingsShot(false) >= 3) || (opmode.time >= waitTime)){
