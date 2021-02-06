@@ -10,6 +10,11 @@ public class Joystick {
     boolean squared;
     Polar polar;
 
+    /**
+     *
+     * @param input squareWithSign
+     * @return input * input * Math.signum(input)
+     */
     private double squareWithSign(double input){
         return input * input * Math.signum(input);
     }
@@ -79,6 +84,10 @@ public class Joystick {
         return pressed;
     }
 
+    /**
+     *
+     * @param squared setSquared
+     */
     public void setSquared(boolean squared){
         this.squared = squared;
     }

@@ -39,6 +39,11 @@ public class Navigation {
     }
     DriverPerspective perspective = DriverPerspective.BACK;
 
+    /**
+     *
+     * @param driver polar driver
+     * @return pi/2, angle unit in radians
+     */
     Polar fieldFromDriver(Polar driver){
         switch(perspective){
             case BLUE:
@@ -89,11 +94,20 @@ public class Navigation {
         imuOffset = offset;
     }
 
+    /**
+     *
+     * @param pose set current position
+     */
     public void setCurrentPosition(RobotPose pose) {
         currentPosition = pose;
         mecanumDrive.setOffsets();
     }
 
+    /**
+     *
+     * @param angle reset IMU
+     * @param au reset IMU
+     */
     public void resetIMU(double angle, AngleUnit au) {
         double supposedHeading = au.toRadians(angle);
         double currentHeading = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS).firstAngle; //if we use our get method it would double the offset if we set it again
@@ -114,12 +128,23 @@ public class Navigation {
         return au.fromRadians(angles.firstAngle + imuOffset);
     }
 
+    /**
+     *
+     * @param translate rotate CCW
+     * @param rotateSpeed drive field relative
+     */
     private void driveFieldRelative(Polar translate, double rotateSpeed) {
         Polar drive = translate.rotateCCW(getHeading(AngleUnit.RADIANS), AngleUnit.RADIANS);
         mecanumDrive.driveMecanum(drive.getY(DistanceUnit.CM), drive.getX(DistanceUnit.CM), rotateSpeed);
     }
 
     //Teleop Stuff
+
+    /**
+     *
+     * @param translateJoystick driveFieldRelativeAngle
+     * @param angleJoystick if angleJoystick >=0.8, set fieldRelative to ...
+     */
     public void driveFieldRelativeAngle(Joystick translateJoystick, Joystick angleJoystick) {
         double rotateSpeed = 0;
 
@@ -135,6 +160,11 @@ public class Navigation {
         driveFieldRelative(translate, rotateSpeed);
     }
 
+    /**
+     *
+     * @param translateJoystick driveAngle
+     * @param angle rotateSpeed
+     */
     public void driveAngle(Joystick translateJoystick, double angle){
         double rotateSpeed = 0;
 
@@ -146,6 +176,10 @@ public class Navigation {
         driveFieldRelative(translate, rotateSpeed);
     }
 
+    /**
+     *
+     * @param rotateSpeed driveMecanum (forward 0.0, strafe 0.0, rotateSpeed)
+     */
     public void driveRotate(double rotateSpeed) {
         mecanumDrive.driveMecanum(0.0, 0.0, rotateSpeed);
     }
@@ -206,6 +240,9 @@ public class Navigation {
         return false;
     }
 
+    /**
+     * update position of mecanum drive
+     */
     public void updatePose() {
         MecanumDrive.MoveDeltas movement = mecanumDrive.getDistance(true);
         currentPosition.setAngle(getHeading(AngleUnit.RADIANS), AngleUnit.RADIANS);
