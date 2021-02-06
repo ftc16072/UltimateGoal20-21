@@ -9,6 +9,9 @@ public class ShootRings extends QQ_Action {
     QQ_Action main;
     double waitTime;
 
+    /**
+     * shoot rings
+     */
     public ShootRings(){
         /*main = new ShootAction("ring1");;
         main.setNext(new DelayAction(delayTime));

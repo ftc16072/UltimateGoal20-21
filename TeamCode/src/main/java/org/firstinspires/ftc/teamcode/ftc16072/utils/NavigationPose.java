@@ -17,6 +17,7 @@ public class NavigationPose extends RobotPose {
      * @param yTolerance tolerance on the y component
      * @param du distance unit those distances are in
      * @param angle angle component
+     * @param angleTolerance tolerance on the angle
      * @param au angle unit that angle is in
      */
     public NavigationPose(double x, double xTolerance, double y, double yTolerance, DistanceUnit du, double angle, double angleTolerance, AngleUnit au){
@@ -27,6 +28,14 @@ public class NavigationPose extends RobotPose {
         this.angleTolerance = au.toRadians(angleTolerance);
     }
 
+    /**
+     *
+     * @param x x component
+     * @param y y component
+     * @param distanceTolerance tolerance on the distance
+     * @param angle angle component
+     * @param angleTolerance tolerance on the angle
+     */
     public NavigationPose(double x, double y, double distanceTolerance, double angle, double angleTolerance){
         this(x, distanceTolerance, y, distanceTolerance, DistanceUnit.INCH, angle, angleTolerance, AngleUnit.DEGREES);
     }
@@ -40,6 +49,12 @@ public class NavigationPose extends RobotPose {
         this(x, 0.5, y, 0.5, DistanceUnit.INCH, 0, 0, AngleUnit.DEGREES);
     }
 
+    /**
+     *
+     * @param x x component
+     * @param y y component
+     * @param theta angle in radians
+     */
     public NavigationPose(double x, double y, double theta){
         this(x, 0.5, y, 0.5, DistanceUnit.INCH, theta, 2, AngleUnit.DEGREES);
     }

@@ -74,6 +74,10 @@ public class WobblyGoal implements QQ_Mechanism {
         rotator.setPower(ROTATOR_MAX_SPEED);
     }
 
+    /**
+     *
+     * @return rotator is busy
+     */
     public boolean isRotatorBusy(){
         return rotator.isBusy();
     }

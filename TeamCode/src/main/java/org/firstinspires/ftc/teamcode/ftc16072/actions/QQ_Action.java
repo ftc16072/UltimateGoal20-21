@@ -32,7 +32,7 @@ abstract public class QQ_Action {
 
     /**
      *
-     * @param nextAction
+     * @param nextAction if NextAction is 0, continue to the nextAction
      * @return nextAction
      */
     public QQ_Action setNext(QQ_Action nextAction){

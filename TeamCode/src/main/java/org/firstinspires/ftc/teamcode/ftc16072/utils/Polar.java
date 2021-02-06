@@ -16,6 +16,7 @@ public class Polar {
      * @param angle angle component
      * @param au    angle unit the angle is in
      * @param r     distance from center
+     * @param du distance unit of polar
      */
     public Polar(double angle, AngleUnit au, double r, DistanceUnit du) {
         this.r = du.toCm(r);
@@ -29,6 +30,7 @@ public class Polar {
      *
      * @param x distance from the origin in the x axis
      * @param y distance from the origin in the y axis
+     * @param du distance from polar
      */
     public Polar(double x, double y, DistanceUnit du) {
         this.x_cm = du.toCm(x);
@@ -87,6 +89,7 @@ public class Polar {
      *
      * @param heading   angle to subtract
      * @param angleUnit angle unit that angle is in
+     * @return new polar angle
      */
     public Polar rotateCCW(double heading, AngleUnit angleUnit) {
         return new Polar(theta - angleUnit.toRadians(heading), AngleUnit.RADIANS, r, DistanceUnit.CM);
@@ -97,11 +100,16 @@ public class Polar {
      *
      * @param heading   angle to add
      * @param angleUnit angle unit that angle is in
+     * @return new polar angle
      */
     public Polar rotateCW(double heading, AngleUnit angleUnit) {
         return new Polar(theta + angleUnit.toRadians(heading), AngleUnit.RADIANS, r, DistanceUnit.CM);
     }
 
+    /**
+     *
+     * @param scale scaleR when r = r * scale
+     */
     public void scaleR(double scale){
         r = r * scale;
     }

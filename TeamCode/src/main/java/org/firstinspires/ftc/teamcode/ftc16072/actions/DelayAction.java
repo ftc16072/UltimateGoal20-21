@@ -6,6 +6,10 @@ public class DelayAction extends QQ_Action {
     double delayTime;
     double delayTill;
 
+    /**
+     *
+     * @param seconds set delay time to seconds
+     */
     public DelayAction(double seconds){
         delayTime = seconds;
     }

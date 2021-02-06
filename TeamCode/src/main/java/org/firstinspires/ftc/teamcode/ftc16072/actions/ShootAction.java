@@ -8,6 +8,11 @@ public class ShootAction extends QQ_Action{
 int step;
 double waitTime;
 double AUTO_SHOOT_ANGLE = 0.5; //change value to correct
+
+    /**
+     *
+     * @param description add description of shootAction
+     */
     public ShootAction(String description){
         super(description);
     }

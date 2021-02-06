@@ -21,19 +21,50 @@ public class MecanumDrive implements QQ_Mechanism {
         double y_cm;
         double theta;
 
+        /**
+         *
+         * @param forward distance from origin on the x axis
+         * @param strafe distance from origina on the y axis
+         * @param du distance unit
+         * @param angle radians of theta
+         * @param au angle unit
+         */
         public MoveDeltas(double forward, double strafe, DistanceUnit du, double angle, AngleUnit au){
             x_cm = du.toCm(forward);
             y_cm = du.toCm(strafe);
             theta = au.toRadians(angle);
         }
 
+        /**
+         *
+         * @param du forward distance
+         * @return return x cm from distance
+         */
         public double getForward(DistanceUnit du) {
             return du.fromCm(x_cm);
         }
+
+        /**
+         *
+          * @param du strafe distance
+         * @return return y cm from distance
+         */
         public double getStrafe(DistanceUnit du) {
             return du.fromCm(y_cm);
         }
+
+        /**
+         *
+         * @param au angle distance
+         * @return radians of theta
+         */
         public double getAngle(AngleUnit au) { return au.fromRadians(theta); }
+
+        /**
+         *
+         * @param angle set angle
+         * @param au theta degrees to angle
+         */
         public void setAngle(double angle, AngleUnit au) {theta = au.toRadians(angle);}
 
     }
@@ -145,6 +176,12 @@ public class MecanumDrive implements QQ_Mechanism {
         return "MecanumDrive";
     }
 
+    /**
+     *
+     * @param forward drive mecanum forward
+     * @param strafe drive mecanum side to side
+     * @param rotate rotate mecanum
+     */
     public void driveMecanum(double forward, double strafe, double rotate) {
         double frontLeftSpeed = forward + strafe + rotate;
         double frontRightSpeed = forward - strafe - rotate;
@@ -185,10 +222,17 @@ public class MecanumDrive implements QQ_Mechanism {
         return new MoveDeltas(forward, strafe, DistanceUnit.CM, angle , AngleUnit.DEGREES);
     }
 
+    /**
+     *
+     * @param maxSpeed set max speed
+     */
     public void setMaxSpeed(double maxSpeed) {
         this.maxSpeed = maxSpeed;
     }
 
+    /**
+     * set backleft, backright, frontleft and frontright offsets
+     */
     public void setOffsets(){
         backLeftOffset = backLeft.getCurrentPosition();
         backRightOffset = backRight.getCurrentPosition();

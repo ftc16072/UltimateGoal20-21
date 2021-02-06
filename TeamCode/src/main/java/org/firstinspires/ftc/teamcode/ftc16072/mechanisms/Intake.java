@@ -61,10 +61,16 @@ public class Intake implements QQ_Mechanism {
         }
     }
 
+    /**
+     * release intake position
+     */
     public void release(){
         intakeHolder.setPosition(RELEASE_POSITION);
     }
 
+    /**
+     * hold intake position
+     */
     public void hold(){
         intakeHolder.setPosition(HOLD_POSITION);
     }

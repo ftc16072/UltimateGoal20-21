@@ -9,6 +9,7 @@ import org.firstinspires.ftc.teamcode.ftc16072.mechanisms.tests.QQ_TestBlinkin;
 import org.firstinspires.ftc.teamcode.ftc16072.mechanisms.tests.QQ_TestServo;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class Lights implements QQ_Mechanism {
@@ -36,7 +37,7 @@ public class Lights implements QQ_Mechanism {
      */
     @Override
     public List<QQ_Test> getTests() {
-        return Arrays.asList(new QQ_TestBlinkin("lights", RevBlinkinLedDriver.BlinkinPattern.YELLOW, RevBlinkinLedDriver.BlinkinPattern.VIOLET, blinkinLedDriver));
+        return Collections.singletonList(new QQ_TestBlinkin("lights", RevBlinkinLedDriver.BlinkinPattern.YELLOW, RevBlinkinLedDriver.BlinkinPattern.VIOLET, blinkinLedDriver));
     }
     /**
      * get name
@@ -46,19 +47,38 @@ public class Lights implements QQ_Mechanism {
     public String getName() {
         return "Lights";
     }
+
+    /**
+     * set strobe light to red
+     */
     public void warn(){
         blinkinLedDriver.setPattern(RevBlinkinLedDriver.BlinkinPattern.STROBE_RED);
     }
+
+    /**
+     * set LED light to yellow
+     */
     public void normal(){
         blinkinLedDriver.setPattern(RevBlinkinLedDriver.BlinkinPattern.YELLOW);
     }
 
+    /**
+     * set LED light to blue
+     */
     public void blue(){
         blinkinLedDriver.setPattern(RevBlinkinLedDriver.BlinkinPattern.BLUE);
     }
+
+    /**
+     * set LED light to twinkle
+     */
     public void endGame(){
         blinkinLedDriver.setPattern(RevBlinkinLedDriver.BlinkinPattern.CP1_2_TWINKLES);
     }
+
+    /**
+     * set LED light to black
+     */
     public void off(){
         blinkinLedDriver.setPattern(RevBlinkinLedDriver.BlinkinPattern.BLACK);
     }

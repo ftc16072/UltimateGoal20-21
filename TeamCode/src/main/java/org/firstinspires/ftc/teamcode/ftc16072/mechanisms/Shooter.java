@@ -83,7 +83,10 @@ public class Shooter implements QQ_Mechanism {
         return false;
     }
 
-
+    /**
+     *
+     * @param spin spin the wheels and set velocity
+     */
     public void spinWheels(boolean spin) {
         if (!spin){
             shooterMotor.setVelocity(0);
@@ -92,6 +95,10 @@ public class Shooter implements QQ_Mechanism {
         }
     }
 
+    /**
+     *
+     * @param shouldFlick import shooter and set position
+     */
     public void flick(boolean shouldFlick){
         if (shouldFlick) {
             shooterImport.setPosition(INSERT);
@@ -106,14 +113,26 @@ public class Shooter implements QQ_Mechanism {
         flicked = shouldFlick;
     }
 
+    /**
+     *
+     * @return velocity of shooter motor
+     */
     public double getShooterVelo(){
         return shooterMotor.getVelocity();
     }
 
+    /**
+     *
+     * @return shooter velocity
+     */
     public boolean inAcceptableVelo(){
         return (getShooterVelo() >= SHOOTER_VELO - SHOOTER_RANGE) & (getShooterVelo() <= SHOOTER_VELO + SHOOTER_RANGE);
     }
 
+    /**
+     *
+     * @param time check is spinWheels is true or false
+     */
     public void autoShoot(double time){
         spinWheels(true);
 
@@ -138,10 +157,18 @@ public class Shooter implements QQ_Mechanism {
         }
     }
 
+    /**
+     * wait one second
+     */
     public void doneShooting(){
         waitSecond = true;
     }
 
+    /**
+     *
+     * @param reset count rings shot
+     * @return number of rings
+     */
     public double getRingsShot(boolean reset){
         double ringCount = ringsShot;
 

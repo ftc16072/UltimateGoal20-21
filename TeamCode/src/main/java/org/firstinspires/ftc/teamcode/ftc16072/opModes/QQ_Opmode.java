@@ -71,7 +71,9 @@ public abstract class QQ_Opmode extends OpMode {
 
     }
 
-
+    /**
+     * add ring count for ringsShot and ringsSeen
+     */
     void updateRingCount(){
         telemetry.addData("Ring Count", Math.round(robot.ringCount));
         robot.ringCount -= robot.shooter.getRingsShot(true);
