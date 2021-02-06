@@ -55,6 +55,7 @@ public class Transfer implements QQ_Mechanism {
     @Override
     public void init(HardwareMap hwMap) {
         transferMotor = hwMap.get(DcMotor.class, "transfer_motor");
+        transferMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         leftBelts = hwMap.get(CRServo.class, "leftBelts");
         rightBelts = hwMap.get(CRServo.class, "rightBelts");
         rightBelts.setDirection(DcMotorSimple.Direction.REVERSE);
