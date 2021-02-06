@@ -80,6 +80,10 @@ public class Transfer implements QQ_Mechanism {
 
     }
 
+    /**
+     *
+     * @param desiredState change transfer state
+     */
     public void changeTransfer(Transfer.transferState desiredState) {
         if (desiredState == transferState.Start) {
             transferMotor.setPower(transferSpeed);
@@ -107,10 +111,18 @@ public class Transfer implements QQ_Mechanism {
         }
     }
 
+    /**
+     *
+     * @return distance sensor
+     */
      private boolean seeRing(){
         return distanceSensor.getDistance(DistanceUnit.CM) <= normalDistance - distanceTolerance;
      }
 
+    /**
+     *
+     * @param forward change wasRing to seeRing
+     */
      private void checkForRing(boolean forward){
         if(seeRing() & !wasRing) {
             ringsSeen += forward ? 0.5 : -0.5;
@@ -118,6 +130,11 @@ public class Transfer implements QQ_Mechanism {
         wasRing = seeRing();
      }
 
+    /**
+     *
+     * @param reset rings seen
+     * @return ring count
+     */
      public double getRingsSeen(boolean reset){
          double ringCount = ringsSeen;
          if(reset){

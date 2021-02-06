@@ -61,6 +61,10 @@ public class TeleopDriveAction extends QQ_Action {
         return this;
     }
 
+    /**
+     *
+     * @param opmode if statement for manipulator controls
+     */
     void manipulatorControls(QQ_Opmode opmode) {
         //spinning shooter wheels
         if (opmode.qq_gamepad2.rightTrigger() >= 0.2){
@@ -114,11 +118,19 @@ public class TeleopDriveAction extends QQ_Action {
         }
     }
 
-
+    /**
+     *
+     * @param trigger rotate from trigger
+     * @return trigger divided by 2
+     */
     double rotateFromTrigger(double trigger) {
         return trigger / 2;
     }
 
+    /**
+     *
+     * @param opmode check gamepad controls and angle degrees
+     */
     public void driverControls(QQ_Opmode opmode) {
         opmode.qq_gamepad1.leftStick.setSquared(true);
 

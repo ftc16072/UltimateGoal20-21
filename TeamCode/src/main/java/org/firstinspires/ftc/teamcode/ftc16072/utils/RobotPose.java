@@ -33,12 +33,29 @@ public class RobotPose {
         this(x, y, du, 0, AngleUnit.DEGREES);
     }
 
+    /**
+     *
+     * @param x x component
+     * @param du distance in cm
+     */
     public void setX(double x, DistanceUnit du){
         x_cm = du.toCm(x);
     }
+
+    /**
+     *
+     * @param y y component
+     * @param du distance in cm
+     */
     public void setY(double y, DistanceUnit du){
         y_cm = du.toCm(y);
     }
+
+    /**
+     *
+     * @param angle angle component
+     * @param au theta in radians
+     */
     public void setAngle(double angle, AngleUnit au){
         theta = au.toRadians(angle);
     }
@@ -90,6 +107,10 @@ public class RobotPose {
         return  au.normalize(otherPoint.getAngle(au) - getAngle(au));
     }
 
+    /**
+     *
+     * @param moveDeltas update position of mecanum drive
+     */
     public void updatePose(MecanumDrive.MoveDeltas moveDeltas){
         theta = AngleUnit.normalizeRadians(theta + moveDeltas.getAngle(AngleUnit.RADIANS));
 

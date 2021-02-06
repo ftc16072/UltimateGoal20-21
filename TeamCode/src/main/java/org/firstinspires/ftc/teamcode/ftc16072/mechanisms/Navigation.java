@@ -64,6 +64,10 @@ public class Navigation {
         this.mecanumDrive = mecanumDrive;
     }
 
+    /**
+     *
+     * @param perspective set perspective
+     */
     public void setPerspective(DriverPerspective perspective){
         this.perspective = perspective;
     }
@@ -117,7 +121,7 @@ public class Navigation {
 
     /**
      *
-     * @param au
+     * @param au heading of angle unit
      * @return radians from angles
      */
     public double getHeading(AngleUnit au) {

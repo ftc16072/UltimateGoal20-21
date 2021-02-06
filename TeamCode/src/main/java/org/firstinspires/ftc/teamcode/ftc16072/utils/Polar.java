@@ -89,7 +89,7 @@ public class Polar {
      *
      * @param heading   angle to subtract
      * @param angleUnit angle unit that angle is in
-     * @return
+     * @return new polar angle
      */
     public Polar rotateCCW(double heading, AngleUnit angleUnit) {
         return new Polar(theta - angleUnit.toRadians(heading), AngleUnit.RADIANS, r, DistanceUnit.CM);
@@ -100,12 +100,16 @@ public class Polar {
      *
      * @param heading   angle to add
      * @param angleUnit angle unit that angle is in
-     * @return
+     * @return new polar angle
      */
     public Polar rotateCW(double heading, AngleUnit angleUnit) {
         return new Polar(theta + angleUnit.toRadians(heading), AngleUnit.RADIANS, r, DistanceUnit.CM);
     }
 
+    /**
+     *
+     * @param scale scaleR when r = r * scale
+     */
     public void scaleR(double scale){
         r = r * scale;
     }

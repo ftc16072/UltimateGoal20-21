@@ -5,6 +5,9 @@ import org.firstinspires.ftc.teamcode.ftc16072.opModes.QQ_Opmode;
 public class RaiseWobblyGoal extends QQ_Action {
     double delayTill;
 
+    /**
+     * raise wobbly goal
+     */
     public RaiseWobblyGoal(){
         super("Raise Wobbly Goal");
     }

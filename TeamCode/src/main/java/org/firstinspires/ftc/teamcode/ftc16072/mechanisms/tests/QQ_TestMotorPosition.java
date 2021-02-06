@@ -13,7 +13,9 @@ public class QQ_TestMotorPosition extends QQ_Test {
      * Constructor
      *
      * @param description human readable of the description
-     * @param speed       speed for the motor to run the test at
+     * @param onLocation integer
+     * @param offLocation integer
+     * @param maxSpeed maximum speed of motor
      * @param motor       instance of DcMotor class to run the test on
      */
     public QQ_TestMotorPosition(String description, int onLocation, int offLocation, double maxSpeed, DcMotor motor) {

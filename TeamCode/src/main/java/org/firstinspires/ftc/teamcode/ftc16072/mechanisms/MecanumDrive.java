@@ -23,11 +23,11 @@ public class MecanumDrive implements QQ_Mechanism {
 
         /**
          *
-         * @param forward
-         * @param strafe
-         * @param du
-         * @param angle
-         * @param au
+         * @param forward distance from origin on the x axis
+         * @param strafe distance from origina on the y axis
+         * @param du distance unit
+         * @param angle radians of theta
+         * @param au angle unit
          */
         public MoveDeltas(double forward, double strafe, DistanceUnit du, double angle, AngleUnit au){
             x_cm = du.toCm(forward);
