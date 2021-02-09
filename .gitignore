@@ -87,5 +87,8 @@ lint/outputs/
 lint/tmp/
 # lint/reports/
 
+# license file
+TeamCode/src/main/res/values/licenses.xml
+
 # doxygen
 doxygen/
