@@ -2,10 +2,12 @@ package org.firstinspires.ftc.teamcode.ftc16072.mechanisms;
 
 import android.util.Log;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 
@@ -18,6 +20,7 @@ import java.io.Console;
 import java.util.Arrays;
 import java.util.List;
 
+@Config
 public class Shooter implements QQ_Mechanism {
     enum AimLocation {
         LowGoal,
@@ -33,7 +36,7 @@ public class Shooter implements QQ_Mechanism {
     private Servo shooterImport;
 
     final double INSERT = 0; // TODO: Find Value
-    final double RESET = 0.5; // TODO: Find value
+    final double RESET = 0.5; // TODO: Find value s
 
     public double SHOOTER_VELO = -1125;
     public double SHOOTER_RANGE = 10;
@@ -47,6 +50,8 @@ public class Shooter implements QQ_Mechanism {
 
     boolean flicked;
 
+    private final PIDFCoefficients pidf = new PIDFCoefficients(15, 1, 1, 9);
+
     /**
      * initializes Shooter
      *
@@ -57,6 +62,7 @@ public class Shooter implements QQ_Mechanism {
         shooterMotor = hwMap.get(DcMotorEx.class, "shooter_motor");
         shooterImport = hwMap.get(Servo.class, "servo_import_shooter");
         delayTime = 0.0;
+
     }
 
     /**
@@ -88,11 +94,16 @@ public class Shooter implements QQ_Mechanism {
      * @param spin spin the wheels and set velocity
      */
     public void spinWheels(boolean spin) {
+
         if (!spin){
             shooterMotor.setVelocity(0);
         } else {
             shooterMotor.setVelocity(SHOOTER_VELO);
         }
+    }
+
+    public void updatePidF(){
+        shooterMotor.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, pidf);
     }
 
     /**
