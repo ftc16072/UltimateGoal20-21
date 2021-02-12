@@ -1,5 +1,8 @@
 package org.firstinspires.ftc.teamcode.ftc16072.actions;
 
+import com.acmerobotics.dashboard.FtcDashboard;
+
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.ftc16072.mechanisms.Intake;
@@ -9,6 +12,8 @@ import org.firstinspires.ftc.teamcode.ftc16072.utils.Polar;
 import org.firstinspires.ftc.teamcode.ftc16072.utils.RobotPose;
 
 public class TeleopDriveAction extends QQ_Action {
+
+
     double pivotAngle = 0;
     boolean wasUp;
     boolean wasDown;
@@ -50,6 +55,9 @@ public class TeleopDriveAction extends QQ_Action {
 
         opmode.telemetry.addData("Vel", opmode.robot.shooter.shooterMotor.getVelocity());
 
+        opmode.dashboardTelem.addData("Velocity", opmode.robot.shooter.shooterMotor.getVelocity());
+        opmode.dashboardTelem.update();
+
         if(opmode.robot.shooter.inAcceptableVelo()){
             opmode.robot.lights.blue();
         } else if(opmode.time - timeOffset >= 90){
@@ -75,6 +83,7 @@ public class TeleopDriveAction extends QQ_Action {
                 opmode.robot.shooter.spinWheels(true);
             } else {
                 opmode.robot.shooter.spinWheels(false);
+                opmode.robot.shooter.updatePidF();
             }
             //shooter servo to push rings
             if (opmode.qq_gamepad2.b()) {
@@ -84,6 +93,7 @@ public class TeleopDriveAction extends QQ_Action {
                 opmode.robot.shooter.flick(false);
             }
         }
+
 
 
         //up and down of wobbly goal

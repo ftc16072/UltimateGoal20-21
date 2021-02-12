@@ -1,7 +1,10 @@
 package org.firstinspires.ftc.teamcode.ftc16072.opModes;
 
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.ftc16072.actions.QQ_Action;
@@ -22,12 +25,16 @@ public abstract class QQ_Opmode extends OpMode {
     public QQ_Gamepad qq_gamepad2;
     protected QQ_Action currentAction;
     public StackPipeline.ringNumber numberRingsSeen;
+    FtcDashboard dashboard;
+    public Telemetry dashboardTelem;
 
     /**
      * initializing robot
      */
     @Override
     public void init() {
+        dashboard = FtcDashboard.getInstance();
+        dashboardTelem = dashboard.getTelemetry();
         robot.init(hardwareMap);
         robot.nav.setCurrentPosition(new RobotPose(0,0, DistanceUnit.INCH));
         if(usesCamera){
@@ -43,6 +50,8 @@ public abstract class QQ_Opmode extends OpMode {
                 }
             });
         }
+
+        telemetry.addData("Pid", robot.shooter.shooterMotor.getPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER));
 
     }
 
