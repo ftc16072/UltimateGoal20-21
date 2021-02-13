@@ -20,7 +20,7 @@ import java.io.Console;
 import java.util.Arrays;
 import java.util.List;
 
-@Config
+
 public class Shooter implements QQ_Mechanism {
     enum AimLocation {
         LowGoal,
@@ -36,7 +36,7 @@ public class Shooter implements QQ_Mechanism {
     private Servo shooterImport;
 
     final double INSERT = 0; // TODO: Find Value
-    final double RESET = 0.5; // TODO: Find value s
+    final double RESET = 0.35; // TODO: Find value s
 
     public double SHOOTER_VELO = -1125;
     public double SHOOTER_RANGE = 10;
