@@ -35,6 +35,7 @@ public class autoRings extends QQ_Opmode {
         super.init();
         webcam.setPipeline(stackPipeline);
         robot.nav.setCurrentPosition(new RobotPose(34,9, DistanceUnit.INCH));
+        //Auto Action lineup
         currentAction = new PickUpWobblyGoal()
                 .setNext(new DriveToAction("navigate", new NavigationPose(12, 65, 7, .4, 1, 0, 360)))
                 .setNext(new WarmUpShooter())
@@ -56,24 +57,7 @@ public class autoRings extends QQ_Opmode {
                 .setNext(new DropIntake())
                 .setNext(new DriveToAction("Park", new NavigationPose(60, 90, 1, .4, 1, 0, 40)))
                 .setNext(new DriveToAction("Face the right way", new NavigationPose(60,90,1,0,.1)));
-
-        /* currentAction = new DriveToWobblyGoalZone()
-        /* currentAction = new DriveToWobblyGoalZone()
-                                .setNext(new LowerWobblyGoal())
-                                .setNext(new DelayAction(.5))
-                                .setNext(new DropWobblyGoal())
-                                .setNext(new DelayAction(1))
-                                .setNext(new RaiseWobblyGoal())
-                                .setNext(new WarmUpShooter())
-                                .setNext(new DriveToAction("aim", new NavigationPose(40, 61, 0)))
-                                .setNext(new DelayAction(1))
-                                .setNext(new ShootRings())
-                                .setNext(new TurnOffShooter())
-                                .setNext(new DriveToAction("park", new NavigationPose(40, 80)))
-                                .setNext(new DropIntake());
-
-         */
-
+        //Fit in 18
         robot.intake.hold();
         robot.wobblyGoal.closeGrabber();
 
