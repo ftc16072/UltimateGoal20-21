@@ -5,12 +5,12 @@ import org.firstinspires.ftc.teamcode.ftc16072.utils.NavigationPose;
 import org.firstinspires.ftc.teamcode.ftc16072.utils.StackPipeline;
 
 public class DriveToWobblyGoalZone extends QQ_Action{
-    double ZONE_A_X = 12;
-    double ZONE_A_Y = 68;
-    double ZONE_B_X = 40;
-    double ZONE_B_Y = 95;
+    double ZONE_A_X = 24;
+    double ZONE_A_Y = 79;
+    double ZONE_B_X = 30;
+    double ZONE_B_Y = 85;
     double ZONE_C_X = 10;
-    double ZONE_C_Y = 114;
+    double ZONE_C_Y = 115;
 
     /**
      * checks rings seen and drives to specific zone
@@ -20,11 +20,11 @@ public class DriveToWobblyGoalZone extends QQ_Action{
     @Override
     public QQ_Action run(QQ_Opmode opmode) {
         if (opmode.numberRingsSeen == StackPipeline.ringNumber.ZERO){
-            return new DriveToAction("moving to Zone A", new NavigationPose(ZONE_A_X, ZONE_A_Y, 0.5, -130, .5)).setNext(nextAction);
+            return new DriveToAction("moving to Zone A", new NavigationPose(ZONE_A_X, ZONE_A_Y, 0.5, -80, .5)).setNext(nextAction);
         } else if (opmode.numberRingsSeen == StackPipeline.ringNumber.ONE){
-            return new DriveToAction("moving to Zone B", new NavigationPose(ZONE_B_X, ZONE_B_Y, 0.5, -150, .5)).setNext(nextAction);
+            return new DriveToAction("moving to Zone B", new NavigationPose(ZONE_B_X, ZONE_B_Y, 0.5, -160, .2)).setNext(nextAction);
         } else {
-            return new DriveToAction("moving to Zone C", new NavigationPose(ZONE_C_X, ZONE_C_Y, 0.5, -120, .5)).setNext(nextAction);
+            return new DriveToAction("moving to Zone C", new NavigationPose(ZONE_C_X, ZONE_C_Y, 0.5, .4, 1,  -135, .5)).setNext(nextAction);
         }
 
     }

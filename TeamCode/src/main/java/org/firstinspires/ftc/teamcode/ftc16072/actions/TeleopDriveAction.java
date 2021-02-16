@@ -55,10 +55,10 @@ public class TeleopDriveAction extends QQ_Action {
 
         opmode.telemetry.addData("Vel", opmode.robot.shooter.shooterMotor.getVelocity());
 
-        opmode.dashboardTelem.addData("Velocity", opmode.robot.shooter.shooterMotor.getVelocity());
-        opmode.dashboardTelem.addData("goal", opmode.robot.shooter.SHOOTER_VELO);
-        opmode.dashboardTelem.addData("low", opmode.robot.shooter.SHOOTER_VELO + opmode.robot.shooter.SHOOTER_RANGE);
-        opmode.dashboardTelem.addData("high", opmode.robot.shooter.SHOOTER_VELO - opmode.robot.shooter.SHOOTER_RANGE);
+        opmode.dashboardTelem.addData("Velocity", -opmode.robot.shooter.shooterMotor.getVelocity());
+        opmode.dashboardTelem.addData("goal", -opmode.robot.shooter.SHOOTER_VELO);
+        opmode.dashboardTelem.addData("low", -opmode.robot.shooter.SHOOTER_VELO + opmode.robot.shooter.SHOOTER_RANGE);
+        opmode.dashboardTelem.addData("high", -opmode.robot.shooter.SHOOTER_VELO - opmode.robot.shooter.SHOOTER_RANGE);
 
         opmode.dashboardTelem.update();
 

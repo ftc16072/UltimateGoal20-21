@@ -5,7 +5,6 @@ import org.firstinspires.ftc.teamcode.ftc16072.opModes.QQ_Opmode;
 import java.io.Console;
 
 public class ShootRings extends QQ_Action {
-    double delayTime = .75;
     QQ_Action main;
     double waitTime;
 
@@ -33,10 +32,13 @@ public class ShootRings extends QQ_Action {
     public QQ_Action run(QQ_Opmode opmode) {
         opmode.robot.shooter.autoShoot(opmode.time);
         if (waitTime == 0.0){
-            waitTime = opmode.time + 5;
+            waitTime = opmode.time + 4;
         }
 
         if ((opmode.robot.shooter.getRingsShot(false) >= 3) || (opmode.time >= waitTime)){
+            if (opmode.time >= waitTime){
+                opmode.robot.shooter.flick(true);
+            }
             return nextAction;
         }
         return this;
