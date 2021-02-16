@@ -23,12 +23,12 @@ public class DriveToSecondWobble extends QQ_Action{
             angle = 3;
          } else if (opmode.numberRingsSeen == StackPipeline.ringNumber.ONE) {
             x = 57;
-            y = 35;
+            y = 39;
             angle = 3;
         } else {
-            x = 53;
-            y = 35;
-            angle = 3;
+            x = 54;
+            y = 31;
+            angle = 0;
         }
 
         return new DriveToAction("clear rings", new NavigationPose(x, 80, 7, .9, 1, 0, 2))

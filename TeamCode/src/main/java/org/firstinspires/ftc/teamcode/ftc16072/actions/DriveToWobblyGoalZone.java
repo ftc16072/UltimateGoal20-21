@@ -10,7 +10,7 @@ public class DriveToWobblyGoalZone extends QQ_Action{
     double ZONE_B_X = 30;
     double ZONE_B_Y = 85;
     double ZONE_C_X = 10;
-    double ZONE_C_Y = 115;
+    double ZONE_C_Y = 111;
 
     /**
      * checks rings seen and drives to specific zone
