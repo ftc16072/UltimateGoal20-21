@@ -5,21 +5,31 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.TouchSensor;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.ftc16072.mechanisms.tests.QQ_Test;
 import org.firstinspires.ftc.teamcode.ftc16072.mechanisms.tests.QQ_TestCRServo;
 import org.firstinspires.ftc.teamcode.ftc16072.mechanisms.tests.QQ_TestDistance;
 import org.firstinspires.ftc.teamcode.ftc16072.mechanisms.tests.QQ_TestMotor;
+import org.firstinspires.ftc.teamcode.ftc16072.mechanisms.tests.QQ_TestServo;
+import org.firstinspires.ftc.teamcode.ftc16072.mechanisms.tests.QQ_TestTouchSensor;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class Transfer implements QQ_Mechanism {
+    public enum elevatorState {
+        UP,
+        DOWN,
+        BUSY
+    }
+
     public enum transferState {
-        Start,
-        Reverse,
-        Stop
+        START,
+        REVERSE,
+        STOP
     }
 
     /**
@@ -31,16 +41,21 @@ public class Transfer implements QQ_Mechanism {
     private DcMotor transferMotor;
     private CRServo leftBelts;
     private CRServo rightBelts;
-    private CRServo middleTransferRight;
-    private CRServo middleTransferLeft;
     private DistanceSensor distanceSensor;
+    private TouchSensor bottom;
+    private Servo tilt;
 
-    private final double transferSpeed = 1.0;
-    private final double reverseTransferSpeed = -0.5;
+    private final double transferSpeed = .7;
+    private final double reverseTransferSpeed = -0.7;
+
+    public static double upLocation;
+    public static double downLocation;
+
+    public static int ENCODERLOCATION = 200;
+
+
     private final double beltSpeed = 1.0;
     private final double reverseBeltSpeed = -1.0;
-    private final double middleTransferSpeed = 1;
-    private final double reverseMiddleTransferSpeed = -0.5;
 
     private double normalDistance;
     private double distanceTolerance = 1.5;
@@ -55,15 +70,14 @@ public class Transfer implements QQ_Mechanism {
     @Override
     public void init(HardwareMap hwMap) {
         transferMotor = hwMap.get(DcMotor.class, "transfer_motor");
-        transferMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        transferMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         leftBelts = hwMap.get(CRServo.class, "leftBelts");
         rightBelts = hwMap.get(CRServo.class, "rightBelts");
         rightBelts.setDirection(DcMotorSimple.Direction.REVERSE);
-        middleTransferRight = hwMap.get(CRServo.class, "middleTransferRight");
-        middleTransferLeft = hwMap.get(CRServo.class, "middleTransferLeft");
-        middleTransferLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         distanceSensor = hwMap.get(DistanceSensor.class, "transfer_distance");
         normalDistance = distanceSensor.getDistance(DistanceUnit.CM);
+        bottom = hwMap.get(TouchSensor.class, "bottom_limit");
+        tilt = hwMap.get(Servo.class, "tilt_servo");
     }
 
     /**
@@ -72,11 +86,12 @@ public class Transfer implements QQ_Mechanism {
      */
     @Override
     public List<QQ_Test> getTests() {
-        return Arrays.asList(new QQ_TestMotor("Transfer Motor", transferSpeed, transferMotor),
+        return Arrays.asList(new QQ_TestMotor("Transfer Motor", .2, transferMotor),
+                new QQ_TestMotor("Transfer Reverse", -.2, transferMotor),
+                new QQ_TestServo("tilt servo", upLocation, downLocation, tilt),
                 new QQ_TestCRServo("left belts", beltSpeed, leftBelts),
                 new QQ_TestCRServo("right belts", beltSpeed, rightBelts),
-                new QQ_TestCRServo("middle Transfer Right", middleTransferSpeed, middleTransferRight),
-                new QQ_TestCRServo("middle Transfer Left", middleTransferSpeed, middleTransferLeft),
+                new QQ_TestTouchSensor("bottom", bottom),
                 new QQ_TestDistance("Distance", distanceSensor));
 
     }
@@ -86,29 +101,63 @@ public class Transfer implements QQ_Mechanism {
      * @param desiredState change transfer state
      */
     public void changeTransfer(Transfer.transferState desiredState) {
-        if (desiredState == transferState.Start) {
-            transferMotor.setPower(transferSpeed);
+        if (desiredState == transferState.START) {
             rightBelts.setPower(beltSpeed);
             leftBelts.setPower(beltSpeed);
-            middleTransferRight.setPower(middleTransferSpeed);
-            middleTransferLeft.setPower(middleTransferSpeed);
             checkForRing(true);
 
-        } else if (desiredState == transferState.Reverse) {
-            transferMotor.setPower(reverseTransferSpeed);
+        } else if (desiredState == transferState.REVERSE) {
             rightBelts.setPower(reverseBeltSpeed);
             leftBelts.setPower(reverseBeltSpeed);
-            middleTransferRight.setPower(reverseMiddleTransferSpeed);
-            middleTransferLeft.setPower(reverseMiddleTransferSpeed);
             checkForRing(false);
 
         } else {
             transferMotor.setPower(0);
             rightBelts.setPower(0);
             leftBelts.setPower(0);
-            middleTransferRight.setPower(0);
-            middleTransferLeft.setPower(0);
 
+        }
+    }
+
+    public elevatorState currentState(){
+        if(transferMotor.getCurrentPosition() <=10){
+            return elevatorState.DOWN;
+        }
+        if(transferMotor.getCurrentPosition() >= ENCODERLOCATION + 10){
+            return elevatorState.UP;
+        }
+        return elevatorState.BUSY;
+    }
+
+    public void setState(elevatorState state){
+        if(state == elevatorState.UP){
+            goUP();
+            tilt.setPosition(upLocation);
+        }
+        if(state == elevatorState.DOWN){
+            goDOWN();
+            tilt.setPosition(downLocation);
+        }
+    }
+
+    private void goUP(){
+        transferMotor.setTargetPosition(ENCODERLOCATION);
+        transferMotor.setPower(transferSpeed);
+    }
+
+    private void goDOWN(){
+        transferMotor.setTargetPosition(0);
+        transferMotor.setPower(reverseTransferSpeed);
+    }
+
+
+    public void checkEncoder(){
+        if(bottom.isPressed()){
+            transferMotor.setPower(0);
+            transferMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        } else {
+            transferMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            transferMotor.setPower(-0.2);
         }
     }
 

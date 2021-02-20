@@ -1,14 +1,10 @@
 package org.firstinspires.ftc.teamcode.ftc16072.actions;
 
-import com.acmerobotics.dashboard.FtcDashboard;
-
-import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.ftc16072.mechanisms.Intake;
 import org.firstinspires.ftc.teamcode.ftc16072.mechanisms.Transfer;
 import org.firstinspires.ftc.teamcode.ftc16072.opModes.QQ_Opmode;
-import org.firstinspires.ftc.teamcode.ftc16072.utils.Polar;
 import org.firstinspires.ftc.teamcode.ftc16072.utils.RobotPose;
 
 public class TeleopDriveAction extends QQ_Action {
@@ -22,6 +18,7 @@ public class TeleopDriveAction extends QQ_Action {
 
     private boolean gamepad2APressed;
     private boolean gamepad1BPressed;
+    private boolean gamepad2XPressed;
     private boolean closeGrabber;
     final double MAX_SPEED = 1;
     final double NORMAL_SPEED = 0.6;
@@ -80,7 +77,13 @@ public class TeleopDriveAction extends QQ_Action {
     void manipulatorControls(QQ_Opmode opmode) {
         //spinning shooter wheels
         if (opmode.qq_gamepad2.rightTrigger() >= 0.2){
-            opmode.robot.shooter.autoShoot(opmode.time);
+            if (opmode.robot.transfer.currentState() == Transfer.elevatorState.UP){
+                opmode.robot.shooter.autoShoot(opmode.time);
+            } else {
+                opmode.robot.shooter.spinWheels(true);
+                opmode.robot.transfer.setState(Transfer.elevatorState.UP);
+            }
+
         } else {
             opmode.robot.shooter.doneShooting();
             if (opmode.qq_gamepad2.rightBumper()) {
@@ -90,13 +93,22 @@ public class TeleopDriveAction extends QQ_Action {
                 opmode.robot.shooter.updatePidF();
             }
             //shooter servo to push rings
-            if (opmode.qq_gamepad2.b()) {
+            if (opmode.qq_gamepad2.b() & opmode.robot.transfer.currentState() == Transfer.elevatorState.UP) {
                 opmode.robot.shooter.flick(true);
 
             } else {
                 opmode.robot.shooter.flick(false);
             }
         }
+
+        if(opmode.qq_gamepad2.x() && !gamepad2XPressed){
+            if(opmode.robot.transfer.currentState() == Transfer.elevatorState.UP){
+                opmode.robot.transfer.setState(Transfer.elevatorState.DOWN);
+            } else {
+                opmode.robot.transfer.setState(Transfer.elevatorState.UP);
+            }
+        }
+        gamepad2XPressed = opmode.qq_gamepad2.x();
 
 
 
@@ -120,15 +132,15 @@ public class TeleopDriveAction extends QQ_Action {
         }
 
         //intake and transfer in and out
-        if (opmode.qq_gamepad2.leftBumper() || opmode.qq_gamepad2.rightStick.getY() > 0.2 || opmode.qq_gamepad2.leftTrigger() > 0.2){
+        if ((opmode.robot.transfer.currentState() == Transfer.elevatorState.DOWN) & (opmode.qq_gamepad2.leftBumper() || opmode.qq_gamepad2.rightStick.getY() > 0.2 || opmode.qq_gamepad2.leftTrigger() > 0.2)){
             opmode.robot.intake.changeState(Intake.intakeState.Start);
-            opmode.robot.transfer.changeTransfer(Transfer.transferState.Start);
+            opmode.robot.transfer.changeTransfer(Transfer.transferState.START);
         } else if (opmode.qq_gamepad2.rightStick.getY() < -0.2) {
             opmode.robot.intake.changeState(Intake.intakeState.Reverse);
-            opmode.robot.transfer.changeTransfer(Transfer.transferState.Reverse);
+            opmode.robot.transfer.changeTransfer(Transfer.transferState.REVERSE);
         } else {
             opmode.robot.intake.changeState(Intake.intakeState.Stop);
-            opmode.robot.transfer.changeTransfer(Transfer.transferState.Stop);
+            opmode.robot.transfer.changeTransfer(Transfer.transferState.STOP);
         }
     }
 
