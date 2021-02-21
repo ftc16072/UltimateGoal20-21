@@ -77,7 +77,7 @@ public class TeleopDriveAction extends QQ_Action {
     void manipulatorControls(QQ_Opmode opmode) {
         //spinning shooter wheels
         if (opmode.qq_gamepad2.rightTrigger() >= 0.2){
-            if (opmode.robot.transfer.currentState() == Transfer.elevatorState.UP){
+            if (opmode.robot.transfer.currentState() == Transfer.elevatorState.UP || opmode.qq_gamepad2.y()){
                 opmode.robot.shooter.autoShoot(opmode.time);
             } else {
                 opmode.robot.shooter.spinWheels(true);
@@ -102,7 +102,7 @@ public class TeleopDriveAction extends QQ_Action {
         }
 
         if(opmode.qq_gamepad2.x() && !gamepad2XPressed){
-            if(opmode.robot.transfer.currentState() == Transfer.elevatorState.UP){
+            if(opmode.robot.transfer.currentState() == Transfer.elevatorState.UP || opmode.qq_gamepad2.y()){
                 opmode.robot.transfer.setState(Transfer.elevatorState.DOWN);
             } else {
                 opmode.robot.transfer.setState(Transfer.elevatorState.UP);
@@ -132,9 +132,14 @@ public class TeleopDriveAction extends QQ_Action {
         }
 
         //intake and transfer in and out
-        if ((opmode.robot.transfer.currentState() == Transfer.elevatorState.DOWN) & (opmode.qq_gamepad2.leftBumper() || opmode.qq_gamepad2.rightStick.getY() > 0.2 || opmode.qq_gamepad2.leftTrigger() > 0.2)){
-            opmode.robot.intake.changeState(Intake.intakeState.Start);
-            opmode.robot.transfer.changeTransfer(Transfer.transferState.START);
+        if ( (opmode.qq_gamepad2.leftBumper() || opmode.qq_gamepad2.rightStick.getY() > 0.2 || opmode.qq_gamepad2.leftTrigger() > 0.2)){
+            if (opmode.robot.transfer.currentState() == Transfer.elevatorState.DOWN || opmode.qq_gamepad2.y()) {
+                opmode.robot.intake.changeState(Intake.intakeState.Start);
+                opmode.robot.transfer.changeTransfer(Transfer.transferState.START);
+            } else {
+                opmode.robot.transfer.setState(Transfer.elevatorState.DOWN);
+            }
+
         } else if (opmode.qq_gamepad2.rightStick.getY() < -0.2) {
             opmode.robot.intake.changeState(Intake.intakeState.Reverse);
             opmode.robot.transfer.changeTransfer(Transfer.transferState.REVERSE);

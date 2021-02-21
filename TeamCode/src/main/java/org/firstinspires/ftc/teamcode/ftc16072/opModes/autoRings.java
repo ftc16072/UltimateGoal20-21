@@ -68,9 +68,6 @@ public class autoRings extends QQ_Opmode {
     public void init_loop() {
         super.init_loop();
         telemetry.addData("analysis", stackPipeline.analysis);
-        if(!(qq_gamepad1.a()|| qq_gamepad2.a())){
-            robot.transfer.checkEncoder();
-        }
 
         numberRingsSeen = stackPipeline.analysis;
     }
