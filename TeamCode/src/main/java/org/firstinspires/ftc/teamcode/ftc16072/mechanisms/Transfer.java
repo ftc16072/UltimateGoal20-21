@@ -40,7 +40,8 @@ public class Transfer implements QQ_Mechanism {
      *
      * @param hwMap forces the init to take a Hardware Map from the configuration
      */
-
+    private CRServo middleTransferRight;
+    private CRServo middleTransferLeft;
     private CRServo leftBelts;
     private CRServo rightBelts;
     private DistanceSensor distanceSensor;
@@ -81,6 +82,11 @@ public class Transfer implements QQ_Mechanism {
         down = hwMap.get(DigitalChannel.class, "low_sensor");
         down.setMode(DigitalChannel.Mode.INPUT);
 
+        middleTransferRight = hwMap.get(CRServo.class, "middleTransferRight");
+        middleTransferRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        middleTransferLeft = hwMap.get(CRServo.class, "middleTransferLeft");
+
+
     }
 
     /**
@@ -107,16 +113,22 @@ public class Transfer implements QQ_Mechanism {
         if (desiredState == transferState.START) {
             rightBelts.setPower(beltSpeed);
             leftBelts.setPower(beltSpeed);
+            middleTransferRight.setPower(beltSpeed);
+            middleTransferLeft.setPower(beltSpeed);
             checkForRing(true);
 
         } else if (desiredState == transferState.REVERSE) {
             rightBelts.setPower(reverseBeltSpeed);
             leftBelts.setPower(reverseBeltSpeed);
+            middleTransferRight.setPower(reverseBeltSpeed);
+            middleTransferLeft.setPower(reverseBeltSpeed);
             checkForRing(false);
 
         } else {
             rightBelts.setPower(0);
             leftBelts.setPower(0);
+            middleTransferRight.setPower(0);
+            middleTransferLeft.setPower(0);
 
         }
     }
