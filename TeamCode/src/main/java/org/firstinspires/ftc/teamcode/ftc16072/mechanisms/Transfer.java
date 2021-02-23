@@ -71,8 +71,8 @@ public class Transfer implements QQ_Mechanism {
     @Override
     public void init(HardwareMap hwMap) {
         leftBelts = hwMap.get(CRServo.class, "leftBelts");
+        leftBelts.setDirection(DcMotorSimple.Direction.REVERSE);
         rightBelts = hwMap.get(CRServo.class, "rightBelts");
-        rightBelts.setDirection(DcMotorSimple.Direction.REVERSE);
         distanceSensor = hwMap.get(DistanceSensor.class, "transfer_distance");
         normalDistance = distanceSensor.getDistance(DistanceUnit.CM);
         tilt = hwMap.get(Servo.class, "tilt_servo");
@@ -80,7 +80,6 @@ public class Transfer implements QQ_Mechanism {
         up.setMode(DigitalChannel.Mode.INPUT);
         down = hwMap.get(DigitalChannel.class, "low_sensor");
         down.setMode(DigitalChannel.Mode.INPUT);
-
 
     }
 
