@@ -1,46 +1,56 @@
 package org.firstinspires.ftc.teamcode.ftc16072.mechanisms;
 
 import com.qualcomm.robotcore.hardware.CRServo;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.teamcode.ftc16072.mechanisms.tests.QQ_DualTest;
 import org.firstinspires.ftc.teamcode.ftc16072.mechanisms.tests.QQ_Test;
 import org.firstinspires.ftc.teamcode.ftc16072.mechanisms.tests.QQ_TestCRServo;
+import org.firstinspires.ftc.teamcode.ftc16072.mechanisms.tests.QQ_TestDigitalSensor;
 import org.firstinspires.ftc.teamcode.ftc16072.mechanisms.tests.QQ_TestDistance;
-import org.firstinspires.ftc.teamcode.ftc16072.mechanisms.tests.QQ_TestMotor;
+import org.firstinspires.ftc.teamcode.ftc16072.mechanisms.tests.QQ_TestServo;
 
 import java.util.Arrays;
 import java.util.List;
 
+
 public class Transfer implements QQ_Mechanism {
-    public enum transferState {
-        Start,
-        Reverse,
-        Stop
+    public enum elevatorState {
+        UP,
+        DOWN,
+        BUSY
     }
 
-    /**
-     * initializes the transfer
-     *
-     * @param hwMap forces the init to take a Hardware Map from the configuration
-     */
+    public enum transferState {
+        START,
+        REVERSE,
+        STOP
+    }
 
-    private DcMotor transferMotor;
-    private CRServo leftBelts;
-    private CRServo rightBelts;
+
     private CRServo middleTransferRight;
     private CRServo middleTransferLeft;
+    private CRServo leftBelts;
+    private CRServo rightBelts;
     private DistanceSensor distanceSensor;
+    private Servo tilt;
+    private DigitalChannel up;
+    private DigitalChannel down;
 
-    private final double transferSpeed = 1.0;
-    private final double reverseTransferSpeed = -0.5;
+    private final double transferSpeed = .7;
+    private final double reverseTransferSpeed = -0.7;
+
+    private final double UP_LOCATION = .53;
+    private final double DOWN_LOCATION = .75;
+
+
     private final double beltSpeed = 1.0;
     private final double reverseBeltSpeed = -1.0;
-    private final double middleTransferSpeed = 1;
-    private final double reverseMiddleTransferSpeed = -0.5;
 
     private double normalDistance;
     private double distanceTolerance = 1.5;
@@ -51,19 +61,29 @@ public class Transfer implements QQ_Mechanism {
 
 
 
-
+    /**
+     * initializes the transfer
+     *
+     * @param hwMap forces the init to take a Hardware Map from the configuration
+     */
     @Override
     public void init(HardwareMap hwMap) {
-        transferMotor = hwMap.get(DcMotor.class, "transfer_motor");
-        transferMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         leftBelts = hwMap.get(CRServo.class, "leftBelts");
+        leftBelts.setDirection(DcMotorSimple.Direction.REVERSE);
         rightBelts = hwMap.get(CRServo.class, "rightBelts");
-        rightBelts.setDirection(DcMotorSimple.Direction.REVERSE);
-        middleTransferRight = hwMap.get(CRServo.class, "middleTransferRight");
-        middleTransferLeft = hwMap.get(CRServo.class, "middleTransferLeft");
-        middleTransferLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         distanceSensor = hwMap.get(DistanceSensor.class, "transfer_distance");
         normalDistance = distanceSensor.getDistance(DistanceUnit.CM);
+        tilt = hwMap.get(Servo.class, "tilt_servo");
+        up = hwMap.get(DigitalChannel.class, "high_sensor");
+        up.setMode(DigitalChannel.Mode.INPUT);
+        down = hwMap.get(DigitalChannel.class, "low_sensor");
+        down.setMode(DigitalChannel.Mode.INPUT);
+
+        middleTransferRight = hwMap.get(CRServo.class, "middleTransferRight");
+        middleTransferRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        middleTransferLeft = hwMap.get(CRServo.class, "middleTransferLeft");
+
+
     }
 
     /**
@@ -72,13 +92,14 @@ public class Transfer implements QQ_Mechanism {
      */
     @Override
     public List<QQ_Test> getTests() {
-        return Arrays.asList(new QQ_TestMotor("Transfer Motor", transferSpeed, transferMotor),
+        return Arrays.asList(
+                new QQ_TestServo("tilt servo", UP_LOCATION, DOWN_LOCATION, tilt),
                 new QQ_TestCRServo("left belts", beltSpeed, leftBelts),
                 new QQ_TestCRServo("right belts", beltSpeed, rightBelts),
-                new QQ_TestCRServo("middle Transfer Right", middleTransferSpeed, middleTransferRight),
-                new QQ_TestCRServo("middle Transfer Left", middleTransferSpeed, middleTransferLeft),
+                new QQ_DualTest(
+                        new QQ_TestDigitalSensor("Up", up),
+                        new QQ_TestDigitalSensor("down", down)),
                 new QQ_TestDistance("Distance", distanceSensor));
-
     }
 
     /**
@@ -86,29 +107,44 @@ public class Transfer implements QQ_Mechanism {
      * @param desiredState change transfer state
      */
     public void changeTransfer(Transfer.transferState desiredState) {
-        if (desiredState == transferState.Start) {
-            transferMotor.setPower(transferSpeed);
+        if (desiredState == transferState.START) {
             rightBelts.setPower(beltSpeed);
             leftBelts.setPower(beltSpeed);
-            middleTransferRight.setPower(middleTransferSpeed);
-            middleTransferLeft.setPower(middleTransferSpeed);
+            middleTransferRight.setPower(beltSpeed);
+            middleTransferLeft.setPower(beltSpeed);
             checkForRing(true);
 
-        } else if (desiredState == transferState.Reverse) {
-            transferMotor.setPower(reverseTransferSpeed);
+        } else if (desiredState == transferState.REVERSE) {
             rightBelts.setPower(reverseBeltSpeed);
             leftBelts.setPower(reverseBeltSpeed);
-            middleTransferRight.setPower(reverseMiddleTransferSpeed);
-            middleTransferLeft.setPower(reverseMiddleTransferSpeed);
+            middleTransferRight.setPower(reverseBeltSpeed);
+            middleTransferLeft.setPower(reverseBeltSpeed);
             checkForRing(false);
 
         } else {
-            transferMotor.setPower(0);
             rightBelts.setPower(0);
             leftBelts.setPower(0);
             middleTransferRight.setPower(0);
             middleTransferLeft.setPower(0);
 
+        }
+    }
+
+    public elevatorState currentState(){
+        if (up.getState() == false){
+           return elevatorState.UP;
+        } else if (down.getState() == false){
+            return elevatorState.DOWN;
+        }
+        return elevatorState.BUSY;
+    }
+
+    public void setState(elevatorState state){
+        if(state == elevatorState.UP){
+            tilt.setPosition(UP_LOCATION);
+        }
+        if(state == elevatorState.DOWN){
+            tilt.setPosition(DOWN_LOCATION);
         }
     }
 
