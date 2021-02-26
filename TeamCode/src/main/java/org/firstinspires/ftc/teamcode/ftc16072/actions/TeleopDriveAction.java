@@ -132,14 +132,10 @@ public class TeleopDriveAction extends QQ_Action {
         }
 
         //intake and transfer in and out
-        if ( (opmode.qq_gamepad2.leftBumper() || opmode.qq_gamepad2.rightStick.getY() > 0.2 || opmode.qq_gamepad2.leftTrigger() > 0.2)){
-            if (opmode.robot.transfer.currentState() == Transfer.elevatorState.DOWN || opmode.qq_gamepad2.y()) {
+        if ( (opmode.qq_gamepad2.leftBumper() || opmode.qq_gamepad2.rightStick.getY() > 0.2 || opmode.qq_gamepad2.leftTrigger() > 0.2) ){
+                opmode.robot.transfer.setState(Transfer.elevatorState.DOWN);
                 opmode.robot.intake.changeState(Intake.intakeState.Start);
                 opmode.robot.transfer.changeTransfer(Transfer.transferState.START);
-            } else {
-                opmode.robot.transfer.setState(Transfer.elevatorState.DOWN);
-            }
-
         } else if (opmode.qq_gamepad2.rightStick.getY() < -0.2) {
             opmode.robot.intake.changeState(Intake.intakeState.Reverse);
             opmode.robot.transfer.changeTransfer(Transfer.transferState.REVERSE);
