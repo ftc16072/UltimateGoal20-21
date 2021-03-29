@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.ftc16072.mechanisms.QQ_Mechanism;
 import org.firstinspires.ftc.teamcode.ftc16072.mechanisms.tests.QQ_Test;
+import org.firstinspires.ftc.teamcode.ftc16072.utils.QQ_BothGamepad;
 import org.firstinspires.ftc.teamcode.ftc16072.utils.QQ_Gamepad;
 
 import java.util.List;
@@ -25,7 +26,7 @@ public class TestWiring extends QQ_Opmode {
      */
     @Override
     public void loop() {
-        qq_gamepad1 = new QQ_Gamepad(gamepad1);
+        QQ_BothGamepad qq_gamepad1 = new QQ_BothGamepad(gamepad1, gamepad2);
         if (qq_gamepad1.dpadRight() && !wasRight) {
             currentMechanism++;
             if (currentMechanism >= mechanisms.size()) {
