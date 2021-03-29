@@ -18,16 +18,16 @@ public class DriveToSecondWobble extends QQ_Action{
     @Override
     public QQ_Action run(QQ_Opmode opmode) {
         if (opmode.numberRingsSeen == StackPipeline.ringNumber.ZERO){
-            x = 53;
-            y = 35;
+            x = 59;
+            y = 36;
             angle = 3;
          } else if (opmode.numberRingsSeen == StackPipeline.ringNumber.ONE) {
-            x = 57;
+            x = 61.5;
             y = 39;
             angle = 3;
         } else {
-            x = 54;
-            y = 31;
+            x = 58;
+            y = 32;
             angle = 0;
         }
 

@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.ftc16072.actions;
 
+import org.firstinspires.ftc.teamcode.ftc16072.mechanisms.Transfer;
 import org.firstinspires.ftc.teamcode.ftc16072.opModes.QQ_Opmode;
 
 import java.io.Console;
@@ -30,7 +31,10 @@ public class ShootRings extends QQ_Action {
      */
     @Override
     public QQ_Action run(QQ_Opmode opmode) {
+
         opmode.robot.shooter.autoShoot(opmode.time);
+        opmode.robot.transfer.setState(Transfer.elevatorState.UP);
+
         if (waitTime == 0.0){
             waitTime = opmode.time + 4;
         }

@@ -17,6 +17,7 @@ import org.firstinspires.ftc.teamcode.ftc16072.actions.DelayAction;
 import org.firstinspires.ftc.teamcode.ftc16072.actions.ShootRings;
 import org.firstinspires.ftc.teamcode.ftc16072.actions.TurnOffShooter;
 import org.firstinspires.ftc.teamcode.ftc16072.actions.WarmUpShooter;
+import org.firstinspires.ftc.teamcode.ftc16072.mechanisms.Transfer;
 import org.firstinspires.ftc.teamcode.ftc16072.utils.NavigationPose;
 import org.firstinspires.ftc.teamcode.ftc16072.utils.RobotPose;
 import org.firstinspires.ftc.teamcode.ftc16072.utils.StackPipeline;
@@ -40,7 +41,7 @@ public class autoRings extends QQ_Opmode {
         currentAction = new PickUpWobblyGoal()
                 .setNext(new DriveToAction("navigate", new NavigationPose(12, 65, 7, .4, 1, 0, 360)))
                 .setNext(new WarmUpShooter())
-                .setNext(new DriveToAction("Aim", new NavigationPose(43, 58, .5, .1, 1,0, 1)))
+                .setNext(new DriveToAction("Aim", new NavigationPose(43, 67, .5, .1, 1,0, 1)))
                 .setNext(new ShootRings())
                 .setNext(new TurnOffShooter())
                 .setNext(new PickUpWobblyGoal())
@@ -61,14 +62,20 @@ public class autoRings extends QQ_Opmode {
         //Fit in 18
         robot.intake.hold();
         robot.wobblyGoal.closeGrabber();
-
+        robot.transfer.setState(Transfer.elevatorState.UP);
     }
 
     @Override
     public void init_loop() {
         super.init_loop();
         telemetry.addData("analysis", stackPipeline.analysis);
-
+        robot.transfer.setState(Transfer.elevatorState.UP);
         numberRingsSeen = stackPipeline.analysis;
+    }
+
+    @Override
+    public void loop() {
+        super.loop();
+        robot.transfer.setState(Transfer.elevatorState.UP);
     }
 }

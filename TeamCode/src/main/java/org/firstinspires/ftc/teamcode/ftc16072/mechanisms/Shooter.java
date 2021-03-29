@@ -35,11 +35,11 @@ public class Shooter implements QQ_Mechanism {
     public DcMotorEx shooterMotor;
     private Servo shooterImport;
 
-    public static double INSERT = 0; // TODO: Find Value
-    public static double RESET = 1; // TODO: Find value s
+    private final double INSERT = 0; // TODO: Find Value
+    private final double RESET = .89; // TODO: Find value s
 
-    public double SHOOTER_VELO = -1125;
-    public double SHOOTER_RANGE = 10;
+    public static double SHOOTER_VELO = -1125;
+    public static double SHOOTER_RANGE = 10;
 
     private int state;
     private boolean waitSecond = true;

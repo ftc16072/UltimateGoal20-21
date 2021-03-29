@@ -67,6 +67,11 @@ public class TeleopDriveAction extends QQ_Action {
             opmode.robot.lights.normal();
         }
 
+
+
+        if(nextAction != null){
+            return nextAction;
+        }
         return this;
     }
 
@@ -77,25 +82,21 @@ public class TeleopDriveAction extends QQ_Action {
     void manipulatorControls(QQ_Opmode opmode) {
         //spinning shooter wheels
         if (opmode.qq_gamepad2.rightTrigger() >= 0.2){
-            if (opmode.robot.transfer.currentState() == Transfer.elevatorState.UP || opmode.qq_gamepad2.y()){
                 opmode.robot.shooter.autoShoot(opmode.time);
-            } else {
-                opmode.robot.shooter.spinWheels(true);
                 opmode.robot.transfer.setState(Transfer.elevatorState.UP);
-            }
 
         } else {
             opmode.robot.shooter.doneShooting();
             if (opmode.qq_gamepad2.rightBumper()) {
                 opmode.robot.shooter.spinWheels(true);
+                opmode.robot.transfer.setState(Transfer.elevatorState.UP);
             } else {
                 opmode.robot.shooter.spinWheels(false);
                 opmode.robot.shooter.updatePidF();
             }
             //shooter servo to push rings
-            if (opmode.qq_gamepad2.b() & opmode.robot.transfer.currentState() == Transfer.elevatorState.UP) {
+            if (opmode.qq_gamepad2.b()) {
                 opmode.robot.shooter.flick(true);
-
             } else {
                 opmode.robot.shooter.flick(false);
             }
@@ -183,25 +184,15 @@ public class TeleopDriveAction extends QQ_Action {
             opmode.robot.nav.driveRotate(-rotateFromTrigger(opmode.qq_gamepad1.leftTrigger()));
         } else if (opmode.qq_gamepad1.rightTrigger() >= 0.05) {
             opmode.robot.nav.driveRotate(rotateFromTrigger(opmode.qq_gamepad1.rightTrigger()));
-        } else if (opmode.qq_gamepad1.a()) {
-            opmode.robot.nav.driveAngle(
-                    opmode.qq_gamepad1.leftStick,
-                    powerShot1Angle);
-
-        } else if (opmode.qq_gamepad1.x()) {
-            opmode.robot.nav.driveAngle(
-                    opmode.qq_gamepad1.leftStick,
-                    powerShot2Angle);
-
-        }else if (opmode.qq_gamepad1.y()){
-            opmode.robot.nav.driveAngle(
-                    opmode.qq_gamepad1.leftStick,
-                    powerShot3Angle);
-
-        } else{
+        } else {
             opmode.robot.nav.driveFieldRelativeAngle(
                     opmode.qq_gamepad1.leftStick,
                     opmode.qq_gamepad1.rightStick);
+
+        }
+
+        if (opmode.qq_gamepad1.x()) {
+            nextAction = new DummyTeleopAction();
         }
 
         if (opmode.qq_gamepad1.b() & !gamepad1BPressed){

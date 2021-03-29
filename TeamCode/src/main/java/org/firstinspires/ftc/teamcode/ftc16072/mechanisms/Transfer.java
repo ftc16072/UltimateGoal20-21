@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.ftc16072.mechanisms;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
@@ -18,7 +19,7 @@ import org.firstinspires.ftc.teamcode.ftc16072.mechanisms.tests.QQ_TestServo;
 import java.util.Arrays;
 import java.util.List;
 
-
+@Config
 public class Transfer implements QQ_Mechanism {
     public enum elevatorState {
         UP,
@@ -45,8 +46,8 @@ public class Transfer implements QQ_Mechanism {
     private final double transferSpeed = .7;
     private final double reverseTransferSpeed = -0.7;
 
-    private final double UP_LOCATION = .53;
-    private final double DOWN_LOCATION = .75;
+    public static double UP_LOCATION = .56;
+    public static double DOWN_LOCATION = .75;
 
 
     private final double beltSpeed = 1.0;

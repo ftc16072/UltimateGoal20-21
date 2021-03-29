@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.ftc16072.mechanisms;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -11,6 +12,7 @@ import org.firstinspires.ftc.teamcode.ftc16072.mechanisms.tests.QQ_TestServo;
 import java.util.Arrays;
 import java.util.List;
 
+@Config
 public class Intake implements QQ_Mechanism {
     public enum intakeState{
         Start,
@@ -22,8 +24,8 @@ public class Intake implements QQ_Mechanism {
     public Servo intakeHolder;
     private final double intakeSpeed = -0.8;
     private final double reverseIntakeSpeed = 0.4;
-    private final double HOLD_POSITION = 0.33;
-    private final double RELEASE_POSITION = 0.0;
+    public static double HOLD_POSITION = 1.0;
+    public static double RELEASE_POSITION = 0.0;
 
     /**
      * initialize intake
