@@ -89,3 +89,6 @@ lint/tmp/
 
 # doxygen
 doxygen/
+
+#
+TeamCode/src/main/res/values/licenses.xml
