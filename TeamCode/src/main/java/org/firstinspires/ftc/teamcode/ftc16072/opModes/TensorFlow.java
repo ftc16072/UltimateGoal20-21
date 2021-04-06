@@ -35,11 +35,10 @@ public class TensorFlow extends QQ_Opmode {
     @Override
     public void loop() {
         if (tfod != null) {
-            // getUpdatedRecognitions() will return null if no new information is available since
-            // the last time that call was made.
-            List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
-            if (updatedRecognitions != null) {
-                telemetry.addData("# Object Detected", updatedRecognitions.size());
+            List<Recognition> recognitions = tfod.getRecognitions();
+
+            if (recognitions != null) {
+                telemetry.addData("# Object Detected", recognitions.size());
             }
             else {
                 telemetry.addData("# Object Detected", 0);
