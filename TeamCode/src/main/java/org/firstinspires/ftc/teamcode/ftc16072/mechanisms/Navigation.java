@@ -197,7 +197,10 @@ public class Navigation {
 
     public void updatePose() {
         MecanumDrive.MoveDeltas movement = mecanumDrive.getDistance(true);
-        currentPosition.setAngle(getHeading(AngleUnit.RADIANS), AngleUnit.RADIANS);
+        System.out.println("QQ ***********************************");
+        System.out.println("QQ out x" + movement.x_cm + "out y:" + movement.y_cm + "out theta: " + movement.theta);
+        //currentPosition.setAngle(getHeading(AngleUnit.RADIANS), AngleUnit.RADIANS);
+        //currentPosition = new RobotPose(0,0,DistanceUnit.CM, 0, AngleUnit.RADIANS);
         currentPosition.updatePose(movement);
     }
 
