@@ -21,66 +21,40 @@ public class MecanumDrive implements QQ_Mechanism {
         double y_cm;
         double theta;
 
-        /**
-         *
-         * @param forward distance from origin on the x axis
-         * @param strafe distance from origina on the y axis
-         * @param du distance unit
-         * @param angle radians of theta
-         * @param au angle unit
-         */
         public MoveDeltas(double forward, double strafe, DistanceUnit du, double angle, AngleUnit au){
             x_cm = du.toCm(forward);
             y_cm = du.toCm(strafe);
             theta = au.toRadians(angle);
         }
 
-        /**
-         *
-         * @param du forward distance
-         * @return return x cm from distance
-         */
         public double getForward(DistanceUnit du) {
             return du.fromCm(x_cm);
         }
-
-        /**
-         *
-          * @param du strafe distance
-         * @return return y cm from distance
-         */
         public double getStrafe(DistanceUnit du) {
             return du.fromCm(y_cm);
         }
-
-        /**
-         *
-         * @param au angle distance
-         * @return radians of theta
-         */
         public double getAngle(AngleUnit au) { return au.fromRadians(theta); }
-
-        /**
-         *
-         * @param angle set angle
-         * @param au theta degrees to angle
-         */
         public void setAngle(double angle, AngleUnit au) {theta = au.toRadians(angle);}
 
     }
 
 
     //declaring mecanum drive motors
-    private DcMotorEx frontLeft;
-    private DcMotorEx frontRight;
-    private DcMotorEx backRight;
-    private DcMotorEx backLeft;
+    public DcMotorEx frontLeft;
+    public DcMotorEx frontRight;
+    public DcMotorEx backRight;
+    public DcMotorEx backLeft;
 
-    private final double GEAR_RATIO = 4.0/6.0;
-    private final double WHEEL_RADIUS = 5.0; //5 cm
-    private final double TICKS_PER_ROTATION = 383.6;
+    private final static double GEAR_RATIO = 1;
+    private final static double WHEEL_RADIUS = 3.8; //5 cm
+    private final static double TICKS_PER_ROTATION = 8192;
+    private final static double DISTANCE_LEFT = 21;//cm, same as distance right
+    private final static double DISTANCE_CENTER = 6.5;//cm
     //cm per rotation/ticks per rotation
-    private final double CM_PER_TICK = (2 * Math.PI * GEAR_RATIO * WHEEL_RADIUS) / TICKS_PER_ROTATION;
+    private final static double CM_PER_TICK = (2 * Math.PI * GEAR_RATIO * WHEEL_RADIUS) / TICKS_PER_ROTATION;
+
+
+
 
     //created so we can easily change code to lower the speed in the setSpeeds method
     private double maxSpeed = 1.0;
@@ -115,16 +89,16 @@ public class MecanumDrive implements QQ_Mechanism {
     @Override
     public void init(HardwareMap hwMap) {
         frontLeft = hwMap.get(DcMotorEx.class, "front_left_motor");
-        frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         frontRight = hwMap.get(DcMotorEx.class, "front_right_motor");
-        frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         backLeft = hwMap.get(DcMotorEx.class, "back_left_motor");
-        backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         backRight = hwMap.get(DcMotorEx.class, "back_right_motor");
-        backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 //back left and front left motors move backwards
         backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -176,12 +150,6 @@ public class MecanumDrive implements QQ_Mechanism {
         return "MecanumDrive";
     }
 
-    /**
-     *
-     * @param forward drive mecanum forward
-     * @param strafe drive mecanum side to side
-     * @param rotate rotate mecanum
-     */
     public void driveMecanum(double forward, double strafe, double rotate) {
         double frontLeftSpeed = forward + strafe + rotate;
         double frontRightSpeed = forward - strafe - rotate;
@@ -197,46 +165,64 @@ public class MecanumDrive implements QQ_Mechanism {
      * @return a MoveDelta of the mecanum drive representing how far we have driven since the last reset
      */
     public MoveDeltas getDistance(boolean reset) {
-        int backLeftPosition = backLeft.getCurrentPosition();
-        int backRightPosition = backRight.getCurrentPosition();
-        int frontLeftPosition = frontLeft.getCurrentPosition();
-        int frontRightPosition = frontRight.getCurrentPosition();
 
-        encoderMatrix.put(0, 0, (float) ((frontLeftPosition - frontLeftOffset) * CM_PER_TICK));
-        encoderMatrix.put(1, 0, (float) ((frontRightPosition - frontRightOffset) * CM_PER_TICK));
-        encoderMatrix.put(2, 0, (float) ((backLeftPosition - backLeftOffset) * CM_PER_TICK));
-
-        MatrixF distanceMatrix = conversion.multiplied(encoderMatrix);
-
-        double forward = distanceMatrix.get(0, 0);
-        double strafe = distanceMatrix.get(0, 1);
-        //double angle = distanceMatrix.get(0, 2);
-        double angle = 0;
-        if(reset){
-            frontLeftOffset  = frontLeftPosition;
-            frontRightOffset = frontRightPosition;
-            backLeftOffset   = backLeftPosition;
-            backRightOffset  = backRightPosition;
+        if (reset) {
+            setOffsets();
         }
 
-        return new MoveDeltas(forward, strafe, DistanceUnit.CM, angle , AngleUnit.DEGREES);
+        double center = -(frontRight.getCurrentPosition()-frontRightOffset) * CM_PER_TICK;
+        double right = -(backLeft.getCurrentPosition()-backLeftOffset) * CM_PER_TICK;
+        double left = (frontLeft.getCurrentPosition()-frontLeftOffset) * CM_PER_TICK;
+
+        if ((center < .1) && (right <.1) && (left<.1)){
+            return new MoveDeltas(0, 0, DistanceUnit.CM, 0, AngleUnit.RADIANS);
+        }
+/*
+        double forward = (left+right)/2.0;
+        double theta = (left/DISTANCE_LEFT)-forward;
+        double strafe = center -  (DISTANCE_CENTER*theta);
+
+
+*/
+        double theta = ((left-right)/(2*DISTANCE_LEFT));
+        theta = theta == 0 ? 0.0000001:theta;
+
+        System.out.println("QQ theta: " + theta);
+
+        float scalar = (float) ((Math.sin(theta))/(Math.sin((Math.PI-theta)/2)));
+
+        System.out.println("QQ scalar" + scalar);
+
+        float[] translationData = {
+                (float) ((right/theta) + DISTANCE_LEFT),
+                (float) ((center/theta) + DISTANCE_CENTER)
+        };
+
+        System.out.println("QQ before matrix x:" + translationData[0] + " Y: " + translationData[1]);
+
+        MatrixF translation = new GeneralMatrixF(2, 1,translationData);
+
+        translation.multiply(scalar);
+
+        System.out.println("QQ after mult x:" + translation.get(0,0) + " Y: " + translation.get(1,0));
+
+
+        return new MoveDeltas(translation.get(0,0), translation.get(1,0), DistanceUnit.CM, theta , AngleUnit.RADIANS);
+
+
+        //return new MoveDeltas(forward, strafe, DistanceUnit.CM, theta, AngleUnit.DEGREES);
     }
 
-    /**
-     *
-     * @param maxSpeed set max speed
-     */
     public void setMaxSpeed(double maxSpeed) {
         this.maxSpeed = maxSpeed;
     }
 
-    /**
-     * set backleft, backright, frontleft and frontright offsets
-     */
     public void setOffsets(){
         backLeftOffset = backLeft.getCurrentPosition();
         backRightOffset = backRight.getCurrentPosition();
         frontLeftOffset = frontLeft.getCurrentPosition();
         frontRightOffset = frontRight.getCurrentPosition();
     }
+
+
 }

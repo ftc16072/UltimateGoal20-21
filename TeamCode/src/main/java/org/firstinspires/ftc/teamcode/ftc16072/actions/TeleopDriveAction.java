@@ -23,13 +23,14 @@ public class TeleopDriveAction extends QQ_Action {
      * @return next action
      */
     public QQ_Action run(QQ_Opmode opmode) {
-        RobotPose pose = opmode.robot.nav.currentPosition;
-        opmode.telemetry.addData("Y", pose.getY(DistanceUnit.INCH));
-        opmode.telemetry.addData("X", pose.getX(DistanceUnit.INCH));
-        opmode.telemetry.addData("imu", opmode.robot.nav.getHeading(AngleUnit.DEGREES));
-        opmode.telemetry.addData("theta", pose.getAngle(AngleUnit.DEGREES));
-        driverControls(opmode);
+        opmode.telemetry.addData("center", opmode.robot.mecanumDrive.frontRight.getCurrentPosition());
+        opmode.telemetry.addData("Right", opmode.robot.mecanumDrive.backLeft.getCurrentPosition());
+        opmode.telemetry.addData("Left", opmode.robot.mecanumDrive.frontLeft.getCurrentPosition());
+        opmode.telemetry.addData("Forward", opmode.robot.nav.getCurrentPosition().getY(DistanceUnit.INCH));
+        opmode.telemetry.addData("Strafe", opmode.robot.nav.getCurrentPosition().getX(DistanceUnit.INCH));
+        opmode.telemetry.addData("Thetaq", opmode.robot.nav.getCurrentPosition().getAngle(AngleUnit.DEGREES));
         //manipulatorControls(opmode);
+        driverControls(opmode);
         return this;
     }
 /*
