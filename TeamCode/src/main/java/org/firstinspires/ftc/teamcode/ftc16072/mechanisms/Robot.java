@@ -35,7 +35,7 @@ public class Robot {
             mechanism.init(hwMap);
         }
         nav.init(hwMap);
-        lights.normal();
+   //     lights.normal();
     }
 
     /**

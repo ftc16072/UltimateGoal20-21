@@ -17,6 +17,6 @@ public class Teleop extends QQ_Opmode {
         //robot will move the direction the user commands it to
         usesGamepads = true;
         currentAction = new TeleopDriveAction();
-        robot.intake.hold();
+//        robot.intake.hold();
     }
 }

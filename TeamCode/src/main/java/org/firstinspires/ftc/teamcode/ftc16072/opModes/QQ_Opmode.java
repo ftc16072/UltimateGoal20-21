@@ -51,7 +51,7 @@ public abstract class QQ_Opmode extends OpMode {
             });
         }
 
-        telemetry.addData("Pid", robot.shooter.shooterMotor.getPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER));
+  //      telemetry.addData("Pid", robot.shooter.shooterMotor.getPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER));
 
     }
 
@@ -85,8 +85,8 @@ public abstract class QQ_Opmode extends OpMode {
      */
     void updateRingCount(){
         telemetry.addData("Ring Count", Math.round(robot.ringCount));
-        robot.ringCount -= robot.shooter.getRingsShot(true);
-        robot.ringCount += robot.transfer.getRingsSeen(true);
+ //       robot.ringCount -= robot.shooter.getRingsShot(true);
+ //       robot.ringCount += robot.transfer.getRingsSeen(true);
 
         if (robot.ringCount < 0){
             robot.ringCount = 0;
