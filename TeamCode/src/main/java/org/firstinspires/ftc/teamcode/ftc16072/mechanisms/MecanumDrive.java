@@ -71,10 +71,10 @@ public class MecanumDrive implements QQ_Mechanism {
 
 
     //declaring mecanum drive motors
-    private DcMotorEx frontLeft;
-    private DcMotorEx frontRight;
-    private DcMotorEx backRight;
-    private DcMotorEx backLeft;
+    protected DcMotorEx frontLeft;
+    protected DcMotorEx frontRight;
+    protected DcMotorEx backRight;
+    protected DcMotorEx backLeft;
 
     private final double GEAR_RATIO = 4.0/6.0;
     private final double WHEEL_RADIUS = 5.0; //5 cm

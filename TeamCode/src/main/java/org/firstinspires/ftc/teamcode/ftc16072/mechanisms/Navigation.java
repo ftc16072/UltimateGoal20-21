@@ -252,7 +252,9 @@ public class Navigation {
      */
     public void updatePose() {
         MecanumDrive.MoveDeltas movement = mecanumDrive.getDistance(true);
-        currentPosition.setAngle(getHeading(AngleUnit.RADIANS), AngleUnit.RADIANS);
+        if(mecanumDrive.getClass() != OdoMecanumDrive.class) {
+            currentPosition.setAngle(getHeading(AngleUnit.RADIANS), AngleUnit.RADIANS);
+        }
         currentPosition.updatePose(movement);
     }
 
