@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class OdoOnlyRobot {
-    public MecanumDrive mecanumDrive = new MecanumDrive();
+    public OdoMecanumDrive mecanumDrive = new OdoMecanumDrive();
     public Navigation nav = new Navigation(mecanumDrive);
     private List<QQ_Mechanism> mechanisms = Arrays.asList(
             mecanumDrive
