@@ -64,7 +64,6 @@ public abstract class QQ_Opmode extends OpMode {
     public void loop() {
         telemetry.addData("analysis", numberRingsSeen);
         robot.nav.updatePose();
-        updateRingCount();
         if(usesGamepads){
             qq_gamepad1 = new QQ_Gamepad(gamepad1);
             qq_gamepad2 = new QQ_Gamepad(gamepad2);
@@ -79,20 +78,5 @@ public abstract class QQ_Opmode extends OpMode {
 
 
     }
-
-    /**
-     * add ring count for ringsShot and ringsSeen
-     */
-    void updateRingCount(){
-        telemetry.addData("Ring Count", Math.round(robot.ringCount));
-        robot.ringCount -= robot.shooter.getRingsShot(true);
-        robot.ringCount += robot.transfer.getRingsSeen(true);
-
-        if (robot.ringCount < 0){
-            robot.ringCount = 0;
-        }
-    }
-
-
 
 }

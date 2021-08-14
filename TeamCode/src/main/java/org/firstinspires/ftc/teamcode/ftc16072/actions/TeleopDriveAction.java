@@ -9,11 +9,6 @@ import org.firstinspires.ftc.teamcode.ftc16072.utils.RobotPose;
 
 public class TeleopDriveAction extends QQ_Action {
 
-
-    double pivotAngle = 0;
-    boolean wasUp;
-    boolean wasDown;
-
     double timeOffset;
 
     private boolean gamepad2APressed;
@@ -23,10 +18,6 @@ public class TeleopDriveAction extends QQ_Action {
     final double MAX_SPEED = 1;
     final double NORMAL_SPEED = 0.6;
     final double SLOW_SPEED = 0.3;
-
-    public double powerShot1Angle = 91.0;
-    public double powerShot2Angle = 88.0;
-    public double powerShot3Angle = 84.6;
 
 
 
@@ -82,6 +73,7 @@ public class TeleopDriveAction extends QQ_Action {
             } else {
                 opmode.robot.shooter.spinWheels(true);
                 opmode.robot.transfer.setState(Transfer.elevatorState.UP);
+                //opmode.robot.shooter.flick(false);
             }
 
         } else {
@@ -96,7 +88,7 @@ public class TeleopDriveAction extends QQ_Action {
             if (opmode.qq_gamepad2.b() & opmode.robot.transfer.currentState() == Transfer.elevatorState.UP) {
                 opmode.robot.shooter.flick(true);
 
-            } else {
+            } else if(opmode.robot.transfer.currentState() == Transfer.elevatorState.UP) {
                 opmode.robot.shooter.flick(false);
             }
         }
@@ -104,8 +96,10 @@ public class TeleopDriveAction extends QQ_Action {
         if(opmode.qq_gamepad2.x() && !gamepad2XPressed){
             if(opmode.robot.transfer.currentState() == Transfer.elevatorState.UP || opmode.qq_gamepad2.y()){
                 opmode.robot.transfer.setState(Transfer.elevatorState.DOWN);
+                opmode.robot.shooter.flick(true);
             } else {
                 opmode.robot.transfer.setState(Transfer.elevatorState.UP);
+                opmode.robot.shooter.flick(false);
             }
         }
         gamepad2XPressed = opmode.qq_gamepad2.x();
@@ -133,12 +127,14 @@ public class TeleopDriveAction extends QQ_Action {
 
         //intake and transfer in and out
         if ( (opmode.qq_gamepad2.leftBumper() || opmode.qq_gamepad2.rightStick.getY() > 0.2 || opmode.qq_gamepad2.leftTrigger() > 0.2) ){
+                opmode.robot.shooter.flick(true);
                 opmode.robot.transfer.setState(Transfer.elevatorState.DOWN);
                 opmode.robot.intake.changeState(Intake.intakeState.Start);
                 opmode.robot.transfer.changeTransfer(Transfer.transferState.START);
         } else if (opmode.qq_gamepad2.rightStick.getY() < -0.2) {
             opmode.robot.intake.changeState(Intake.intakeState.Reverse);
             opmode.robot.transfer.changeTransfer(Transfer.transferState.REVERSE);
+            opmode.robot.shooter.flick(true);
         } else {
             opmode.robot.intake.changeState(Intake.intakeState.Stop);
             opmode.robot.transfer.changeTransfer(Transfer.transferState.STOP);
@@ -183,21 +179,6 @@ public class TeleopDriveAction extends QQ_Action {
             opmode.robot.nav.driveRotate(-rotateFromTrigger(opmode.qq_gamepad1.leftTrigger()));
         } else if (opmode.qq_gamepad1.rightTrigger() >= 0.05) {
             opmode.robot.nav.driveRotate(rotateFromTrigger(opmode.qq_gamepad1.rightTrigger()));
-        } else if (opmode.qq_gamepad1.a()) {
-            opmode.robot.nav.driveAngle(
-                    opmode.qq_gamepad1.leftStick,
-                    powerShot1Angle);
-
-        } else if (opmode.qq_gamepad1.x()) {
-            opmode.robot.nav.driveAngle(
-                    opmode.qq_gamepad1.leftStick,
-                    powerShot2Angle);
-
-        }else if (opmode.qq_gamepad1.y()){
-            opmode.robot.nav.driveAngle(
-                    opmode.qq_gamepad1.leftStick,
-                    powerShot3Angle);
-
         } else{
             opmode.robot.nav.driveFieldRelativeAngle(
                     opmode.qq_gamepad1.leftStick,

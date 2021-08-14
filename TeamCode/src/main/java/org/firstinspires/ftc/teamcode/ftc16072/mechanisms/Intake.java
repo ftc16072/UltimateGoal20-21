@@ -22,8 +22,6 @@ public class Intake implements QQ_Mechanism {
     public Servo intakeHolder;
     private final double intakeSpeed = -0.8;
     private final double reverseIntakeSpeed = 0.4;
-    private final double HOLD_POSITION = 0.33;
-    private final double RELEASE_POSITION = 0.0;
 
     /**
      * initialize intake
@@ -32,7 +30,6 @@ public class Intake implements QQ_Mechanism {
     @Override
     public void init(HardwareMap hwMap) {
          intakeMotor = hwMap.get(DcMotor.class, "intake_motor");
-         intakeHolder = hwMap.get(Servo.class, "intake_holder");
     }
 
     /**
@@ -43,8 +40,7 @@ public class Intake implements QQ_Mechanism {
     public List<QQ_Test> getTests() {
         return Arrays.asList(
                 new QQ_TestMotor("Intake Motor",  intakeSpeed, intakeMotor),
-                new QQ_TestMotor("motor - FULL speed", -1.0, intakeMotor),
-                new QQ_TestServo("Holder", HOLD_POSITION, RELEASE_POSITION, intakeHolder));
+                new QQ_TestMotor("motor - FULL speed", 1.0, intakeMotor));
     }
 
     /**
@@ -62,17 +58,17 @@ public class Intake implements QQ_Mechanism {
     }
 
     /**
-     * release intake position
+     * release intake position *DEAD*
      */
     public void release(){
-        intakeHolder.setPosition(RELEASE_POSITION);
+        // NOT DELETING BECAUSE STUFF WILL BREAK AND TOO LAZY TO FIX FOR LOKI
     }
 
     /**
-     * hold intake position
+     * hold intake position *DEAD*
      */
     public void hold(){
-        intakeHolder.setPosition(HOLD_POSITION);
+        // NOT DELETING BECAUSE STUFF WILL BREAK AND TOO LAZY TO FIX FOR LOKI
     }
 
     /**

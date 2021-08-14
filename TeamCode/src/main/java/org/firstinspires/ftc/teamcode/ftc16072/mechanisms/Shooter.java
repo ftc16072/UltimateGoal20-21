@@ -3,20 +3,18 @@ package org.firstinspires.ftc.teamcode.ftc16072.mechanisms;
 import android.util.Log;
 
 import com.acmerobotics.dashboard.config.Config;
-import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.util.Range;
 
+import org.firstinspires.ftc.teamcode.ftc16072.mechanisms.tests.QQ_DualTest;
 import org.firstinspires.ftc.teamcode.ftc16072.mechanisms.tests.QQ_Test;
 import org.firstinspires.ftc.teamcode.ftc16072.mechanisms.tests.QQ_TestMotor;
 import org.firstinspires.ftc.teamcode.ftc16072.mechanisms.tests.QQ_TestServo;
 //import org.opencv.core.Mat;
 
-import java.io.Console;
 import java.util.Arrays;
 import java.util.List;
 
@@ -33,12 +31,16 @@ public class Shooter implements QQ_Mechanism {
 
 
     public DcMotorEx shooterMotor;
-    private Servo shooterImport;
+    private Servo shooterImportLeft;
+    private Servo shooterImportRight;
 
-    public static double INSERT = 0; // TODO: Find Value
-    public static double RESET = 1; // TODO: Find value s
+    public static double INSERT_LEFT = .45; // TODO: Find Value
+    public static double RESET_LEFT = 0; // TODO: Find value s
 
-    public double SHOOTER_VELO = -1125;
+    public static double INSERT_RIGHT = .25; // TODO: Find Value
+    public static double RESET_RIGHT = .48; // TODO: Find value
+
+    public double SHOOTER_VELO = -1125/3.0;
     public double SHOOTER_RANGE = 10;
 
     private int state;
@@ -60,7 +62,8 @@ public class Shooter implements QQ_Mechanism {
     @Override
     public void init(HardwareMap hwMap) {
         shooterMotor = hwMap.get(DcMotorEx.class, "shooter_motor");
-        shooterImport = hwMap.get(Servo.class, "servo_import_shooter");
+        shooterImportLeft = hwMap.get(Servo.class, "shooter_left");
+        shooterImportRight = hwMap.get(Servo.class, "shooter_right");
         delayTime = 0.0;
     }
 
@@ -73,7 +76,7 @@ public class Shooter implements QQ_Mechanism {
     public List<QQ_Test> getTests() {
         return Arrays.asList(new QQ_TestMotor("Motor-.5", -0.7, shooterMotor),
             new QQ_TestMotor("Motor - Full Speed", -0.8, shooterMotor),
-                new QQ_TestServo("Import", INSERT, RESET, shooterImport));
+       new QQ_DualTest(new QQ_TestServo("Import Right", INSERT_LEFT, RESET_LEFT, shooterImportLeft), new QQ_TestServo("Import Left", INSERT_RIGHT, RESET_RIGHT, shooterImportRight)));
     }
 
     //create methods to set angle up and down, left, right
@@ -111,14 +114,16 @@ public class Shooter implements QQ_Mechanism {
      */
     public void flick(boolean shouldFlick){
         if (shouldFlick) {
-            shooterImport.setPosition(INSERT);
+            shooterImportLeft.setPosition(INSERT_LEFT);
+            shooterImportRight.setPosition(INSERT_RIGHT);
             if(!flicked){
                 ringsShot += 1;
             }
 
 
         } else {
-            shooterImport.setPosition(RESET);
+            shooterImportLeft.setPosition(RESET_LEFT);
+            shooterImportRight.setPosition(RESET_RIGHT);
         }
         flicked = shouldFlick;
     }
